@@ -14,7 +14,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class AutoSurveyController {
   @Autowired
-  AutosurveyService autosurveyService;
+  AutoSurveyService autosurveyService;
 
   @GetMapping
   ResponseEntity<List<AutoSurveyDTO>> getAllSurveys() {

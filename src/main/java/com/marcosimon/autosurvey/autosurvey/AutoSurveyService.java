@@ -1,4 +1,4 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-public class AutosurveyService {
+public class AutoSurveyService {
 }

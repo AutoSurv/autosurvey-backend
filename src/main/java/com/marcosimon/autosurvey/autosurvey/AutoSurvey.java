@@ -6,7 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="autosurvey")
-public class Autosurvey {
+public class AutoSurvey {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -15,6 +15,9 @@ public class Autosurvey {
     )
     @Column(name="autosurvey_id")
     private String id;
+
+    @Column(name="country")
+    private String country;
 
     @Column(name = "family_member")
     private int familyMember;
@@ -44,10 +47,11 @@ public class Autosurvey {
     private long food;
 
 
-    public Autosurvey() {
+    public AutoSurvey() {
     }
 
-    public Autosurvey(int familyMember, int numIncomes, long totalIncome, String job, String area, long rent, long bills, long transport, long food) {
+    public AutoSurvey(String country, int familyMember, int numIncomes, long totalIncome, String job, String area, long rent, long bills, long transport, long food) {
+        this.country = country;
         this.familyMember = familyMember;
         this.numIncomes = numIncomes;
         this.totalIncome = totalIncome;
@@ -67,6 +71,13 @@ public class Autosurvey {
         this.id = id;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
     public int getFamilyMember() {
         return familyMember;
     }
