@@ -44,10 +44,10 @@ public class AutoSurvey {
     private long educationFee;
 
     @Column(name = "education_type")
-    private boolean educationType;
+    private String educationType;
 
     @Column(name = "accommodation_type")
-    private long accommodationType;
+    private String accommodationType;
 
     @Column(name = "profession")
     private String profession;
@@ -78,7 +78,7 @@ public class AutoSurvey {
     public AutoSurvey() {
     }
 
-    public AutoSurvey(String id,String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, boolean educationType, long accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments) {
+    public AutoSurvey(String id,String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments) {
         this.id = id;
         this.country = country;
         this.rent = rent;
@@ -183,19 +183,19 @@ public class AutoSurvey {
         this.educationFee = educationFee;
     }
 
-    public boolean isEducationType() {
+    public String isEducationType() {
         return educationType;
     }
 
-    public void setEducationType(boolean educationType) {
+    public void setEducationType(String educationType) {
         this.educationType = educationType;
     }
 
-    public long getAccommodationType() {
+    public String getAccommodationType() {
         return accommodationType;
     }
 
-    public void setAccommodationType(long accommodationType) {
+    public void setAccommodationType(String accommodationType) {
         this.accommodationType = accommodationType;
     }
 

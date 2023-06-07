@@ -54,6 +54,7 @@ public class AutoSurveyController {
 
   @PatchMapping("{id}")
   ResponseEntity<AutoSurveyDTO> editSurvey(@PathVariable String id, @RequestBody AutoSurveyDTO autoSurveyDTO, HttpServletRequest req) {
+    AutoSurveyDTO editedSurveyDto = autosurveyService.updateSurvey(id, autoSurveyDTO);
     return null;
   }
 
