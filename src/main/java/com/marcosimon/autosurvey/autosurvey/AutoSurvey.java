@@ -13,55 +13,95 @@ public class AutoSurvey {
     @GenericGenerator(
             name = "system-uuid", strategy = "uuid"
     )
-    @Column(name="autosurvey_id")
+    @Column(name="survey_id")
     private String id;
 
     @Column(name="country")
     private String country;
 
-    @Column(name = "family_member")
-    private int familyMember;
-
-    @Column(name = "num_incomes")
-    private int numIncomes;
-
-    @Column(name = "total_income")
-    private long totalIncome;
-
-    @Column(name = "job")
-    private String job;
-
-    @Column(name = "area")
-    private String area;
-
     @Column(name = "rent")
     private long rent;
 
-    @Column(name = "bills")
-    private long bills;
-
-    @Column(name = "transport")
-    private long transport;
+    @Column(name = "utilities")
+    private long utilities;
 
     @Column(name = "food")
     private long food;
 
+    @Column(name = "basic_items")
+    private long basicItems;
+
+    @Column(name = "transportation")
+    private long transportation;
+
+    @Column(name = "education_total")
+    private long educationTotal;
+
+    @Column(name = "education_supplies")
+    private long educationSupplies;
+
+    @Column(name = "education_fee")
+    private long educationFee;
+
+    @Column(name = "education_type")
+    private boolean educationType;
+
+    @Column(name = "accommodation_type")
+    private long accommodationType;
+
+    @Column(name = "profession")
+    private String profession;
+
+    @Column(name = "location_given")
+    private String locationGiven;
+
+    @Column(name = "location_clustered")
+    private String locationClustered;
+
+    @Column(name = "num_residents")
+    private int numResidents;
+
+    @Column(name = "num_incomes")
+    private int numIncomes;
+
+    @Column(name = "num_full_incomes")
+    private int numFullIncomes;
+
+    @Column(name = "num_children")
+    private int numChildren;
+    @Column(name = "total_income")
+    private long totalIncome;
+
+    @Column(name = "comments")
+    private String comments;
 
     public AutoSurvey() {
     }
 
-    public AutoSurvey(String country, int familyMember, int numIncomes, long totalIncome, String job, String area, long rent, long bills, long transport, long food) {
+    public AutoSurvey(String id,String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, boolean educationType, long accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments) {
+        this.id = id;
         this.country = country;
-        this.familyMember = familyMember;
-        this.numIncomes = numIncomes;
-        this.totalIncome = totalIncome;
-        this.job = job;
-        this.area = area;
         this.rent = rent;
-        this.bills = bills;
-        this.transport = transport;
+        this.utilities = utilities;
         this.food = food;
+        this.basicItems = basicItems;
+        this.transportation = transportation;
+        this.educationTotal = educationTotal;
+        this.educationSupplies = educationSupplies;
+        this.educationFee = educationFee;
+        this.educationType = educationType;
+        this.accommodationType = accommodationType;
+        this.profession = profession;
+        this.locationGiven = locationGiven;
+        this.locationClustered = locationClustered;
+        this.numResidents = numResidents;
+        this.numIncomes = numIncomes;
+        this.numFullIncomes = numFullIncomes;
+        this.numChildren = numChildren;
+        this.totalIncome = totalIncome;
+        this.comments = comments;
     }
+
 
     public String getId() {
         return id;
@@ -78,12 +118,117 @@ public class AutoSurvey {
     public void setCountry(String country) {
         this.country = country;
     }
-    public int getFamilyMember() {
-        return familyMember;
+
+    public long getRent() {
+        return rent;
     }
 
-    public void setFamilyMember(int familyMember) {
-        this.familyMember = familyMember;
+    public void setRent(long rent) {
+        this.rent = rent;
+    }
+
+    public long getUtilities() {
+        return utilities;
+    }
+
+    public void setUtilities(long utilities) {
+        this.utilities = utilities;
+    }
+
+    public long getFood() {
+        return food;
+    }
+
+    public void setFood(long food) {
+        this.food = food;
+    }
+
+    public long getBasicItems() {
+        return basicItems;
+    }
+
+    public void setBasicItems(long basicItems) {
+        this.basicItems = basicItems;
+    }
+
+    public long getTransportation() {
+        return transportation;
+    }
+
+    public void setTransportation(long transportation) {
+        this.transportation = transportation;
+    }
+
+    public long getEducationTotal() {
+        return educationTotal;
+    }
+
+    public void setEducationTotal(long educationTotal) {
+        this.educationTotal = educationTotal;
+    }
+
+    public long getEducationSupplies() {
+        return educationSupplies;
+    }
+
+    public void setEducationSupplies(long educationSupplies) {
+        this.educationSupplies = educationSupplies;
+    }
+
+    public long getEducationFee() {
+        return educationFee;
+    }
+
+    public void setEducationFee(long educationFee) {
+        this.educationFee = educationFee;
+    }
+
+    public boolean isEducationType() {
+        return educationType;
+    }
+
+    public void setEducationType(boolean educationType) {
+        this.educationType = educationType;
+    }
+
+    public long getAccommodationType() {
+        return accommodationType;
+    }
+
+    public void setAccommodationType(long accommodationType) {
+        this.accommodationType = accommodationType;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getLocationGiven() {
+        return locationGiven;
+    }
+
+    public void setLocationGiven(String locationGiven) {
+        this.locationGiven = locationGiven;
+    }
+
+    public String getLocationClustered() {
+        return locationClustered;
+    }
+
+    public void setLocationClustered(String locationClustered) {
+        this.locationClustered = locationClustered;
+    }
+
+    public int getNumResidents() {
+        return numResidents;
+    }
+
+    public void setNumResidents(int numResidents) {
+        this.numResidents = numResidents;
     }
 
     public int getNumIncomes() {
@@ -94,6 +239,22 @@ public class AutoSurvey {
         this.numIncomes = numIncomes;
     }
 
+    public int getNumFullIncomes() {
+        return numFullIncomes;
+    }
+
+    public void setNumFullIncomes(int numFullIncomes) {
+        this.numFullIncomes = numFullIncomes;
+    }
+
+    public int getNumChildren() {
+        return numChildren;
+    }
+
+    public void setNumChildren(int numChildren) {
+        this.numChildren = numChildren;
+    }
+
     public long getTotalIncome() {
         return totalIncome;
     }
@@ -102,51 +263,11 @@ public class AutoSurvey {
         this.totalIncome = totalIncome;
     }
 
-    public String getJob() {
-        return job;
+    public String getComments() {
+        return comments;
     }
 
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public long getRent() {
-        return rent;
-    }
-
-    public void setRent(long rent) {
-        this.rent = rent;
-    }
-
-    public long getBills() {
-        return bills;
-    }
-
-    public void setBills(long bills) {
-        this.bills = bills;
-    }
-
-    public long getTransport() {
-        return transport;
-    }
-
-    public void setTransport(long transport) {
-        this.transport = transport;
-    }
-
-    public long getFood() {
-        return food;
-    }
-
-    public void setFood(long foods) {
-        this.food = foods;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

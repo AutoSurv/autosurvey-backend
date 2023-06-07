@@ -38,7 +38,7 @@ public class AutoSurveyController {
     }
 
     //if id is a proper UUID
-    AutoSurveyDTO surveyDTO = autosurveyService.getSurvey(id);
+    AutoSurveyDTO surveyDTO = autosurveyService.getSurveyById(id);
 
     if (surveyDTO == null) {
       return ResponseEntity.notFound().build();

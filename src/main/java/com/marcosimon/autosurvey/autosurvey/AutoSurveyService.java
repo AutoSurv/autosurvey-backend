@@ -2,7 +2,6 @@ package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.models.AutoSurveyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +15,55 @@ public class AutoSurveyService {
   public AutoSurveyDTO convertToDto (AutoSurvey autoSurvey) {
     AutoSurveyDTO autoSurveyDTO = new AutoSurveyDTO(
             autoSurvey.getId(),
-            autoSurvey.getFamilyMember(),
-            autoSurvey.getNumIncomes(),
-            autoSurvey.getTotalIncome(),
-            autoSurvey.getJob(),
-            autoSurvey.getArea(),
+            autoSurvey.getCountry(),
             autoSurvey.getRent(),
-            autoSurvey.getBills(),
-            autoSurvey.getTransport(),
-            autoSurvey.getFood()
+            autoSurvey.getUtilities(),
+            autoSurvey.getFood(),
+            autoSurvey.getBasicItems(),
+            autoSurvey.getTransportation(),
+            autoSurvey.getEducationTotal(),
+            autoSurvey.getEducationSupplies(),
+            autoSurvey.getEducationFee(),
+            autoSurvey.isEducationType(),
+            autoSurvey.getAccommodationType(),
+            autoSurvey.getProfession(),
+            autoSurvey.getLocationGiven(),
+            autoSurvey.getLocationClustered(),
+            autoSurvey.getNumResidents(),
+            autoSurvey.getNumIncomes(),
+            autoSurvey.getNumFullIncomes(),
+            autoSurvey.getNumChildren(),
+            autoSurvey.getTotalIncome(),
+            autoSurvey.getComments()
     );
 
     return autoSurveyDTO;
+  }
+  public AutoSurvey convertFromDto (AutoSurveyDTO dto) {
+    AutoSurvey autoSurvey = new AutoSurvey(
+            dto.id(),
+            dto.country(),
+            dto.rent(),
+            dto.utilities(),
+            dto.food(),
+            dto.basicItems(),
+            dto.transportation(),
+            dto.educationTotal(),
+            dto.educationSupplies(),
+            dto.educationFee(),
+            dto.educationType(),
+            dto.accommodationType(),
+            dto.profession(),
+            dto.locationGiven(),
+            dto.locationClustered(),
+            dto.numResidents(),
+            dto.numIncomes(),
+            dto.numFullIncomes(),
+            dto.numChildren(),
+            dto.totalIncome(),
+            dto.comments()
+    );
+    return  autoSurvey;
   }
 
 
@@ -49,7 +85,7 @@ public class AutoSurveyService {
   }
 
 
-  public AutoSurveyDTO getSurvey(String id) {
+  public AutoSurveyDTO getSurveyById(String id) {
     AutoSurvey survey = autoSurveyRepository.getById(id);
     if (survey == null) {
       return null;
@@ -60,7 +96,15 @@ public class AutoSurveyService {
     return autoSurveyDTO;
   }
 
+  public AutoSurvey saveSurvey(AutoSurveyDTO surveyDTO) {
 
+    return autoSurveyRepository.saveSurvey(convertFromDto(surveyDTO));
+
+  }
+
+  public void saveSurveys(List<AutoSurveyDTO> dtos) {
+    autoSurveyRepository.saveSurveys(dtos.stream().map(this::convertFromDto).toList());
+  }
 
 
 
