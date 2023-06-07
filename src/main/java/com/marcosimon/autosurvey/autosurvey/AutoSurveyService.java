@@ -200,5 +200,7 @@ public class AutoSurveyService {
 
   }
 
-
+  public void deleteSurvey(String id) {
+    autoSurveyRepository.deleteSurvey(id);
+  }
 }

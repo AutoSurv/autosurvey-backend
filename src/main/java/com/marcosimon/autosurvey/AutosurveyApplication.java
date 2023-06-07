@@ -22,13 +22,13 @@ public class AutosurveyApplication {
 
 /*
 	@Bean
-	CommandLineRunner runner(MilkService milkService) {
+	CommandLineRunner runner(AutoSurveyService autosurveyService) {
 		return args -> {
 			//read json
 			ObjectMapper mapper = new ObjectMapper();
 			//TypeReference gives a reference of what type of data you want after the parsing is complete.
 			TypeReference<MilkListFileDTO> typeReference = new TypeReference<MilkListFileDTO>(){};
-			InputStream inputStream = TypeReference.class.getResourceAsStream("/milk.json");
+			InputStream inputStream = TypeReference.class.getResourceAsStream("/data.json");
 			System.out.println("inputStream: " + inputStream);
 			//write in db
 			try {
@@ -38,7 +38,7 @@ public class AutosurveyApplication {
 				for (MilkFileDTO milkFileDTO : milkFileDtoList) {
 					milks.add(new Milk(milkFileDTO.name(), milkFileDTO.type(), milkFileDTO.storage()));
 				}
-				milkService.saveAll(milks);
+				autosurveyService.saveSurveys(milks);
 			} catch (IOException e) {
 				System.out.println("Error: " +e.getMessage());
 			}

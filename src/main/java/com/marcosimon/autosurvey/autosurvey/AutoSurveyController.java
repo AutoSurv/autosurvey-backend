@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -47,20 +48,37 @@ public class AutoSurveyController {
     return ResponseEntity.ok(surveyDTO);
   }
 
-  @PostMapping("{id}")
-  ResponseEntity<AutoSurveyDTO> addNewSurvey(@PathVariable String id, HttpServletRequest req) {
-    return null;
+  @PostMapping
+  ResponseEntity<AutoSurveyDTO> addNewSurvey( @RequestBody AutoSurveyDTO autoSurveyDTO, HttpServletRequest req) {
+
+    AutoSurvey addedSurvey = autosurveyService.saveSurvey(autoSurveyDTO);
+    if (addedSurvey == null) return ResponseEntity.unprocessableEntity().build();
+
+    AutoSurveyDTO surveyDTO = autosurveyService.convertToDto(addedSurvey);
+    URI location = URI.create(("/api/autosurveys/" + addedSurvey.getId() + "/status"));
+    return ResponseEntity.created(location).body(surveyDTO);
   }
+
 
   @PatchMapping("{id}")
   ResponseEntity<AutoSurveyDTO> editSurvey(@PathVariable String id, @RequestBody AutoSurveyDTO autoSurveyDTO, HttpServletRequest req) {
+    if (id.equals("") || id == null) return ResponseEntity.badRequest().build();
+
+    AutoSurveyDTO surveyDTO = autosurveyService.getSurveyById(id);
+    if (surveyDTO == null) return ResponseEntity.notFound().build();
+
     AutoSurveyDTO editedSurveyDto = autosurveyService.updateSurvey(id, autoSurveyDTO);
-    return null;
+    return ResponseEntity.accepted().body(editedSurveyDto);
   }
 
   @DeleteMapping("{id}")
   ResponseEntity deleteSurvey(@PathVariable String id) {
-    return null;
+    if (id.equals("") || id == null) return ResponseEntity.badRequest().build();
+
+    AutoSurveyDTO surveyDTO = autosurveyService.getSurveyById(id);
+    if (surveyDTO == null) return ResponseEntity.notFound().build();
+
+    return ResponseEntity.noContent().build();
   }
 
 
