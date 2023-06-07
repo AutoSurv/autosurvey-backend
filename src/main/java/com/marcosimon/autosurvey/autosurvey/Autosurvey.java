@@ -40,14 +40,14 @@ public class Autosurvey {
     @Column(name = "transport")
     private long transport;
 
-    @Column(name = "foods")
-    private long foods;
+    @Column(name = "food")
+    private long food;
 
 
     public Autosurvey() {
     }
 
-    public Autosurvey(int familyMember, int numIncomes, long totalIncome, String job, String area, long rent, long bills, long transport, long foods) {
+    public Autosurvey(int familyMember, int numIncomes, long totalIncome, String job, String area, long rent, long bills, long transport, long food) {
         this.familyMember = familyMember;
         this.numIncomes = numIncomes;
         this.totalIncome = totalIncome;
@@ -56,7 +56,7 @@ public class Autosurvey {
         this.rent = rent;
         this.bills = bills;
         this.transport = transport;
-        this.foods = foods;
+        this.food = food;
     }
 
     public String getId() {
@@ -131,11 +131,11 @@ public class Autosurvey {
         this.transport = transport;
     }
 
-    public long getFoods() {
-        return foods;
+    public long getFood() {
+        return food;
     }
 
-    public void setFoods(long foods) {
-        this.foods = foods;
+    public void setFood(long foods) {
+        this.food = foods;
     }
 }
