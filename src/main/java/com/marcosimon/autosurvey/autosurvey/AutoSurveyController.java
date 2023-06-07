@@ -18,12 +18,33 @@ public class AutoSurveyController {
 
   @GetMapping
   ResponseEntity<List<AutoSurveyDTO>> getAllSurveys() {
-    return null;
+    List<AutoSurveyDTO> surveyDTOList = autosurveyService.getAllSurvey();
+    if (surveyDTOList == null) {
+      return ResponseEntity.notFound().build(); //list doesn't exist
+    }
+
+    if (surveyDTOList.size() == 0) {
+      return ResponseEntity.notFound().build(); //list is empty
+    }
+
+    return ResponseEntity.ok().body(surveyDTOList);
   }
 
   @GetMapping("{id}")
   ResponseEntity<AutoSurveyDTO> getSurvey(@PathVariable String id) {
-    return null;
+
+    if (id == null || id.equals("")) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    //if id is a proper UUID
+    AutoSurveyDTO surveyDTO = autosurveyService.getSurvey(id);
+
+    if (surveyDTO == null) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(surveyDTO);
   }
 
   @PostMapping("{id}")
