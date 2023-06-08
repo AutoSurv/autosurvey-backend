@@ -2,6 +2,10 @@ package com.marcosimon.autosurvey;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
+import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
+import com.marcosimon.autosurvey.models.AutoSurveyDTO;
+import com.marcosimon.autosurvey.models.AutoSurveyListDto;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,30 +24,26 @@ public class AutosurveyApplication {
 	}
 
 
-/*
+
 	@Bean
 	CommandLineRunner runner(AutoSurveyService autosurveyService) {
 		return args -> {
 			//read json
 			ObjectMapper mapper = new ObjectMapper();
 			//TypeReference gives a reference of what type of data you want after the parsing is complete.
-			TypeReference<MilkListFileDTO> typeReference = new TypeReference<MilkListFileDTO>(){};
+			TypeReference<AutoSurveyListDto> typeReference = new TypeReference<AutoSurveyListDto>(){};
 			InputStream inputStream = TypeReference.class.getResourceAsStream("/data.json");
 			System.out.println("inputStream: " + inputStream);
 			//write in db
 			try {
-				MilkListFileDTO milkListFileDTO = mapper.readValue(inputStream, typeReference);
-				List<MilkFileDTO> milkFileDtoList = milkListFileDTO.results();
-				List<Milk> milks =new ArrayList<>();
-				for (MilkFileDTO milkFileDTO : milkFileDtoList) {
-					milks.add(new Milk(milkFileDTO.name(), milkFileDTO.type(), milkFileDTO.storage()));
-				}
-				autosurveyService.saveSurveys(milks);
+				AutoSurveyListDto fieldListDto = mapper.readValue(inputStream, typeReference);
+				List<AutoSurveyDTO> surveyDTOList = fieldListDto.surveyDTOList();
+				autosurveyService.saveSurveys(surveyDTOList);
 			} catch (IOException e) {
 				System.out.println("Error: " +e.getMessage());
 			}
 		};
 
 	}
-	*/
+
 }
