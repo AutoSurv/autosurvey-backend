@@ -1,0 +1,41 @@
+[{
+  "id": "id",
+  "country": "country",
+  "rent": 1000,
+  "utilities": 1100,
+  "food": 1110,
+  "basicItems": 1111,
+  "transportation": 2000,
+  "educationTotal": 2200,
+  "educationSupplies": 2220,
+  "educationFee": 2222,
+  "educationType": "public",
+  "accommodationType": "rent",
+  "profession": "guard",
+  "locationGiven": "location1",
+  "locationClustered": "location2",
+  "numResidents": 3,
+  "numIncomes": 2,
+  "numFullIncomes": 1,
+  "numChildren": 1,
+  "totalIncome": 3000,
+  "comments": "nice"
+}, {
+
+}, {
+
+}, {
+
+}, {
+
+}, {
+
+}, {
+
+}, {
+
+}, {
+
+}, {
+
+}]
