@@ -82,6 +82,8 @@ public class AutoSurveyController {
     AutoSurveyDTO surveyDTO = autosurveyService.getSurveyById(id);
     if (surveyDTO == null) return ResponseEntity.notFound().build();
 
+    autosurveyService.deleteSurvey(id);
+
     return ResponseEntity.noContent().build();
   }
 
