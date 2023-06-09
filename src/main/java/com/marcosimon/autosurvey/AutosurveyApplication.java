@@ -32,14 +32,13 @@ public class AutosurveyApplication {
 			//read json
 			ObjectMapper mapper = new ObjectMapper();
 			//TypeReference gives a reference of what type of data you want after the parsing is complete.
-			TypeReference<AutoSurveyListDto> typeReference = new TypeReference<AutoSurveyListDto>(){};
+			TypeReference<List<AutoSurvey>> typeReference = new TypeReference<>(){};
 			InputStream inputStream = TypeReference.class.getResourceAsStream("/data.json");
 			System.out.println("inputStream: " + inputStream);
 			//write in db
 			try {
-				AutoSurveyListDto fieldListDto = mapper.readValue(inputStream, typeReference);
-				List<AutoSurveyDTO> surveyDTOList = fieldListDto.surveyDTOList();
-				autosurveyService.saveSurveys(surveyDTOList);
+				List<AutoSurvey> fieldListDto = mapper.readValue(inputStream, typeReference);
+				autosurveyService.saveSurveys(fieldListDto.stream().map(autosurveyService::convertToDto).toList());
 			} catch (IOException e) {
 				System.out.println("Error: " +e.getMessage());
 			}

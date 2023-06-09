@@ -1,0 +1,28 @@
+## default connection pool
+server:
+  port: 9000
+debug: true
+spring:
+  sql:
+    init:
+      platform: postgresql
+      mode: always
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${PSQL_DB}
+    username: ${PSQL_USER}
+    password: ${PSQL_PASSWORD}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: ERROR
