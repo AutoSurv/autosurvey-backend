@@ -19,7 +19,9 @@ public class AutoSurveyController {
 
   @GetMapping
   ResponseEntity<List<AutoSurveyDTO>> getAllSurveys() {
+    System.out.println("I am here");
     List<AutoSurveyDTO> surveyDTOList = autosurveyService.getAllSurvey();
+    System.out.println(surveyDTOList);
     if (surveyDTOList == null) {
       return ResponseEntity.notFound().build(); //list doesn't exist
     }

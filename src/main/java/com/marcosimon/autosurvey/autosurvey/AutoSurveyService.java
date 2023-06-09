@@ -2,10 +2,12 @@ package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.models.AutoSurveyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class AutoSurveyService {
 
   @Autowired
@@ -81,7 +83,7 @@ public class AutoSurveyService {
   public List<AutoSurveyDTO> getAllSurvey() {
     List<AutoSurvey> autoSurveyList = autoSurveyRepository.listSurveys();
 
-    return convertToDtoList(autoSurveyList);
+    return autoSurveyList.stream().map(this::convertToDto).toList();
   }
 
 
