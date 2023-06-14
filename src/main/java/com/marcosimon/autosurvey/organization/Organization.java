@@ -20,8 +20,8 @@ public class Organization {
     @Column(name = "org_name")
     private String orgName;
 
-    @Column(name = "country")
-    private String country;
+    //@Column(name = "country")
+    //private String country;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "org_id")
@@ -30,10 +30,10 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(String orgId, String orgName, String country, List<AutoSurvey> autoSurveys) {
+    public Organization(String orgId, String orgName, List<AutoSurvey> autoSurveys) {
         this.orgId = orgId;
         this.orgName = orgName;
-        this.country = country;
+        //this.country = country;
         this.autoSurveys = autoSurveys;
     }
 
@@ -52,7 +52,7 @@ public class Organization {
     public void setOrgName(String orgName) {
         this.orgName = orgName;
     }
-
+    /*
     public String getCountry() {
         return country;
     }
@@ -60,7 +60,7 @@ public class Organization {
     public void setCountry(String country) {
         this.country = country;
     }
-
+    */
     public List<AutoSurvey> getAutoSurveys() {
         return autoSurveys;
     }

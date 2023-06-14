@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface JpaOrganizationRepository  extends JpaRepository<Organization, String> {
     Organization findByOrgName(String orgName);
+
 }
