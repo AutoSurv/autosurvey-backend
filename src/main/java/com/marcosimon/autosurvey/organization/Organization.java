@@ -28,8 +28,9 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(String orgName) {
+    public Organization(String orgName, List<CountryGroup> countries) {
         this.orgName = orgName;
+        this.countries = countries;
 
     }
 

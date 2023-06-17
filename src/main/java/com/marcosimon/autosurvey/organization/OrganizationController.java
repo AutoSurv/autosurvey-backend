@@ -42,7 +42,7 @@ public class OrganizationController {
 
     @PostMapping
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
-        Organization organization = new Organization(dto.orgName());
+        Organization organization = new Organization(dto.orgName(), new ArrayList<CountryGroup>());
         Organization newOrg = service.addOrganization(organization);
         URI location = URI.create((req.getRequestURI() + "/" + newOrg.getOrgId()));
         return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(newOrg));
@@ -69,20 +69,16 @@ public class OrganizationController {
     @PostMapping(path = "{id}/countries")
     public ResponseEntity<OrganizationResponseDTO> addCountry(@PathVariable String id, @RequestBody AddOrgCountryDTO dto, HttpServletRequest req){
         Organization org = service.getOrgById(id);
-        CountryGroup newCountry = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>());
-        newCountry.setOrganization(org);
-        countryGroupService.addCountry(newCountry);
-
-        try {
-
-            Organization updatedOrg = service.addCountry(id, newCountry);
-            return ResponseEntity.accepted().body(OrganizationConverter.toResponseDto(updatedOrg));
-
-        } catch(NoSuchElementException ex) {
-            return ResponseEntity.notFound().build();
-        } catch(IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().build();
+        if(countryGroupService.getCountryByName(dto.country()) == null) {
+            CountryGroup newCountry = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>());
+            newCountry.setOrganization(org);
+            countryGroupService.addCountry(newCountry);
+            org.getCountries().add(newCountry);
+            org.setCountries(org.getCountries());
+            service.organizationRepository.saveOrganization(org);
+            return ResponseEntity.accepted().body(OrganizationConverter.toResponseDto(org));
         }
+        return null;
     }
 
     @PatchMapping(path = "{id}")

@@ -31,6 +31,11 @@ public class CountryGroupService {
         return repo.getCountryByID(id);
     }
 
+    public CountryGroup getCountryByName(String name) {
+        return repo.getCountryByName(name);
+    }
+
+
     public CountryGroup addCountry(CountryGroup country) {
         CountryGroup existingCountry = repo.getCountryByName(country.getCountry());
         if(existingCountry == null) {

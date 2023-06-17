@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.countrygroup;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.organization.Organization;
 import jakarta.persistence.*;
@@ -28,6 +29,7 @@ public class CountryGroup {
 
     @ManyToOne
     @JoinColumn(name ="org_id")
+    @JsonIgnore
     private Organization organization;
 
 
