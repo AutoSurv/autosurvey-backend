@@ -1,15 +1,18 @@
 package com.marcosimon.autosurvey.autosurvey;
 
+import com.marcosimon.autosurvey.countrygroup.CountryGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Repository
 public class AutoSurveyRepository {
 
+    Logger log = Logger.getLogger(AutoSurveyRepository.class.getName());
     @Autowired
     JpaAutoSurveyRepository jpaAutoSurveyRepository;
 
@@ -22,6 +25,7 @@ public class AutoSurveyRepository {
     }
 
     public List<AutoSurvey> listSurveys() {
+
         return Streamable.of(jpaAutoSurveyRepository.findAll()).toList();
     }
 
@@ -43,6 +47,12 @@ public class AutoSurveyRepository {
         jpaAutoSurveyRepository.deleteById(id);
 
     }
+    /*
+    public List<AutoSurvey> surveysForCountries(List<CountryGroup> groups) {
+        return jpaAutoSurveyRepository.listByCountryGroup(groups);
+    }
+
+     */
 
 
 

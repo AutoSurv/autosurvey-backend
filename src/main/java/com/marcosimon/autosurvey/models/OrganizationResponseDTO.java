@@ -10,7 +10,7 @@ public record OrganizationResponseDTO(
         @JsonProperty("org_name")
         String orgName,
         @JsonProperty
-        List<AutoSurveyDTO>  surveyDTOList
+        List<CountryResponseDTO>  countries
 
 
         ) {

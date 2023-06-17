@@ -1,12 +1,17 @@
 package com.marcosimon.autosurvey.organization;
 
-import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
-import com.marcosimon.autosurvey.models.CreateOrganizationDTO;
-import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
+
+import com.marcosimon.autosurvey.countrygroup.CountryConverter;
+import com.marcosimon.autosurvey.countrygroup.CountryGroup;
+import com.marcosimon.autosurvey.countrygroup.CountryGroupRepository;
+import com.marcosimon.autosurvey.countrygroup.CountryGroupService;
+import com.marcosimon.autosurvey.models.AddOrgCountryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class OrganizationService {
@@ -15,15 +20,17 @@ public class OrganizationService {
     OrganizationRepository organizationRepository;
 
     @Autowired
-    AutoSurveyRepository autoSurveyRepository;
+    CountryGroupRepository countryGroupRepository;
 
 
     public OrganizationService() {
     }
 
-    public OrganizationService(OrganizationRepository organizationRepository) {
+    public OrganizationService(OrganizationRepository organizationRepository, CountryGroupRepository countryGroupRepository) {
         this.organizationRepository = organizationRepository;
+        this.countryGroupRepository = countryGroupRepository;
     }
+
 
     public List<Organization> getAllOrganizations() {
         return organizationRepository.listOrganizations();
@@ -33,21 +40,37 @@ public class OrganizationService {
         return organizationRepository.getById(id);
     }
 
-    public Organization saveOrganization(Organization org) {
-        return organizationRepository.saveOrganization(org);
-    }
 
-    public OrganizationResponseDTO addOrganization(Organization org) {
+    public Organization addOrganization(Organization org) {
         Organization existingOrg = organizationRepository.getByOrgName(org.getOrgName());
         if(existingOrg == null) {
-            Organization saveOrg = organizationRepository.saveOrganization(org);
-
-            return OrganizationConverter.toDTO(saveOrg, autoSurveyRepository.get);
+            return organizationRepository.saveOrganization(org);
         }
+        return null;
     }
 
+    public Organization addCountry(String id, CountryGroup newCountry) {
+        Organization org = organizationRepository.getById(id);
+            countryGroupRepository.saveCountry(newCountry);
+            return organizationRepository.saveOrganization(org);
+    }
 
+    public Organization renameOrganization(String id, String name) {
+        Organization org = organizationRepository.getById(id);
+        Organization existingOrg = organizationRepository.getByOrgName(name);
+        if (existingOrg == null) {
+            org.setOrgName(name);
+            return organizationRepository.saveOrganization(org);
+        }
+        return  null;
+    }
 
+    public void deleteOrganization(String id) {
+        organizationRepository.deleteOrganization(id);
+    }
 
+    public void deleteOrgByName(String name) {
+        organizationRepository.deleteOrgByName(name);
+    }
 
 }

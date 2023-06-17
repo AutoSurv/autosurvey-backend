@@ -13,13 +13,13 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:postgresql://${PSQL_DB}.db.elephantsql.com:5432/${PSQL_USER}
+    url: jdbc:postgresql://localhost:5432/${PSQL_DB}
     username: ${PSQL_USER}
     password: ${PSQL_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     defer-datasource-initialization: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 

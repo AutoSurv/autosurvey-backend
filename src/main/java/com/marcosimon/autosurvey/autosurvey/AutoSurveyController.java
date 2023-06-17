@@ -1,85 +1,81 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-
-import com.marcosimon.autosurvey.models.AutoSurveyDTO;
+import com.marcosimon.autosurvey.countrygroup.CountryGroupService;
+import com.marcosimon.autosurvey.models.AutoSurveyResponseDTO;
+import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/autosurveys")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AutoSurveyController {
-  @Autowired
-  AutoSurveyService autosurveyService;
+
+  Logger logger = Logger.getLogger(AutoSurveyRepository.class.getName());
+
+  private final AutoSurveyService surveyService;
+  private final CountryGroupService countryGroupService;
+
+  public AutoSurveyController(AutoSurveyService surveyService, CountryGroupService countryGroupService) {
+    this.surveyService = surveyService;
+    this.countryGroupService = countryGroupService;
+  }
 
   @GetMapping
-  ResponseEntity<List<AutoSurveyDTO>> getAllSurveys() {
-    List<AutoSurveyDTO> surveyDTOList = autosurveyService.getAllSurvey();
-    if (surveyDTOList == null) {
-      return ResponseEntity.notFound().build(); //list doesn't exist
-    }
-
-    if (surveyDTOList.size() == 0) {
-      return ResponseEntity.notFound().build(); //list is empty
-    }
-
-    return ResponseEntity.ok().body(surveyDTOList);
+  ResponseEntity<List<AutoSurveyResponseDTO>> getAllSurveys() {
+    List<AutoSurvey> body = surveyService.getAllSurveys();
+    logger.info(body.get(0).getLocationGiven());
+    return ResponseEntity.ok(body.stream().map(SurveyConverter::toResponseDto).collect(Collectors.toList()));
   }
 
   @GetMapping("{id}")
-  ResponseEntity<AutoSurveyDTO> getSurvey(@PathVariable String id) {
+  ResponseEntity<AutoSurveyResponseDTO> getSurvey(@PathVariable String id) {
 
     if (id == null || id.equals("")) {
       return ResponseEntity.badRequest().build();
     }
 
     //if id is a proper UUID
-    AutoSurveyDTO surveyDTO = autosurveyService.getSurveyById(id);
+    AutoSurvey survey = surveyService.getSurveyById(id);
 
-    if (surveyDTO == null) {
+    if (survey == null) {
       return ResponseEntity.notFound().build();
     }
 
-    return ResponseEntity.ok(surveyDTO);
+    return ResponseEntity.ok(SurveyConverter.toResponseDto(survey));
   }
 
   @PostMapping
-  ResponseEntity<AutoSurveyDTO> addNewSurvey( @RequestBody AutoSurveyDTO autoSurveyDTO, HttpServletRequest req) {
-
-    AutoSurvey addedSurvey = autosurveyService.saveSurvey(autoSurveyDTO);
-    if (addedSurvey == null) return ResponseEntity.unprocessableEntity().build();
-
-    AutoSurveyDTO surveyDTO = autosurveyService.convertToDto(addedSurvey);
-    URI location = URI.create(("/api/autosurveys/" + addedSurvey.getId() + "/status"));
-    return ResponseEntity.created(location).body(surveyDTO);
+  ResponseEntity<AutoSurveyResponseDTO> addNewSurvey(@RequestBody CreateSurveyDTO newSurvey, HttpServletRequest req) {
+    AutoSurvey survey = SurveyConverter.fromDto(newSurvey);
+    AutoSurvey autoSurvey = surveyService.saveSurvey(survey);
+    URI location = URI.create((req.getRequestURI() + "/" + autoSurvey.getId()));
+    return ResponseEntity.created(location).body(SurveyConverter.toResponseDto(autoSurvey));
   }
 
 
   @PatchMapping("{id}")
-  ResponseEntity<AutoSurveyDTO> editSurvey(@PathVariable String id, @RequestBody AutoSurveyDTO autoSurveyDTO, HttpServletRequest req) {
-    if (id.equals("") || id == null) return ResponseEntity.badRequest().build();
+  ResponseEntity<AutoSurveyResponseDTO> editSurvey(@RequestBody CreateSurveyDTO survey, @PathVariable String id, HttpServletRequest req) {
+    if (id.equals("")) return ResponseEntity.badRequest().build();
+    AutoSurvey surv = SurveyConverter.fromDto(survey);
+    surv.setId(id);
+    AutoSurvey updatedSurvey = surveyService.updateSurveyData(surv);
+    if (updatedSurvey == null) return ResponseEntity.notFound().build();
 
-    AutoSurveyDTO surveyDTO = autosurveyService.getSurveyById(id);
-    if (surveyDTO == null) return ResponseEntity.notFound().build();
-
-    AutoSurveyDTO editedSurveyDto = autosurveyService.updateSurvey(id, autoSurveyDTO);
-    return ResponseEntity.accepted().body(editedSurveyDto);
+    return ResponseEntity.accepted().body(SurveyConverter.toResponseDto(updatedSurvey));
   }
 
   @DeleteMapping("{id}")
   ResponseEntity deleteSurvey(@PathVariable String id) {
-    if (id.equals("") || id == null) return ResponseEntity.badRequest().build();
-
-    AutoSurveyDTO surveyDTO = autosurveyService.getSurveyById(id);
-    if (surveyDTO == null) return ResponseEntity.notFound().build();
-
+    if (id.equals("")) return ResponseEntity.badRequest().build();
+    surveyService.deleteSurvey(id);
     return ResponseEntity.noContent().build();
   }
-
 
 }
