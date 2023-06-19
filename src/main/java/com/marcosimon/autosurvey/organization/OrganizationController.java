@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.organization;
 
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
+import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
 import com.marcosimon.autosurvey.countrygroup.CountryConverter;
 import com.marcosimon.autosurvey.countrygroup.CountryGroup;
 import com.marcosimon.autosurvey.countrygroup.CountryGroupService;
@@ -28,6 +29,8 @@ public class OrganizationController {
     private OrganizationService service;
     @Autowired
     private CountryGroupService countryGroupService;
+    @Autowired
+    private AutoSurveyService surveyService;
 
     @GetMapping
     public ResponseEntity<List<Organization>> listOrganizations() {
@@ -69,16 +72,51 @@ public class OrganizationController {
     @PostMapping(path = "{id}/countries")
     public ResponseEntity<OrganizationResponseDTO> addCountry(@PathVariable String id, @RequestBody AddOrgCountryDTO dto, HttpServletRequest req){
         Organization org = service.getOrgById(id);
-        if(countryGroupService.getCountryByName(dto.country()) == null) {
-            CountryGroup newCountry = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>());
-            newCountry.setOrganization(org);
-            countryGroupService.addCountry(newCountry);
-            org.getCountries().add(newCountry);
-            org.setCountries(org.getCountries());
-            service.organizationRepository.saveOrganization(org);
-            return ResponseEntity.accepted().body(OrganizationConverter.toResponseDto(org));
-        }
-        return null;
+        if(countryGroupService.getCountryByName(dto.country()) != null) return ResponseEntity.badRequest().build();
+        CountryGroup newCountry = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>());
+        newCountry.setOrganization(org);
+        countryGroupService.addCountry(newCountry);
+        org.getCountries().add(newCountry);
+        org.setCountries(org.getCountries());
+        service.organizationRepository.saveOrganization(org);
+        URI location = URI.create((req.getRequestURI() + "/" + newCountry.getCountryId()));
+        return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(org));
+
+    }
+
+    @PostMapping(path = "{id}/countries/{countryId}")
+    public ResponseEntity<OrganizationResponseDTO> addSurvey(@PathVariable String id, @PathVariable String countryId, @RequestBody CreateSurveyDTO dto, HttpServletRequest req) {
+        Organization org = service.getOrgById(id);
+        CountryGroup country = countryGroupService.getCountry(countryId);
+        if(!country.getOrganization().getOrgId().equals(org.getOrgId()) || !country.getCountry().equals(dto.country())) return ResponseEntity.badRequest().build();
+        AutoSurvey newSurvey = new AutoSurvey(  dto.country(),
+                                                dto.rent(),
+                                                dto.utilities(),
+                                                dto.food(),
+                                                dto.basicItems(),
+                                                dto.transportation(),
+                                                dto.educationTotal(),
+                                                dto.educationSupplies(),
+                                                dto.educationFee(),
+                                                dto.educationType(),
+                                                dto.accommodationType(),
+                                                dto.profession(),
+                                                dto.locationGiven(),
+                                                dto.locationClustered(),
+                                                dto.numResidents(),
+                                                dto.numIncomes(),
+                                                dto.numFullIncomes(),
+                                                dto.numChildren(),
+                                                dto.totalIncome(),
+                                                dto.comments());
+            newSurvey.setCountryGroup(country);
+            surveyService.saveSurvey(newSurvey);
+            country.getSurveys().add(newSurvey);
+            country.setSurveys(country.getSurveys());
+            countryGroupService.saveCountry(country);
+            URI location = URI.create((req.getRequestURI() + "/" + newSurvey.getId()));
+            return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(org));
+
     }
 
     @PatchMapping(path = "{id}")
