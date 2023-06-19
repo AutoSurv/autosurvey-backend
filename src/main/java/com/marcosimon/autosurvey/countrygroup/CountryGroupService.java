@@ -1,9 +1,13 @@
 package com.marcosimon.autosurvey.countrygroup;
 
+import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
+import com.marcosimon.autosurvey.models.AddOrgCountryDTO;
+import com.marcosimon.autosurvey.organization.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,4 +68,9 @@ public class CountryGroupService {
     }
 
 
+    public CountryGroup addOrgToCountry(AddOrgCountryDTO dto, Organization org) {
+        CountryGroup newCountry = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>());
+        newCountry.setOrganization(org);
+        return addCountry(newCountry);
+    }
 }

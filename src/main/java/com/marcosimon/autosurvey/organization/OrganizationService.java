@@ -75,4 +75,9 @@ public class OrganizationService {
         organizationRepository.deleteOrgByName(name);
     }
 
+  public Organization addCountryToOrg(Organization org, CountryGroup newCountry) {
+      org.getCountries().add(newCountry);
+      org.setCountries(org.getCountries());
+      return organizationRepository.saveOrganization(org);
+  }
 }

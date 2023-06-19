@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("api/countrygroups")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CountryGroupController {
 
     Logger logger = Logger.getLogger(CountryGroupRepository.class.getName());
@@ -38,21 +39,21 @@ public class CountryGroupController {
     public ResponseEntity<CountryResponseDTO> addCountry(@RequestBody CreateCountryDTO dto, HttpServletRequest req) {
         CountryGroup country = new CountryGroup(dto.country(), new ArrayList<>());
         CountryGroup newCountry = service.addCountry(country);
-        if(newCountry != null){
+
+        if (newCountry == null)  return ResponseEntity.badRequest().build();
+
         URI location = URI.create((req.getRequestURI() + "/" + newCountry.getCountryId()));
         return ResponseEntity.created(location).body(CountryConverter.toResponseDto(newCountry));
-        }
-        return ResponseEntity.badRequest().build();
 
     }
 
     @PatchMapping(path = "{id}")
     ResponseEntity<CountryResponseDTO> patchCountry(@RequestBody CreateCountryDTO dto, @PathVariable String id) {
         CountryGroup updatedCountry = service.renameCountry(id, dto.country());
-        if(updatedCountry != null) {
-            return ResponseEntity.accepted().body(CountryConverter.toResponseDto(updatedCountry));
-        }
-        return ResponseEntity.badRequest().build();
+
+        if (updatedCountry == null) return ResponseEntity.badRequest().build();
+
+        return ResponseEntity.accepted().body(CountryConverter.toResponseDto(updatedCountry));
     }
 
     @DeleteMapping(path = "{id}")

@@ -22,7 +22,7 @@ public class AutosurveyApplication {
 
 
 
-/*
+
 
 	@Bean
 	CommandLineRunner runner(AutoSurveyService autosurveyService) {
@@ -44,7 +44,7 @@ public class AutosurveyApplication {
 		};
 
 	}
-*/
+
 
 
 

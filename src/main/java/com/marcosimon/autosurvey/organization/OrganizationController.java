@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("api/organizations")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrganizationController {
 
     Logger logger = Logger.getLogger(OrganizationRepository.class.getName());
@@ -45,42 +46,28 @@ public class OrganizationController {
 
     @PostMapping
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
+        if (dto.orgName().equals("") || dto.orgName() == null) return ResponseEntity.badRequest().build();
+
         Organization organization = new Organization(dto.orgName(), new ArrayList<CountryGroup>());
         Organization newOrg = service.addOrganization(organization);
+
+        if (newOrg == null) return ResponseEntity.unprocessableEntity().build(); //return custom message entity esxist
+
         URI location = URI.create((req.getRequestURI() + "/" + newOrg.getOrgId()));
         return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(newOrg));
     }
-    /*
     @PostMapping(path = "{id}/countries")
     public ResponseEntity<OrganizationResponseDTO> addCountry(@PathVariable String id, @RequestBody AddOrgCountryDTO dto, HttpServletRequest req){
         Organization org = service.getOrgById(id);
-        CountryGroup newCountry = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>());
 
-        try {
-
-            Organization updatedOrg = service.addCountry(id, newCountry);
-            return ResponseEntity.accepted().body(OrganizationConverter.toResponseDto(updatedOrg));
-
-        } catch(NoSuchElementException ex) {
-            return ResponseEntity.notFound().build();
-        } catch(IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-     */
-    @PostMapping(path = "{id}/countries")
-    public ResponseEntity<OrganizationResponseDTO> addCountry(@PathVariable String id, @RequestBody AddOrgCountryDTO dto, HttpServletRequest req){
-        Organization org = service.getOrgById(id);
         if(countryGroupService.getCountryByName(dto.country()) != null) return ResponseEntity.badRequest().build();
-        CountryGroup newCountry = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>());
-        newCountry.setOrganization(org);
-        countryGroupService.addCountry(newCountry);
-        org.getCountries().add(newCountry);
-        org.setCountries(org.getCountries());
-        service.organizationRepository.saveOrganization(org);
+
+        CountryGroup newCountry = countryGroupService.addOrgToCountry(dto, org);
+
+        Organization orgCountry = service.addCountryToOrg(org, newCountry);
+
         URI location = URI.create((req.getRequestURI() + "/" + newCountry.getCountryId()));
-        return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(org));
+        return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(orgCountry));
 
     }
 
