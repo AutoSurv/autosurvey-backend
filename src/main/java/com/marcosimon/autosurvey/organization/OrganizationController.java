@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("api/organizations")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrganizationController {
 
     Logger logger = Logger.getLogger(OrganizationRepository.class.getName());

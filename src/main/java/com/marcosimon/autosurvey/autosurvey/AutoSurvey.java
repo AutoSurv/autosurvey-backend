@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.countrygroup.CountryGroup;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -77,6 +78,7 @@ public class AutoSurvey {
 
     @ManyToOne
     @JoinColumn(name = "country_id")
+    @JsonIgnore
     private CountryGroup countryGroup;
 
     public AutoSurvey() {
