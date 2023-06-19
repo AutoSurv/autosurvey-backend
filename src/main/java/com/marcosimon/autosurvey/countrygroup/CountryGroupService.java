@@ -35,6 +35,7 @@ public class CountryGroupService {
         return repo.getCountryByName(name);
     }
 
+    public CountryGroup saveCountry(CountryGroup country) { return repo.saveCountry(country); }
 
     public CountryGroup addCountry(CountryGroup country) {
         CountryGroup existingCountry = repo.getCountryByName(country.getCountry());
