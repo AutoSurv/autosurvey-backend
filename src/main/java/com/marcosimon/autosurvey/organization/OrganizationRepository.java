@@ -41,4 +41,9 @@ public class OrganizationRepository {
         jpaOrganizationRepository.deleteById(id);
     }
 
+    public void deleteOrgByName(String name) {
+        Organization org = jpaOrganizationRepository.findByOrgName(name);
+        jpaOrganizationRepository.delete(org);
+    }
+
 }

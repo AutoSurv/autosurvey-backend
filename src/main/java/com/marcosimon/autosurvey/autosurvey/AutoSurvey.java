@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
+import com.marcosimon.autosurvey.countrygroup.CountryGroup;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,9 +17,8 @@ public class AutoSurvey {
     @Column(name="survey_id")
     private String id;
 
-    @Column(name="country")
+    @Column(name = "country")
     private String country;
-
     @Column(name = "rent")
     private long rent;
 
@@ -75,11 +75,14 @@ public class AutoSurvey {
     @Column(name = "comments")
     private String comments;
 
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private CountryGroup countryGroup;
+
     public AutoSurvey() {
     }
 
-    public AutoSurvey(String id,String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments) {
-        this.id = id;
+    public AutoSurvey(String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments) {
         this.country = country;
         this.rent = rent;
         this.utilities = utilities;
@@ -109,14 +112,6 @@ public class AutoSurvey {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public long getRent() {
@@ -183,7 +178,7 @@ public class AutoSurvey {
         this.educationFee = educationFee;
     }
 
-    public String isEducationType() {
+    public String getEducationType() {
         return educationType;
     }
 
@@ -269,5 +264,13 @@ public class AutoSurvey {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

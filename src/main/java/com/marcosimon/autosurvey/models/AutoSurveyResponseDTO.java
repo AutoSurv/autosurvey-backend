@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record AutoSurveyDTO(
+public record AutoSurveyResponseDTO(
         @JsonProperty("id")
         String id,
         @JsonProperty("country")
@@ -13,35 +13,35 @@ public record AutoSurveyDTO(
         long utilities,
         @JsonProperty("food")
         long food,
-        @JsonProperty("basic_items")
+        @JsonProperty("basicItems")
         long basicItems,
         @JsonProperty("transportation")
         long transportation,
-        @JsonProperty("education_total")
+        @JsonProperty("educationTotal")
         long educationTotal,
-        @JsonProperty("education_supplies")
+        @JsonProperty("educationSupplies")
         long educationSupplies,
-        @JsonProperty("education_fee")
+        @JsonProperty("educationFee")
         long educationFee,
-        @JsonProperty("education_type")
+        @JsonProperty("educationType")
         String educationType,
-        @JsonProperty("accommodation_type")
+        @JsonProperty("accommodationType")
         String accommodationType,
         @JsonProperty("profession")
         String profession,
-        @JsonProperty("location_given")
+        @JsonProperty("locationGiven")
         String locationGiven,
-        @JsonProperty("location_clustered")
+        @JsonProperty("locationClustered")
         String locationClustered,
-        @JsonProperty("num_residents")
+        @JsonProperty("numResidents")
         int numResidents,
-        @JsonProperty("num_incomes")
+        @JsonProperty("numIncomes")
         int numIncomes,
-        @JsonProperty("num_full_incomes")
+        @JsonProperty("numFullIncomes")
         int numFullIncomes,
-        @JsonProperty("num_children")
+        @JsonProperty("numChildren")
         int numChildren,
-        @JsonProperty("total_income")
+        @JsonProperty("totalIncome")
         long totalIncome,
         @JsonProperty("comments")
         String comments

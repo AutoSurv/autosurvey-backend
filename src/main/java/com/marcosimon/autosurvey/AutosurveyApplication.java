@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
-import com.marcosimon.autosurvey.models.AutoSurveyDTO;
-import com.marcosimon.autosurvey.models.AutoSurveyListDto;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -38,8 +35,9 @@ public class AutosurveyApplication {
 			System.out.println("inputStream: " + inputStream);
 			//write in db
 			try {
-				List<AutoSurvey> fieldListDto = mapper.readValue(inputStream, typeReference);
-				autosurveyService.saveSurveys(fieldListDto.stream().map(autosurveyService::convertToDto).toList());
+				List<AutoSurvey> autoSurveys = mapper.readValue(inputStream, typeReference);
+				autosurveyService.saveSurveys(autoSurveys);
+				System.out.println("Surveys Saved");
 			} catch (IOException e) {
 				System.out.println("Error: " +e.getMessage());
 			}
@@ -47,6 +45,8 @@ public class AutosurveyApplication {
 
 	}
 */
+
+
 
 
 }

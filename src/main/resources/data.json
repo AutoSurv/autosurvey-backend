@@ -1,6 +1,5 @@
 [{
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,
@@ -21,8 +20,7 @@
   "totalIncome": 3000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1100,
   "utilities": 1110,
   "food": 1111,
@@ -43,8 +41,7 @@
   "totalIncome": 2000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,
@@ -65,8 +62,7 @@
   "totalIncome": 3000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,
@@ -87,8 +83,7 @@
   "totalIncome": 3000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,
@@ -109,8 +104,7 @@
   "totalIncome": 3000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,
@@ -131,8 +125,7 @@
   "totalIncome": 3000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,
@@ -153,8 +146,7 @@
   "totalIncome": 3000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,
@@ -175,8 +167,7 @@
   "totalIncome": 3000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,
@@ -197,8 +188,7 @@
   "totalIncome": 3000,
   "comments": "nice"
 }, {
-  "id": "id",
-  "country": "country",
+  "country": "Japan",
   "rent": 1000,
   "utilities": 1100,
   "food": 1110,

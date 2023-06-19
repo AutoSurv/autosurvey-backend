@@ -1,5 +1,8 @@
 # AutoSurvey Backend
 
+### Sprint Log
+https://docs.google.com/spreadsheets/d/131GQ0ECQZ2qMDJ8q3EOJtaPxaZ0fYK-Fzr3jG-eJOXo/edit#gid=0
+
 ### Pitch Deck
 https://docs.google.com/document/d/1-v1rtQ55ZSGBe7O_RpJ1MYXa1TxsQAnLwjDPOG2lyxc/edit?pli=1#
 ###

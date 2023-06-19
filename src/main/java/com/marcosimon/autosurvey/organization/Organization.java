@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.organization;
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
+import com.marcosimon.autosurvey.countrygroup.CountryGroup;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,21 +21,17 @@ public class Organization {
     @Column(name = "org_name")
     private String orgName;
 
-    @Column(name = "country")
-    private String country;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "org_id")
-    private List<AutoSurvey> autoSurveys;
+    @OneToMany(mappedBy = "organization")
+    //@JoinColumn(name = "org_id")
+    private List<CountryGroup> countries;
 
     public Organization() {
     }
 
-    public Organization(String orgId, String orgName, String country, List<AutoSurvey> autoSurveys) {
-        this.orgId = orgId;
+    public Organization(String orgName, List<CountryGroup> countries) {
         this.orgName = orgName;
-        this.country = country;
-        this.autoSurveys = autoSurveys;
+        this.countries = countries;
+
     }
 
     public String getOrgId() {
@@ -53,19 +50,11 @@ public class Organization {
         this.orgName = orgName;
     }
 
-    public String getCountry() {
-        return country;
+    public List<CountryGroup> getCountries() {
+        return countries;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public List<AutoSurvey> getAutoSurveys() {
-        return autoSurveys;
-    }
-
-    public void setAutoSurveys(List<AutoSurvey> autoSurveys) {
-        this.autoSurveys = autoSurveys;
+    public void setCountries(List<CountryGroup> countries) {
+        this.countries = countries;
     }
 }

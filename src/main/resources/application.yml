@@ -1,8 +1,10 @@
 ## default connection pool
 server:
-  port: 9000
+  port: 8080
 debug: true
 spring:
+  config:
+    import: env.properties
   sql:
     init:
       platform: postgresql
@@ -17,8 +19,9 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 logging:
   level:
