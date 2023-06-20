@@ -46,12 +46,11 @@ public class OrganizationController {
 
     @PostMapping
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
-        if (dto.orgName().equals("") || dto.orgName() == null) return ResponseEntity.badRequest().build();
+        if (dto.orgName() == null || dto.orgName().equals("")) return ResponseEntity.badRequest().build();
 
         Organization organization = new Organization(dto.orgName(), new ArrayList<CountryGroup>());
         Organization newOrg = service.addOrganization(organization);
 
-        if (newOrg == null) return ResponseEntity.unprocessableEntity().build(); //return custom message entity esxist
 
         URI location = URI.create((req.getRequestURI() + "/" + newOrg.getOrgId()));
         return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(newOrg));
@@ -59,8 +58,7 @@ public class OrganizationController {
     @PostMapping(path = "{id}/countries")
     public ResponseEntity<OrganizationResponseDTO> addCountry(@PathVariable String id, @RequestBody AddOrgCountryDTO dto, HttpServletRequest req){
         Organization org = service.getOrgById(id);
-
-        if(countryGroupService.getCountryByName(dto.country()) != null) return ResponseEntity.badRequest().build();
+        if (dto == null) return ResponseEntity.badRequest().build();
 
         CountryGroup newCountry = countryGroupService.addOrgToCountry(dto, org);
 
