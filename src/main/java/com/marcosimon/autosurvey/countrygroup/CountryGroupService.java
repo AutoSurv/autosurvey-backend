@@ -3,7 +3,10 @@ package com.marcosimon.autosurvey.countrygroup;
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
 import com.marcosimon.autosurvey.models.AddOrgCountryDTO;
+import com.marcosimon.autosurvey.models.CreateCountryDTO;
+import com.marcosimon.autosurvey.models.OrgCountryDTO;
 import com.marcosimon.autosurvey.organization.Organization;
+import com.marcosimon.autosurvey.organization.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,8 @@ import java.util.List;
 public class CountryGroupService {
 
     @Autowired
+    public OrganizationRepository organizationRepository;
+    @Autowired
     public CountryGroupRepository repo;
     @Autowired
     public AutoSurveyRepository autoSurveyRepository;
@@ -21,42 +26,41 @@ public class CountryGroupService {
     public CountryGroupService() {
     }
 
-    public CountryGroupService(CountryGroupRepository repo, AutoSurveyRepository autoSurveyRepository) {
+    public CountryGroupService(OrganizationRepository organizationRepository, CountryGroupRepository repo, AutoSurveyRepository autoSurveyRepository) {
+        this.organizationRepository = organizationRepository;
         this.repo = repo;
         this.autoSurveyRepository = autoSurveyRepository;
     }
 
 
-    public List<CountryGroup> listCountryGroups() {
-        return repo.listCountryGroups();
+    public List<OrgCountryDTO> listCountryGroups() {
+        return repo.listCountryGroups().stream().map(CountryConverter::toResponseDto).toList();
     }
 
-    public CountryGroup getCountry(String id) {
-        return repo.getCountryByID(id);
+    public OrgCountryDTO getCountry(String id) {
+        return  CountryConverter.toResponseDto(repo.getCountryByID(id));
     }
 
-    public CountryGroup getCountryByName(String name) {
-        return repo.getCountryByName(name);
+    public OrgCountryDTO getCountryByName(String name) {
+        return CountryConverter.toResponseDto(repo.getCountryByName(name));
     }
 
-    public CountryGroup saveCountry(CountryGroup country) { return repo.saveCountry(country); }
+    public OrgCountryDTO addCountry(CreateCountryDTO dto) {
+        Organization org = organizationRepository.getById(dto.orgId());
+        CountryGroup country = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>() ,dto.orgId(), dto.orgName());
+        org.getCountries().add(country);
+        org.setCountries(org.getCountries());
+        organizationRepository.saveOrganization(org);
+        return CountryConverter.toResponseDto(country);
 
-    public CountryGroup addCountry(CountryGroup country) {
-        CountryGroup existingCountry = repo.getCountryByName(country.getCountry());
-        if(existingCountry == null) {
-            return repo.saveCountry(country);
-        }
-        return null;
     }
 
-    public CountryGroup renameCountry(String id, String newName) {
-        CountryGroup country = repo.getCountryByID(id);
-        CountryGroup existingCountry = repo.getCountryByName(newName);
-        if(existingCountry == null) {
-            country.setCountry(newName);
-            return repo.saveCountry(country);
-        }
-        return null;
+    public OrgCountryDTO renameCountry(String countryId, String newName) {
+        CountryGroup country = repo.getCountryByID(countryId);
+        country.setCountry(newName);
+        repo.saveCountry(country);
+        return CountryConverter.toResponseDto(country);
+
     }
 
     public void deleteCountry(String id) {
@@ -68,9 +72,4 @@ public class CountryGroupService {
     }
 
 
-    public CountryGroup addOrgToCountry(AddOrgCountryDTO dto, Organization org) {
-        CountryGroup newCountry = new CountryGroup(dto.country(), new ArrayList<AutoSurvey>());
-        newCountry.setOrganization(org);
-        return addCountry(newCountry);
-    }
 }

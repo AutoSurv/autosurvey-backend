@@ -2,6 +2,8 @@ package com.marcosimon.autosurvey.countrygroup;
 
 import com.marcosimon.autosurvey.models.CountryResponseDTO;
 import com.marcosimon.autosurvey.models.CreateCountryDTO;
+import com.marcosimon.autosurvey.models.OrgCountryDTO;
+import com.marcosimon.autosurvey.models.renameCountryDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping("api/countrygroups")
+@RequestMapping("api/countries")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CountryGroupController {
 
@@ -24,40 +26,36 @@ public class CountryGroupController {
     private CountryGroupService service;
 
     @GetMapping
-    public ResponseEntity<List<CountryGroup>> listGroups() {
-        List<CountryGroup> body = service.listCountryGroups();
+    public ResponseEntity<List<OrgCountryDTO>> listGroups() {
+        List<OrgCountryDTO> body = service.listCountryGroups();
         logger.info(body.toString());
         return ResponseEntity.ok(body);
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<CountryGroup> getCountry(@PathVariable String id) {
+    public ResponseEntity<OrgCountryDTO> getCountry(@PathVariable String id) {
         return ResponseEntity.ok(service.getCountry(id));
     }
 
     @PostMapping
-    public ResponseEntity<CountryResponseDTO> addCountry(@RequestBody CreateCountryDTO dto, HttpServletRequest req) {
-        CountryGroup country = new CountryGroup(dto.country(), new ArrayList<>());
-        CountryGroup newCountry = service.addCountry(country);
-
-        if (newCountry == null)  return ResponseEntity.badRequest().build();
-
-        URI location = URI.create((req.getRequestURI() + "/" + newCountry.getCountryId()));
-        return ResponseEntity.created(location).body(CountryConverter.toResponseDto(newCountry));
+    public ResponseEntity<OrgCountryDTO> addCountry(@RequestBody CreateCountryDTO dto, HttpServletRequest req) {
+        OrgCountryDTO newCountry = service.addCountry(dto);
+        URI location = URI.create((req.getRequestURI() + "/" + newCountry.countryId()));
+        return ResponseEntity.created(location).body(newCountry);
 
     }
 
     @PatchMapping(path = "{id}")
-    ResponseEntity<CountryResponseDTO> patchCountry(@RequestBody CreateCountryDTO dto, @PathVariable String id) {
-        CountryGroup updatedCountry = service.renameCountry(id, dto.country());
+    ResponseEntity<OrgCountryDTO> patchCountry(@RequestBody renameCountryDTO dto, @PathVariable String id) {
+        OrgCountryDTO updatedCountry = service.renameCountry(id, dto.name());
 
         if (updatedCountry == null) return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.accepted().body(CountryConverter.toResponseDto(updatedCountry));
+        return ResponseEntity.accepted().body(updatedCountry);
     }
 
     @DeleteMapping(path = "{id}")
-    ResponseEntity<CountryGroup> deleteCountry(@PathVariable String id) {
+    ResponseEntity deleteCountry(@PathVariable String id) {
         service.deleteCountry(id);
         return ResponseEntity.noContent().build();
     }

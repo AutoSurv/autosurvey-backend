@@ -1,5 +1,5 @@
 package com.marcosimon.autosurvey.organization;
-import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
+
 import com.marcosimon.autosurvey.countrygroup.CountryGroup;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -26,7 +26,7 @@ public class Organization {
     private List<CountryGroup> countries;
 
     public Organization() {
-    }
+    }c
 
     public Organization(String orgName, List<CountryGroup> countries) {
         this.orgName = orgName;

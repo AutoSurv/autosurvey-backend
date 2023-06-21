@@ -46,7 +46,7 @@ public class OrganizationController {
 
     @PostMapping
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
-        if (dto.orgName().equals("") || dto.orgName() == null) return ResponseEntity.badRequest().build();
+        if (dto.orgName().equals("")) return ResponseEntity.badRequest().build();
 
         Organization organization = new Organization(dto.orgName(), new ArrayList<CountryGroup>());
         Organization newOrg = service.addOrganization(organization);
@@ -56,14 +56,17 @@ public class OrganizationController {
         URI location = URI.create((req.getRequestURI() + "/" + newOrg.getOrgId()));
         return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(newOrg));
     }
+    /*@GetMapping(path = "{id}/countries")
+    public ResponseEntity<Organization> getOrgCountry(@PathVariable String id) {
+        return ResponseEntity.ok(service.getOrgById(id));
+    }
     @PostMapping(path = "{id}/countries")
     public ResponseEntity<OrganizationResponseDTO> addCountry(@PathVariable String id, @RequestBody AddOrgCountryDTO dto, HttpServletRequest req){
-        Organization org = service.getOrgById(id);
 
-        if(countryGroupService.getCountryByName(dto.country()) != null) return ResponseEntity.badRequest().build();
+        Organization org = service.getOrgById(id);
+        if(org.getCountries().contains(countryGroupService.getCountryByName(dto.country()))) return ResponseEntity.badRequest().build();
 
         CountryGroup newCountry = countryGroupService.addOrgToCountry(dto, org);
-
         Organization orgCountry = service.addCountryToOrg(org, newCountry);
 
         URI location = URI.create((req.getRequestURI() + "/" + newCountry.getCountryId()));
@@ -104,7 +107,7 @@ public class OrganizationController {
             URI location = URI.create((req.getRequestURI() + "/" + newSurvey.getId()));
             return ResponseEntity.created(location).body(OrganizationConverter.toResponseDto(org));
 
-    }
+    }*/
 
     @PatchMapping(path = "{id}")
     ResponseEntity<OrganizationResponseDTO> patchOrganization(@RequestBody CreateOrganizationDTO dto, @PathVariable String id) {

@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public record OrganizationResponseDTO(
-        @JsonProperty("org_id")
+        @JsonProperty
         String orgId,
-        @JsonProperty("org_name")
+        @JsonProperty
         String orgName,
         @JsonProperty
-        List<CountryResponseDTO>  countries
+        List<OrgCountryDTO>  countries
 
 
         ) {

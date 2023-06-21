@@ -27,18 +27,26 @@ public class CountryGroup {
     //@JoinColumn(name = "survey_id")
     private List<AutoSurvey> surveys;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name ="org_id")
     @JsonIgnore
-    private Organization organization;
+    private Organization organization;*/
+
+    @Column
+    private String orgId;
+
+    @Column
+    private String orgName;
 
 
     public CountryGroup() {
     }
 
-    public CountryGroup(String country, List<AutoSurvey> surveys) {
+    public CountryGroup(String country, List<AutoSurvey> surveys, String orgId, String orgName) {
         this.country = country;
         this.surveys = surveys;
+        this.orgId = orgId;
+        this.orgName = orgName;
     }
 
     public String getCountryId() {
@@ -66,11 +74,27 @@ public class CountryGroup {
         this.surveys = surveys;
     }
 
-    public Organization getOrganization() {
+    /*public Organization getOrganization() {
         return organization;
     }
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }*/
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }
