@@ -1,37 +1,34 @@
 package com.marcosimon.autosurvey.organization;
 
-import com.marcosimon.autosurvey.countrygroup.CountryGroup;
-import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+
+import javax.persistence.Id;
 import java.util.List;
 
 
-@Entity
-@Table(name="organization")
+@Document
 public class Organization {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(
-            name = "system-uuid", strategy = "uuid"
-    )
-    @Column(name="org_id")
+    @MongoId(value = FieldType.OBJECT_ID)
     private String orgId;
-
-    @Column(name = "org_name")
     private String orgName;
-
-    @OneToMany(mappedBy = "organization")
-    //@JoinColumn(name = "org_id")
-    private List<CountryGroup> countries;
+    private List<String> surveys;
 
     public Organization() {
-    }c
+    }
 
-    public Organization(String orgName, List<CountryGroup> countries) {
+    public Organization(String orgId, String orgName, List<String> surveys) {
+        this.orgId = orgId;
         this.orgName = orgName;
-        this.countries = countries;
-
+        this.surveys = surveys;
+    }
+    public Organization(String orgName, List<String> surveys) {
+        this.orgName = orgName;
+        this.surveys = surveys;
     }
 
     public String getOrgId() {
@@ -50,11 +47,11 @@ public class Organization {
         this.orgName = orgName;
     }
 
-    public List<CountryGroup> getCountries() {
-        return countries;
+    public List<String> getSurveys() {
+        return surveys;
     }
 
-    public void setCountries(List<CountryGroup> countries) {
-        this.countries = countries;
+    public void setSurveys(List<String> surveys) {
+        this.surveys = surveys;
     }
 }

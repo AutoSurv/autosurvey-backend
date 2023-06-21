@@ -1,60 +1,15 @@
 package com.marcosimon.autosurvey.autosurvey;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.marcosimon.autosurvey.models.AutoSurveyResponseDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
+import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 
 public class SurveyConverter {
 
-   public static AutoSurvey fromDto(CreateSurveyDTO dto) {
-        return new AutoSurvey(
-                dto.country(),
-                dto.rent(),
-                dto.utilities(),
-                dto.food(),
-                dto.basicItems(),
-                dto.transportation(),
-                dto.educationTotal(),
-                dto.educationSupplies(),
-                dto.educationFee(),
-                dto.educationType(),
-                dto.accommodationType(),
-                dto.profession(),
-                dto.locationGiven(),
-                dto.locationClustered(),
-                dto.numResidents(),
-                dto.numIncomes(),
-                dto.numFullIncomes(),
-                dto.numChildren(),
-                dto.totalIncome(),
-                dto.comments());
-    }
-
-    public static AutoSurvey fromResDto(AutoSurveyResponseDTO dto) {
-        return new AutoSurvey(
-                dto.country(),
-                dto.rent(),
-                dto.utilities(),
-                dto.food(),
-                dto.basicItems(),
-                dto.transportation(),
-                dto.educationTotal(),
-                dto.educationSupplies(),
-                dto.educationFee(),
-                dto.educationType(),
-                dto.accommodationType(),
-                dto.profession(),
-                dto.locationGiven(),
-                dto.locationClustered(),
-                dto.numResidents(),
-                dto.numIncomes(),
-                dto.numFullIncomes(),
-                dto.numChildren(),
-                dto.totalIncome(),
-                dto.comments());
-    }
-
-   public static AutoSurveyResponseDTO toResponseDto(AutoSurvey autoSurvey) {
-        return new AutoSurveyResponseDTO(autoSurvey.getId(),
+   public static OrgSurveyDTO toResponseDto(AutoSurvey autoSurvey) {
+        return new OrgSurveyDTO(
+                autoSurvey.getId(),
                 autoSurvey.getCountry(),
                 autoSurvey.getRent(),
                 autoSurvey.getUtilities(),
@@ -74,6 +29,8 @@ public class SurveyConverter {
                 autoSurvey.getNumFullIncomes(),
                 autoSurvey.getNumChildren(),
                 autoSurvey.getTotalIncome(),
-                autoSurvey.getComments());
+                autoSurvey.getComments(),
+                autoSurvey.getOrgId(),
+                autoSurvey.getOrgName());
     }
 }

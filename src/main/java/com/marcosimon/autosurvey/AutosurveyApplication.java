@@ -24,7 +24,7 @@ public class AutosurveyApplication {
 
 
 
-	@Bean
+	/*@Bean
 	CommandLineRunner runner(AutoSurveyService autosurveyService) {
 		return args -> {
 			//read json
@@ -45,7 +45,7 @@ public class AutosurveyApplication {
 
 	}
 
-
+*/
 
 
 

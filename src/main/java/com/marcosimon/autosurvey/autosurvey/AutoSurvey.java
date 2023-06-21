@@ -1,90 +1,48 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.marcosimon.autosurvey.countrygroup.CountryGroup;
-import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 
-@Entity
-@Table(name="autosurvey")
+@Document
 public class AutoSurvey {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(
-            name = "system-uuid", strategy = "uuid"
-    )
-    @Column(name="survey_id")
+    @MongoId(value = FieldType.OBJECT_ID)
     private String id;
-
-    @Column(name = "country")
     private String country;
-    @Column(name = "rent")
     private long rent;
-
-    @Column(name = "utilities")
     private long utilities;
-
-    @Column(name = "food")
     private long food;
-
-    @Column(name = "basic_items")
     private long basicItems;
-
-    @Column(name = "transportation")
     private long transportation;
-
-    @Column(name = "education_total")
     private long educationTotal;
-
-    @Column(name = "education_supplies")
     private long educationSupplies;
-
-    @Column(name = "education_fee")
     private long educationFee;
-
-    @Column(name = "education_type")
     private String educationType;
-
-    @Column(name = "accommodation_type")
     private String accommodationType;
-
-    @Column(name = "profession")
     private String profession;
-
-    @Column(name = "location_given")
     private String locationGiven;
-
-    @Column(name = "location_clustered")
     private String locationClustered;
-
-    @Column(name = "num_residents")
     private int numResidents;
-
-    @Column(name = "num_incomes")
     private int numIncomes;
-
-    @Column(name = "num_full_incomes")
     private int numFullIncomes;
-
-    @Column(name = "num_children")
     private int numChildren;
-    @Column(name = "total_income")
     private long totalIncome;
-
-    @Column(name = "comments")
     private String comments;
+    private String orgId;
+    private String orgName;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    @JsonIgnore
-    private CountryGroup countryGroup;
+
 
     public AutoSurvey() {
     }
 
-    public AutoSurvey(String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments) {
+    public AutoSurvey(String id, String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
+        this.id = id;
         this.country = country;
         this.rent = rent;
         this.utilities = utilities;
@@ -105,8 +63,34 @@ public class AutoSurvey {
         this.numChildren = numChildren;
         this.totalIncome = totalIncome;
         this.comments = comments;
+        this.orgId = orgId;
+        this.orgName = orgName;
     }
 
+    public AutoSurvey(String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
+        this.country = country;
+        this.rent = rent;
+        this.utilities = utilities;
+        this.food = food;
+        this.basicItems = basicItems;
+        this.transportation = transportation;
+        this.educationTotal = educationTotal;
+        this.educationSupplies = educationSupplies;
+        this.educationFee = educationFee;
+        this.educationType = educationType;
+        this.accommodationType = accommodationType;
+        this.profession = profession;
+        this.locationGiven = locationGiven;
+        this.locationClustered = locationClustered;
+        this.numResidents = numResidents;
+        this.numIncomes = numIncomes;
+        this.numFullIncomes = numFullIncomes;
+        this.numChildren = numChildren;
+        this.totalIncome = totalIncome;
+        this.comments = comments;
+        this.orgId = orgId;
+        this.orgName = orgName;
+    }
 
     public String getId() {
         return id;
@@ -114,6 +98,14 @@ public class AutoSurvey {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public long getRent() {
@@ -268,19 +260,19 @@ public class AutoSurvey {
         this.comments = comments;
     }
 
-    public String getCountry() {
-        return country;
+    public String getOrgId() {
+        return orgId;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
     }
 
-    public CountryGroup getCountryGroup() {
-        return countryGroup;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setCountryGroup(CountryGroup countryGroup) {
-        this.countryGroup = countryGroup;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

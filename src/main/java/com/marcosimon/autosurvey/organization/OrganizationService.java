@@ -1,17 +1,13 @@
 package com.marcosimon.autosurvey.organization;
 
 
-import com.marcosimon.autosurvey.countrygroup.CountryConverter;
-import com.marcosimon.autosurvey.countrygroup.CountryGroup;
-import com.marcosimon.autosurvey.countrygroup.CountryGroupRepository;
-import com.marcosimon.autosurvey.countrygroup.CountryGroupService;
-import com.marcosimon.autosurvey.models.AddOrgCountryDTO;
+import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
+import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
+import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class OrganizationService {
@@ -20,64 +16,73 @@ public class OrganizationService {
     OrganizationRepository organizationRepository;
 
     @Autowired
-    CountryGroupRepository countryGroupRepository;
+    AutoSurveyRepository autoSurveyRepository;
 
 
     public OrganizationService() {
     }
 
-    public OrganizationService(OrganizationRepository organizationRepository, CountryGroupRepository countryGroupRepository) {
+    public OrganizationService(OrganizationRepository organizationRepository, AutoSurveyRepository autoSurveyRepository) {
         this.organizationRepository = organizationRepository;
-        this.countryGroupRepository = countryGroupRepository;
+        this.autoSurveyRepository = autoSurveyRepository;
     }
 
 
-    public List<Organization> getAllOrganizations() {
-        return organizationRepository.listOrganizations();
+    public List<OrganizationResponseDTO> getAllOrganizations() {
+        return organizationRepository.listOrganizations().stream().map(org -> {
+            return OrganizationConverter.toResponseDto(org, autoSurveyRepository.getSurveyByIds(org.getSurveys()));
+        }).toList();
     }
 
-    public Organization getOrgById(String id) {
-        return organizationRepository.getById(id);
+    public OrganizationResponseDTO getOrgById(String id) {
+        Organization org = organizationRepository.getById(id);
+        System.out.println(org.getOrgName());
+        return OrganizationConverter.toResponseDto(org, autoSurveyRepository.getSurveyByIds(org.getSurveys()));
     }
 
 
-    public Organization addOrganization(Organization org) {
+    public OrganizationResponseDTO addOrganization(Organization org) {
         Organization existingOrg = organizationRepository.getByOrgName(org.getOrgName());
         if(existingOrg == null) {
-            return organizationRepository.saveOrganization(org);
+            return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), autoSurveyRepository.getSurveyByIds(org.getSurveys()));
         }
         return null;
     }
 
-    public Organization addCountry(String id, CountryGroup newCountry) {
-
-
-        Organization org = organizationRepository.getById(id);
-            countryGroupRepository.saveCountry(newCountry);
-            return organizationRepository.saveOrganization(org);
-    }
-
-    public Organization renameOrganization(String id, String name) {
+    public OrganizationResponseDTO renameOrganization(String id, String name) {
         Organization org = organizationRepository.getById(id);
         Organization existingOrg = organizationRepository.getByOrgName(name);
         if (existingOrg == null) {
             org.setOrgName(name);
-            return organizationRepository.saveOrganization(org);
+            return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), autoSurveyRepository.getSurveyByIds(org.getSurveys()));
         }
         return  null;
     }
 
-    public void deleteOrganization(String id) {
-        organizationRepository.deleteOrganization(id);
+    public void deleteOrganization(String orgId) {
+        List<String> surveyIds = organizationRepository.getById(orgId).getSurveys();
+        for(String id : surveyIds) {
+            AutoSurvey survey = autoSurveyRepository.getById(id);
+            if(survey != null) {
+                survey.setOrgName("None");
+                survey.setOrgId("deleted");
+                autoSurveyRepository.saveSurvey(survey);
+            }
+        }
+        organizationRepository.deleteOrganization(orgId);
     }
 
     public void deleteOrgByName(String name) {
+        List<String> surveyIds = organizationRepository.getByOrgName(name).getSurveys();
+        for(String id : surveyIds) {
+            AutoSurvey survey = autoSurveyRepository.getById(id);
+            if(survey != null) {
+                survey.setOrgName("None");
+                survey.setOrgId("deleted");
+                autoSurveyRepository.saveSurvey(survey);
+            }
+        }
         organizationRepository.deleteOrgByName(name);
     }
 
-  public Organization addCountryToOrg(Organization org, CountryGroup newCountry) {
-      org.getCountries().add(newCountry);
-      org.setCountries(org.getCountries());
-      return organizationRepository.saveOrganization(org);
-  }
 }
