@@ -1,6 +1,5 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-import com.marcosimon.autosurvey.countrygroup.CountryGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
@@ -14,45 +13,42 @@ public class AutoSurveyRepository {
 
     Logger log = Logger.getLogger(AutoSurveyRepository.class.getName());
     @Autowired
-    JpaAutoSurveyRepository jpaAutoSurveyRepository;
+    AutoSurveyDbRepository autoSurveyDbRepository;
 
 
     public AutoSurveyRepository() {
     }
 
-    public AutoSurveyRepository(JpaAutoSurveyRepository jpaAutoSurveyRepository) {
-        this.jpaAutoSurveyRepository = jpaAutoSurveyRepository;
+    public AutoSurveyRepository(AutoSurveyDbRepository jpaAutoSurveyRepository) {
+        this.autoSurveyDbRepository = jpaAutoSurveyRepository;
     }
 
     public List<AutoSurvey> listSurveys() {
 
-        return Streamable.of(jpaAutoSurveyRepository.findAll()).toList();
+        return Streamable.of(autoSurveyDbRepository.findAll()).toList();
     }
 
+    public List<AutoSurvey> getSurveyByIds(List<String> ids) {return autoSurveyDbRepository.findByIdIn(ids);}
+
     public AutoSurvey getById(String id) {
-        Optional<AutoSurvey> byId = jpaAutoSurveyRepository.findById(id);
+        Optional<AutoSurvey> byId = autoSurveyDbRepository.findById(id);
         return byId.orElse(null);
     }
 
     public AutoSurvey saveSurvey(AutoSurvey autoSurvey) {
-        return jpaAutoSurveyRepository.save(autoSurvey);
+        return autoSurveyDbRepository.save(autoSurvey);
     }
 
     public void saveSurveys(List<AutoSurvey> surveys) {
-        jpaAutoSurveyRepository.saveAll(surveys);
+        autoSurveyDbRepository.saveAll(surveys);
     }
 
     public void deleteSurvey(String id) {
 
-        jpaAutoSurveyRepository.deleteById(id);
+        autoSurveyDbRepository.deleteById(id);
 
     }
-    /*
-    public List<AutoSurvey> surveysForCountries(List<CountryGroup> groups) {
-        return jpaAutoSurveyRepository.listByCountryGroup(groups);
-    }
 
-     */
 
 
 

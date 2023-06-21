@@ -1,9 +1,6 @@
 package com.marcosimon.autosurvey.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.marcosimon.autosurvey.countrygroup.CountryGroup;
-
-import java.util.List;
 
 public record CreateSurveyDTO(
                               @JsonProperty("country")
@@ -45,5 +42,9 @@ public record CreateSurveyDTO(
                               @JsonProperty("totalIncome")
                               long totalIncome,
                               @JsonProperty("comments")
-                              String comments) {
+                              String comments,
+                              @JsonProperty("orgId")
+                              String orgId
+
+                              ) {
 }

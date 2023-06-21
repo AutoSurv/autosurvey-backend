@@ -1,128 +1,188 @@
 package com.marcosimon.autosurvey.autosurvey;
 
+import com.marcosimon.autosurvey.models.CreateSurveyDTO;
+import com.marcosimon.autosurvey.models.OrgSurveyDTO;
+import com.marcosimon.autosurvey.organization.Organization;
+import com.marcosimon.autosurvey.organization.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AutoSurveyService {
 
   @Autowired
+  OrganizationRepository organizationRepository;
+
+  @Autowired
   AutoSurveyRepository autoSurveyRepository;
 
-  public List<AutoSurvey> getAllSurveys() {
-    return autoSurveyRepository.listSurveys();
+  public AutoSurveyService() {
+  }
+
+  public AutoSurveyService(OrganizationRepository organizationRepository, AutoSurveyRepository autoSurveyRepository) {
+    this.organizationRepository = organizationRepository;
+    this.autoSurveyRepository = autoSurveyRepository;
   }
 
 
-  public AutoSurvey getSurveyById(String id) {
+  public List<OrgSurveyDTO> getAllSurveys() {
 
-    return autoSurveyRepository.getById(id);
+    return autoSurveyRepository.listSurveys().stream().map(SurveyConverter::toResponseDto).toList();
   }
 
-  public AutoSurvey saveSurvey(AutoSurvey survey) {
+  public OrgSurveyDTO getSurveyById(String id) {
 
-    return autoSurveyRepository.saveSurvey(survey);
+    return SurveyConverter.toResponseDto(autoSurveyRepository.getById(id));
+  }
+
+  public OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
+
+    Organization org = organizationRepository.getById(dto.orgId());
+/*    AutoSurvey survey = new AutoSurvey(UUID.randomUUID().toString(),
+                                        dto.country(),
+                                        dto.rent(),
+                                        dto.utilities(),
+                                        dto.food(),
+                                        dto.basicItems(),
+                                        dto.transportation(),
+                                        dto.educationTotal(),
+                                        dto.educationSupplies(),
+                                        dto.educationFee(),
+                                        dto.educationType(),
+                                        dto.accommodationType(),
+                                        dto.profession(),
+                                        dto.locationGiven(),
+                                        dto.locationClustered(),
+                                        dto.numResidents(),
+                                        dto.numIncomes(),
+                                        dto.numFullIncomes(),
+                                        dto.numChildren(),
+                                        dto.totalIncome(),
+                                        dto.comments(),
+                                        dto.orgId(),
+                                        org.getOrgName());*/
+
+    AutoSurvey survey = new AutoSurvey(
+            dto.country(),
+            dto.rent(),
+            dto.utilities(),
+            dto.food(),
+            dto.basicItems(),
+            dto.transportation(),
+            dto.educationTotal(),
+            dto.educationSupplies(),
+            dto.educationFee(),
+            dto.educationType(),
+            dto.accommodationType(),
+            dto.profession(),
+            dto.locationGiven(),
+            dto.locationClustered(),
+            dto.numResidents(),
+            dto.numIncomes(),
+            dto.numFullIncomes(),
+            dto.numChildren(),
+            dto.totalIncome(),
+            dto.comments(),
+            dto.orgId(),
+            org.getOrgName());
+
+    List<String> orgToSurvey = org.getSurveys();
+    orgToSurvey.add(survey.getId());
+    org.setSurveys(orgToSurvey);
+    organizationRepository.saveOrganization(org);
+    return SurveyConverter.toResponseDto(autoSurveyRepository.saveSurvey(survey));
 
   }
 
-  public void saveSurveys(List<AutoSurvey> surveys) {
-    autoSurveyRepository.saveSurveys(surveys);
-  }
-
-  public AutoSurvey updateSurveyData(AutoSurvey newSurveyData) {
-    AutoSurvey storedSurvey = getSurveyById(newSurveyData.getId());
+  public OrgSurveyDTO updateSurveyData(CreateSurveyDTO newSurveyData) {
+    AutoSurvey storedSurvey = autoSurveyRepository.getById(newSurveyData.orgId());
     if (storedSurvey == null) return null;
 
-    if (newSurveyData.getCountry() != null) {
-      storedSurvey.setCountry(newSurveyData.getCountry());
+    if (newSurveyData.country() != null) {
+      storedSurvey.setCountry(newSurveyData.country());
     }
 
-    if (newSurveyData.getRent() > 0) {
-      storedSurvey.setRent(newSurveyData.getRent());
+    if (newSurveyData.rent() > 0) {
+      storedSurvey.setRent(newSurveyData.rent());
     }
 
-    if (newSurveyData.getUtilities() > 0) {
-      storedSurvey.setUtilities(newSurveyData.getUtilities());
+    if (newSurveyData.utilities() > 0) {
+      storedSurvey.setUtilities(newSurveyData.utilities());
     }
 
-    if (newSurveyData.getFood() > 0) {
-      storedSurvey.setFood(newSurveyData.getFood());
+    if (newSurveyData.food() > 0) {
+      storedSurvey.setFood(newSurveyData.food());
     }
 
-    if (newSurveyData.getBasicItems() > 0) {
-      storedSurvey.setBasicItems(newSurveyData.getBasicItems());
+    if (newSurveyData.basicItems() > 0) {
+      storedSurvey.setBasicItems(newSurveyData.basicItems());
     }
 
-    if (newSurveyData.getTransportation() > 0) {
-      storedSurvey.setTransportation(newSurveyData.getTransportation());
+    if (newSurveyData.transportation() > 0) {
+      storedSurvey.setTransportation(newSurveyData.transportation());
     }
 
-    if (newSurveyData.getEducationTotal() > 0) {
-      storedSurvey.setEducationTotal(newSurveyData.getEducationTotal());
+    if (newSurveyData.educationTotal() > 0) {
+      storedSurvey.setEducationTotal(newSurveyData.educationTotal());
     }
 
-    if (newSurveyData.getEducationSupplies() > 0) {
-      storedSurvey.setEducationSupplies(newSurveyData.getEducationSupplies());
+    if (newSurveyData.educationSupplies() > 0) {
+      storedSurvey.setEducationSupplies(newSurveyData.educationSupplies());
     }
 
-    if (newSurveyData.getEducationFee() > 0) {
-      storedSurvey.setEducationFee(newSurveyData.getEducationFee());
+    if (newSurveyData.educationFee() > 0) {
+      storedSurvey.setEducationFee(newSurveyData.educationFee());
     }
 
-    if (newSurveyData.getEducationType() != null) {
-      storedSurvey.setEducationType(newSurveyData.getEducationType());
+    if (newSurveyData.educationType() != null) {
+      storedSurvey.setEducationType(newSurveyData.educationType());
     }
 
-    if (newSurveyData.getAccommodationType() != null) {
-      storedSurvey.setAccommodationType(newSurveyData.getAccommodationType());
+    if (newSurveyData.accommodationType() != null) {
+      storedSurvey.setAccommodationType(newSurveyData.accommodationType());
     }
 
-    if (newSurveyData.getProfession() != null) {
-      storedSurvey.setProfession(newSurveyData.getProfession());
+    if (newSurveyData.profession() != null) {
+      storedSurvey.setProfession(newSurveyData.profession());
     }
 
-    if (newSurveyData.getLocationGiven() != null) {
-      storedSurvey.setLocationGiven(newSurveyData.getLocationGiven());
+    if (newSurveyData.locationGiven() != null) {
+      storedSurvey.setLocationGiven(newSurveyData.locationGiven());
     }
 
-    if (newSurveyData.getLocationClustered() != null) {
-      storedSurvey.setLocationClustered(newSurveyData.getLocationClustered());
+    if (newSurveyData.locationClustered() != null) {
+      storedSurvey.setLocationClustered(newSurveyData.locationClustered());
     }
 
-    if (newSurveyData.getNumResidents() > 0) {
-      storedSurvey.setNumResidents(newSurveyData.getNumResidents());
+    if (newSurveyData.numResidents() > 0) {
+      storedSurvey.setNumResidents(newSurveyData.numResidents());
     }
 
-    if (newSurveyData.getNumIncomes() > 0) {
-      storedSurvey.setNumIncomes(newSurveyData.getNumIncomes());
+    if (newSurveyData.numIncomes() > 0) {
+      storedSurvey.setNumIncomes(newSurveyData.numIncomes());
     }
 
-    if (newSurveyData.getNumFullIncomes() > 0) {
-      storedSurvey.setNumFullIncomes(newSurveyData.getNumFullIncomes());
+    if (newSurveyData.numFullIncomes() > 0) {
+      storedSurvey.setNumFullIncomes(newSurveyData.numFullIncomes());
     }
 
-    if (newSurveyData.getNumChildren() > 0) {
-      storedSurvey.setNumChildren(newSurveyData.getNumChildren());
+    if (newSurveyData.numChildren() > 0) {
+      storedSurvey.setNumChildren(newSurveyData.numChildren());
     }
 
-    if (newSurveyData.getTotalIncome() > 0) {
-      storedSurvey.setTotalIncome(newSurveyData.getTotalIncome());
+    if (newSurveyData.totalIncome() > 0) {
+      storedSurvey.setTotalIncome(newSurveyData.totalIncome());
     }
 
-    if (newSurveyData.getComments() != null) {
-      storedSurvey.setComments(newSurveyData.getComments());
+    if (newSurveyData.comments() != null) {
+      storedSurvey.setComments(newSurveyData.comments());
     }
-    return autoSurveyRepository.saveSurvey(storedSurvey);
-
-  }
-  /*
-  public List<AutoSurvey> findByCountry(List<CountryGroup> groups) {
-    return autoSurveyRepository.surveysForCountries(groups);
+    return SurveyConverter.toResponseDto(autoSurveyRepository.saveSurvey(storedSurvey));
   }
 
-   */
   public void deleteSurvey(String id) {
     autoSurveyRepository.deleteSurvey(id);
   }
