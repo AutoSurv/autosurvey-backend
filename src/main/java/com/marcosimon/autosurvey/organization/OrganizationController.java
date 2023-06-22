@@ -42,7 +42,7 @@ public class OrganizationController {
         if (dto.orgName() == null || dto.orgName().equals(""))  return ResponseEntity.badRequest().build();
 
         //OrganizationResponseDTO newOrg = service.addOrganization( new Organization(UUID.randomUUID().toString(),dto.orgName(), new ArrayList<>()));
-        OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(), new ArrayList<>()));
+        OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName()));
         System.out.println(newOrg.orgName());
         if (newOrg == null) return ResponseEntity.unprocessableEntity().build();
 

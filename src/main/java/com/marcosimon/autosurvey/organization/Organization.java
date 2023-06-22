@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,9 +27,9 @@ public class Organization {
         this.orgName = orgName;
         this.surveys = surveys;
     }
-    public Organization(String orgName, List<String> surveys) {
+    public Organization(String orgName) {
         this.orgName = orgName;
-        this.surveys = surveys;
+        this.surveys = new ArrayList<>();
     }
 
     public String getOrgId() {
