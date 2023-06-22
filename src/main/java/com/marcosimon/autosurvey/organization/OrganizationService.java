@@ -36,7 +36,6 @@ public class OrganizationService {
 
     public OrganizationResponseDTO getOrgById(String id) {
         Organization org = organizationRepository.getById(id);
-        System.out.println(org.getOrgName());
         return OrganizationConverter.toResponseDto(org, autoSurveyRepository.getSurveyByIds(org.getSurveys()));
     }
 

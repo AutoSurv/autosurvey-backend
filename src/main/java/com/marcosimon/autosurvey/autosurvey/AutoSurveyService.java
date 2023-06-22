@@ -41,29 +41,6 @@ public class AutoSurveyService {
   public OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
 
     Organization org = organizationRepository.getById(dto.orgId());
-/*    AutoSurvey survey = new AutoSurvey(UUID.randomUUID().toString(),
-                                        dto.country(),
-                                        dto.rent(),
-                                        dto.utilities(),
-                                        dto.food(),
-                                        dto.basicItems(),
-                                        dto.transportation(),
-                                        dto.educationTotal(),
-                                        dto.educationSupplies(),
-                                        dto.educationFee(),
-                                        dto.educationType(),
-                                        dto.accommodationType(),
-                                        dto.profession(),
-                                        dto.locationGiven(),
-                                        dto.locationClustered(),
-                                        dto.numResidents(),
-                                        dto.numIncomes(),
-                                        dto.numFullIncomes(),
-                                        dto.numChildren(),
-                                        dto.totalIncome(),
-                                        dto.comments(),
-                                        dto.orgId(),
-                                        org.getOrgName());*/
 
     AutoSurvey survey = new AutoSurvey(
             dto.country(),
@@ -88,12 +65,12 @@ public class AutoSurveyService {
             dto.comments(),
             dto.orgId(),
             org.getOrgName());
-
+    AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey); //to have id
     List<String> orgToSurvey = org.getSurveys();
-    orgToSurvey.add(survey.getId());
+    orgToSurvey.add(newSurvey.getId());
     org.setSurveys(orgToSurvey);
     organizationRepository.saveOrganization(org);
-    return SurveyConverter.toResponseDto(autoSurveyRepository.saveSurvey(survey));
+    return SurveyConverter.toResponseDto(newSurvey);
 
   }
 

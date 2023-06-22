@@ -1,8 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.marcosimon.autosurvey.models.AutoSurveyResponseDTO;
-import com.marcosimon.autosurvey.models.CreateSurveyDTO;
+
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 
 public class SurveyConverter {
