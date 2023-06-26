@@ -74,8 +74,8 @@ public class AutoSurveyService {
 
   }
 
-  public OrgSurveyDTO updateSurveyData(CreateSurveyDTO newSurveyData) {
-    AutoSurvey storedSurvey = autoSurveyRepository.getById(newSurveyData.orgId());
+  public OrgSurveyDTO updateSurveyData(String id, CreateSurveyDTO newSurveyData) {
+    AutoSurvey storedSurvey = autoSurveyRepository.getById(id);
     if (storedSurvey == null) return null;
 
     if (newSurveyData.country() != null) {

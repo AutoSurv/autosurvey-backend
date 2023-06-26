@@ -62,9 +62,10 @@ public class AutoSurveyController {
 
   @PatchMapping("{id}")
   ResponseEntity<OrgSurveyDTO> editSurvey(@RequestBody CreateSurveyDTO dto, @PathVariable String id) {
+    System.out.println("dto: " + dto);
     if (id == null || id.equals("")) return ResponseEntity.badRequest().build();
 
-    OrgSurveyDTO updatedSurvey = surveyService.updateSurveyData(dto);
+    OrgSurveyDTO updatedSurvey = surveyService.updateSurveyData(id, dto);
     if (updatedSurvey == null) return ResponseEntity.notFound().build();
 
     return ResponseEntity.accepted().body(updatedSurvey);
