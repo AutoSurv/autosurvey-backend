@@ -59,28 +59,13 @@ public class OrganizationService {
     }
 
     public void deleteOrganization(String orgId) {
-        List<String> surveyIds = organizationRepository.getById(orgId).getSurveys();
-        for(String id : surveyIds) {
-            AutoSurvey survey = autoSurveyRepository.getById(id);
-            if(survey != null) {
-                survey.setOrgName("None");
-                survey.setOrgId("deleted");
-                autoSurveyRepository.saveSurvey(survey);
-            }
-        }
-        organizationRepository.deleteOrganization(orgId);
+       Organization org = organizationRepository.getById(orgId);
+       org.getSurveys().forEach(i -> autoSurveyRepository.deleteSurvey(i));
+       organizationRepository.deleteOrganization(orgId);
     }
 
     public void deleteOrgByName(String name) {
-        List<String> surveyIds = organizationRepository.getByOrgName(name).getSurveys();
-        for(String id : surveyIds) {
-            AutoSurvey survey = autoSurveyRepository.getById(id);
-            if(survey != null) {
-                survey.setOrgName("None");
-                survey.setOrgId("deleted");
-                autoSurveyRepository.saveSurvey(survey);
-            }
-        }
+
         organizationRepository.deleteOrgByName(name);
     }
 
