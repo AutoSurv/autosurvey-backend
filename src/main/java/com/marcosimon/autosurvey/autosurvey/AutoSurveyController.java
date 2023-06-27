@@ -62,7 +62,7 @@ public class AutoSurveyController {
   ResponseEntity<OrgSurveyDTO> editSurvey(@RequestBody CreateSurveyDTO dto, @PathVariable String id) {
     if (id.equals("")) return ResponseEntity.badRequest().build();
 
-    OrgSurveyDTO updatedSurvey = surveyService.updateSurveyData(dto);
+    OrgSurveyDTO updatedSurvey = surveyService.updateSurveyData(id, dto);
     if (updatedSurvey == null) return ResponseEntity.notFound().build();
 
     return ResponseEntity.accepted().body(updatedSurvey);

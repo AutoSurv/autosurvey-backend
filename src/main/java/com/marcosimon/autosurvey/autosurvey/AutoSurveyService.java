@@ -4,10 +4,12 @@ import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.organization.OrganizationRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -74,11 +76,14 @@ public class AutoSurveyService {
 
   }
 
-  public OrgSurveyDTO updateSurveyData(CreateSurveyDTO newSurveyData) {
-    AutoSurvey storedSurvey = autoSurveyRepository.getById(newSurveyData.orgId());
+  public OrgSurveyDTO updateSurveyData(String id, CreateSurveyDTO newSurveyData) {
+
+    if (newSurveyData == null) return null;
+
+    AutoSurvey storedSurvey = autoSurveyRepository.getById(id);
     if (storedSurvey == null) return null;
 
-    if (newSurveyData.country() != null) {
+    if (!Objects.equals(newSurveyData.country(), "")) {
       storedSurvey.setCountry(newSurveyData.country());
     }
 
@@ -114,23 +119,23 @@ public class AutoSurveyService {
       storedSurvey.setEducationFee(newSurveyData.educationFee());
     }
 
-    if (newSurveyData.educationType() != null) {
+    if (!Objects.equals(newSurveyData.educationType(), "")) {
       storedSurvey.setEducationType(newSurveyData.educationType());
     }
 
-    if (newSurveyData.accommodationType() != null) {
+    if (!Objects.equals(newSurveyData.accommodationType(), "")) {
       storedSurvey.setAccommodationType(newSurveyData.accommodationType());
     }
 
-    if (newSurveyData.profession() != null) {
+    if (!Objects.equals(newSurveyData.profession(), "")) {
       storedSurvey.setProfession(newSurveyData.profession());
     }
 
-    if (newSurveyData.locationGiven() != null) {
+    if (!Objects.equals(newSurveyData.locationGiven(), "")) {
       storedSurvey.setLocationGiven(newSurveyData.locationGiven());
     }
 
-    if (newSurveyData.locationClustered() != null) {
+    if (!Objects.equals(newSurveyData.locationClustered(), "")) {
       storedSurvey.setLocationClustered(newSurveyData.locationClustered());
     }
 
@@ -154,13 +159,13 @@ public class AutoSurveyService {
       storedSurvey.setTotalIncome(newSurveyData.totalIncome());
     }
 
-    if (newSurveyData.comments() != null) {
+    if (!Objects.equals(newSurveyData.comments(), "")) {
       storedSurvey.setComments(newSurveyData.comments());
     }
     return SurveyConverter.toResponseDto(autoSurveyRepository.saveSurvey(storedSurvey));
   }
 
   public void deleteSurvey(String id) {
-    autoSurveyRepository.deleteSurvey(id);
+        autoSurveyRepository.deleteSurvey(id);
   }
 }
