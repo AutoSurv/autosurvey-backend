@@ -1,7 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 
-import javax.persistence.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -10,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @Document
 public class AutoSurvey {
 
-    @Id
+
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
     private String country;

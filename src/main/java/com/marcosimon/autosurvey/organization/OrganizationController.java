@@ -3,12 +3,15 @@ package com.marcosimon.autosurvey.organization;
 
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
 import com.marcosimon.autosurvey.models.*;
-import javax.servlet.http.HttpServletRequest;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class OrganizationController {
     private AutoSurveyService surveyService;
 
     @GetMapping
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<OrganizationResponseDTO>> listOrganizations() {
         return ResponseEntity.ok(service.getAllOrganizations());
     }

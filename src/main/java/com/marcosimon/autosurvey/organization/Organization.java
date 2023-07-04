@@ -6,14 +6,14 @@ import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 
-import javax.persistence.Id;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Document
 public class Organization {
-    @Id
+
     @MongoId(value = FieldType.OBJECT_ID)
     private String orgId;
     private String orgName;
