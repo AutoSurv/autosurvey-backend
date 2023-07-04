@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.logging.Logger;
 
-@Controller
+@RestController
 @RequestMapping("api/login")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
@@ -21,7 +21,7 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
+/*
     @GetMapping
     public ResponseEntity<UserDto> loginUser(@RequestBody LoginUserDto user) {
         System.out.println("userController.loginUser.user: " + user);
@@ -48,6 +48,25 @@ public class UserController {
         URI location = URI.create((request.getRequestURI() + "/" + newUser.userId()));
         return ResponseEntity.created(location).body(newUser);
     }
+*/
+
+    @GetMapping
+    public ResponseEntity<String> sayHello() {
+        return ResponseEntity.ok("hello");
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDto> login(@RequestBody LoginUserDto dto, HttpServletRequest request) {
+
+        return ResponseEntity.ok(userService.authenticateUser(dto));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> register(@RequestBody CreateUserDto dto, HttpServletRequest request) {
+
+        return ResponseEntity.ok(userService.registerUser(dto));
+    }
+
 
     @PatchMapping
     public ResponseEntity<UserDto> editUser(String userEmail) {

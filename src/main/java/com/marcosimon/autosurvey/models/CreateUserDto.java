@@ -2,6 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 public record CreateUserDto(
         String email,
-        String password
+        String password,
+        String role
 ) {
 }
