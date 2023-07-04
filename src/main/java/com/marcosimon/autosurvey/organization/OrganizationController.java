@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrganizationController {
 
-    Logger logger = Logger.getLogger(OrganizationRepository.class.getName());
+    Logger logger = Logger.getLogger(OrganizationController.class.getName());
 
     @Autowired
     private OrganizationService service;
