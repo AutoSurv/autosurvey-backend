@@ -3,12 +3,15 @@ package com.marcosimon.autosurvey.organization;
 
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
 import com.marcosimon.autosurvey.models.*;
-import javax.servlet.http.HttpServletRequest;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,7 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrganizationController {
 
-    Logger logger = Logger.getLogger(OrganizationController.class.getName());
+    Logger logger = Logger.getLogger(OrganizationRepository.class.getName());
 
     @Autowired
     private OrganizationService service;
@@ -29,6 +32,7 @@ public class OrganizationController {
     private AutoSurveyService surveyService;
 
     @GetMapping
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<OrganizationResponseDTO>> listOrganizations() {
         return ResponseEntity.ok(service.getAllOrganizations());
     }
@@ -52,10 +56,10 @@ public class OrganizationController {
 
     @PatchMapping(path = "{id}")
     ResponseEntity<OrganizationResponseDTO> patchOrganization(@RequestBody CreateOrganizationDTO dto, @PathVariable String id) {
-      OrganizationResponseDTO updatedOrg = service.renameOrganization(id, dto.orgName());
-      if(updatedOrg == null) return ResponseEntity.badRequest().build();
+        OrganizationResponseDTO updatedOrg = service.renameOrganization(id, dto.orgName());
+        if(updatedOrg == null) return ResponseEntity.badRequest().build();
 
-      return ResponseEntity.accepted().body(updatedOrg);
+        return ResponseEntity.accepted().body(updatedOrg);
     }
 
     @DeleteMapping(path = "{id}")

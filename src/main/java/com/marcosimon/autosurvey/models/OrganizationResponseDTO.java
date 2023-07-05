@@ -13,5 +13,5 @@ public record OrganizationResponseDTO(
         List<OrgSurveyDTO>  surveys
 
 
-        ) {
+) {
 }

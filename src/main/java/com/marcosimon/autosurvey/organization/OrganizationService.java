@@ -59,9 +59,9 @@ public class OrganizationService {
     }
 
     public void deleteOrganization(String orgId) {
-       Organization org = organizationRepository.getById(orgId);
-       org.getSurveys().forEach(i -> autoSurveyRepository.deleteSurvey(i));
-       organizationRepository.deleteOrganization(orgId);
+        Organization org = organizationRepository.getById(orgId);
+        org.getSurveys().forEach(i -> autoSurveyRepository.deleteSurvey(i));
+        organizationRepository.deleteOrganization(orgId);
     }
 
     public void deleteOrgByName(String name) {
