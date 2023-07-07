@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.user;
 
+import com.marcosimon.autosurvey.models.UserDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.marcosimon.autosurvey.config.DatabaseUserDetailsService;
 
@@ -22,12 +24,16 @@ public class JWTController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private DatabaseUserDetailsService databaseUserDetailsService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public String authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
+    public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestJWT.username(), authRequestJWT.password()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequestJWT.username());
+            String jwt = jwtService.generateToken(authRequestJWT.username());
+            UserDto userDto = new UserDto(authRequestJWT.username(), jwt);
+            return ResponseEntity.ok(userDto);
         } else {
             throw new UsernameNotFoundException("invalid user request!");
         }

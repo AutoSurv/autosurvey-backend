@@ -19,6 +19,7 @@ spring:
       database: ${MONGO_DATABASE}
 
 
+
 jwt:
   secret: ${JWT_256_BIT_SECRET}
 
