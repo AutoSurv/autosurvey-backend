@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/autosurveys")
-@CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
+@CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000", "https://autosurvey-frontend.vercel.app"})
 public class AutoSurveyController {
 
   Logger logger = Logger.getLogger(AutoSurveyRepository.class.getName());
