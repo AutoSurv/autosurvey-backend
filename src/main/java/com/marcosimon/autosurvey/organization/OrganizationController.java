@@ -50,7 +50,7 @@ public class OrganizationController {
         System.out.println(newOrg.orgName());
         if (newOrg == null) return ResponseEntity.unprocessableEntity().build();
 
-        URI location = URI.create((req.getRequestURI() + "/" + newOrg.orgId()));
+        URI location = URI.create((req.getRequestURI() + "/" + newOrg.orgId()).replace("//organizations", "/organizations" ));
         return ResponseEntity.created(location).body(newOrg);
     }
 

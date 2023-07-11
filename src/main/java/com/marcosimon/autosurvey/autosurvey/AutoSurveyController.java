@@ -58,7 +58,7 @@ public class AutoSurveyController {
     if (dto == null) return ResponseEntity.badRequest().build();
 
     OrgSurveyDTO newSurvey = surveyService.addSurvey(dto);
-    URI location = URI.create((req.getRequestURI() + "/" + newSurvey.id()));
+    URI location = URI.create((req.getRequestURI() + "/" + newSurvey.id()).replace("//autosurveys","/autosurveys"));
     return ResponseEntity.created(location).body(newSurvey);
   }
 
