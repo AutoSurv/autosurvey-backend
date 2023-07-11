@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/authenticate")
-@CrossOrigin(origins = "*")
+@RequestMapping("authenticate")
+@CrossOrigin(origins = "autosurvey-frontend.vercel.app")
 public class JWTController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class JWTController {
         }
     }
 
-    @GetMapping("/validate")
+    @GetMapping("validate")
     public ResponseEntity<?> validateToken(@RequestParam("token") String token) {
         try{
             String username = null;
