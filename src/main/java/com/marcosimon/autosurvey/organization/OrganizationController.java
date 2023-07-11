@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("api/organizations")
-@CrossOrigin(origins = "autosurvey-frontend.vercel.app")
+@CrossOrigin(origins = "*")
 public class OrganizationController {
 
     Logger logger = Logger.getLogger(OrganizationRepository.class.getName());

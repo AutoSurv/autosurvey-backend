@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/authenticate")
-@CrossOrigin(origins = "autosurvey-frontend.vercel.app")
+@CrossOrigin(origins = "*")
 public class JWTController {
 
     @Autowired
