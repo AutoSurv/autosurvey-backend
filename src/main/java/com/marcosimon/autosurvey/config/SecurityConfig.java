@@ -43,7 +43,7 @@ public class SecurityConfig {
         return http.cors().and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(new AntPathRequestMatcher("/users/welcome"),
-                                 new AntPathRequestMatcher("/users/new"),
+                                 new AntPathRequestMatcher("/users/**"),
                                  new AntPathRequestMatcher("/authenticate"),
                                  new AntPathRequestMatcher("/authenticate/validate") ).permitAll()
                 .and()
