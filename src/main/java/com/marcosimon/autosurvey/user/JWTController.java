@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.user;
 
-import com.marcosimon.autosurvey.models.UserDto;
+import com.marcosimon.autosurvey.config.DatabaseUserDetailsService;
+import com.marcosimon.autosurvey.models.LoggedUserDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +10,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import com.marcosimon.autosurvey.config.DatabaseUserDetailsService;
 
 @RestController
 @RequestMapping("/authenticate")
-@CrossOrigin
+@CrossOrigin(origins = "https://autosurvey.vercel.app")
 public class JWTController {
 
     @Autowired
@@ -24,16 +23,12 @@ public class JWTController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private DatabaseUserDetailsService databaseUserDetailsService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
+    public String authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestJWT.username(), authRequestJWT.password()));
         if (authentication.isAuthenticated()) {
-            String jwt = jwtService.generateToken(authRequestJWT.username());
-            UserDto userDto = new UserDto(authRequestJWT.username(), jwt);
-            return ResponseEntity.ok(userDto);
+            return jwtService.generateToken(authRequestJWT.username());
         } else {
             throw new UsernameNotFoundException("invalid user request!");
         }

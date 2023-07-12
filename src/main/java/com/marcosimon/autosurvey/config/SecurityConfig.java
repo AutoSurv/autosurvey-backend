@@ -43,9 +43,9 @@ public class SecurityConfig {
         return http.cors().and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(new AntPathRequestMatcher("/users/welcome"),
-                                 new AntPathRequestMatcher("/users/new"),
-                                 new AntPathRequestMatcher("/authenticate"),
-                                 new AntPathRequestMatcher("/authenticate/validate") ).permitAll()
+                        new AntPathRequestMatcher("/users/new"),
+                        new AntPathRequestMatcher("/authenticate"),
+                        new AntPathRequestMatcher("/authenticate/validate") ).permitAll()
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
@@ -85,7 +85,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:3000", "https://twit-rose.vercel.app"));
+        config.setAllowedOrigins(List.of("https://autosurvey.vercel.app"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
         config.setAllowCredentials(true);
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));

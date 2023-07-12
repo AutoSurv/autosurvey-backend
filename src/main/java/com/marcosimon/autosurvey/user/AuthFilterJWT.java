@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.user;
 
+import com.marcosimon.autosurvey.config.DatabaseUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -7,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import com.marcosimon.autosurvey.config.DatabaseUserDetailsService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -30,7 +30,7 @@ public class AuthFilterJWT extends OncePerRequestFilter {
         String username = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.split(" ")[1].trim();
+            token = authHeader.split(" ")[1];
             username = jwtService.extractUsername(token);
         }
 

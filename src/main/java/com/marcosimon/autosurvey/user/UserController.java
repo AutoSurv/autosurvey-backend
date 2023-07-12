@@ -8,7 +8,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+<<<<<<< HEAD
 @CrossOrigin
+=======
+@CrossOrigin(origins = "https://autosurvey.vercel.app")
+>>>>>>> main
 public class UserController {
 
     @Autowired

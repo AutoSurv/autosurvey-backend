@@ -18,6 +18,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+<<<<<<< HEAD
+=======
+//    public UserModel getUserByName(String userName) {
+//        return userRepository.findUserModelByUsername(userName).orElse(null);
+//    }
+
+>>>>>>> main
     public String createUser(UserModel userModel) {
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         userModel.setRoles(userModel.getRoles().toUpperCase());
