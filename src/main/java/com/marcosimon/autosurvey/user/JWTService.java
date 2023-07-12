@@ -1,10 +1,12 @@
 package com.marcosimon.autosurvey.user;
 
+import com.marcosimon.autosurvey.models.LoggedUserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,28 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
+    @Autowired
+    UserService userService;
     @Value("${jwt.secret}")
     private String SECRET;
 
-    public String generateToken(String username) {
+/*    public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
+        UserModel userModel = userService.getUserByName(username);
+
         return createToken(claims, username);
-    }
+    }*/
+
+        public LoggedUserDto generateToken(String username) {
+            Map<String, Object> claims = new HashMap<>();
+            UserModel userModel = userService.getUserByName(username);
+            String token = createToken(claims, username);
+            LoggedUserDto loggedUserDto = new LoggedUserDto(username, userModel.getRoles(), token);
+
+            return loggedUserDto;
+        }
+
+
     private String createToken(Map<String, Object> claims, String username) {
         int MINUTES = 60;
         return Jwts.builder()

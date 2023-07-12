@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.user;
 
 import com.marcosimon.autosurvey.config.DatabaseUserDetailsService;
+import com.marcosimon.autosurvey.models.LoggedUserDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class JWTController {
     private DatabaseUserDetailsService databaseUserDetailsService;
 
     @PostMapping
-    public String authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
+    public LoggedUserDto authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestJWT.username(), authRequestJWT.password()));
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(authRequestJWT.username());
