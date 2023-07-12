@@ -23,12 +23,17 @@ public class JWTController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private DatabaseUserDetailsService databaseUserDetailsService;
+    @Autowired
+    UserService userService;
 
     @PostMapping
-    public String authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
+    public LoggedUserDto authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestJWT.username(), authRequestJWT.password()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequestJWT.username());
+            UserModel userModel = userService.getUserByName(authRequestJWT.username());
+            if (userModel == null) throw new UsernameNotFoundException("invalid user request!");
+
+            return new LoggedUserDto(userModel.getUsername(), userModel.getRoles(), jwtService.generateToken(authRequestJWT.username()));
         } else {
             throw new UsernameNotFoundException("invalid user request!");
         }
