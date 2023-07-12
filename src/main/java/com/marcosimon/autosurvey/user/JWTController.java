@@ -25,7 +25,7 @@ public class JWTController {
     private DatabaseUserDetailsService databaseUserDetailsService;
 
     @PostMapping
-    public LoggedUserDto authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
+    public String authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestJWT.username(), authRequestJWT.password()));
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(authRequestJWT.username());
