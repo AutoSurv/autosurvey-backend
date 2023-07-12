@@ -55,7 +55,8 @@ public class OrganizationController {
     }
 
     @PatchMapping(path = "{id}")
-    ResponseEntity<OrganizationResponseDTO> patchOrganization(@RequestBody CreateOrganizationDTO dto, @PathVariable String id) {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN','ROLE_MANAGER')")
+     ResponseEntity<OrganizationResponseDTO> patchOrganization(@RequestBody CreateOrganizationDTO dto, @PathVariable String id) {
       OrganizationResponseDTO updatedOrg = service.renameOrganization(id, dto.orgName());
       if(updatedOrg == null) return ResponseEntity.badRequest().build();
 
@@ -63,6 +64,7 @@ public class OrganizationController {
     }
 
     @DeleteMapping(path = "{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN','ROLE_MANAGER')")
     ResponseEntity<Organization> deleteOrganization(@PathVariable String id) {
         service.deleteOrganization(id);
         return ResponseEntity.noContent().build();
