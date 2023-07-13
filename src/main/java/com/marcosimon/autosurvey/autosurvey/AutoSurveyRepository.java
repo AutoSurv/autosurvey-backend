@@ -6,12 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Repository
 public class AutoSurveyRepository {
 
-    Logger log = Logger.getLogger(AutoSurveyRepository.class.getName());
     @Autowired
     AutoSurveyDbRepository autoSurveyDbRepository;
 

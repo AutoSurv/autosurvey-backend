@@ -4,13 +4,12 @@ import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.organization.OrganizationRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
+
 
 @Service
 public class AutoSurveyService {
