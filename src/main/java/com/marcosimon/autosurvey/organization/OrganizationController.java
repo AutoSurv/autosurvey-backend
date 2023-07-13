@@ -24,15 +24,12 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000", "https://autosurvey-frontend.vercel.app"})
 public class OrganizationController {
 
-    Logger logger = Logger.getLogger(OrganizationRepository.class.getName());
-
     @Autowired
     private OrganizationService service;
     @Autowired
     private AutoSurveyService surveyService;
 
     @GetMapping
-    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<OrganizationResponseDTO>> listOrganizations() {
         return ResponseEntity.ok(service.getAllOrganizations());
     }
@@ -42,12 +39,11 @@ public class OrganizationController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
         if (dto.orgName() == null || dto.orgName().equals(""))  return ResponseEntity.badRequest().build();
 
-        //OrganizationResponseDTO newOrg = service.addOrganization( new Organization(UUID.randomUUID().toString(),dto.orgName(), new ArrayList<>()));
         OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName()));
-        System.out.println(newOrg.orgName());
         if (newOrg == null) return ResponseEntity.unprocessableEntity().build();
 
         URI location = URI.create((req.getRequestURI() + "/" + newOrg.orgId()).replace("//organizations", "/organizations" ));
@@ -55,7 +51,7 @@ public class OrganizationController {
     }
 
     @PatchMapping(path = "{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN', 'ROLE_MANAGER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<OrganizationResponseDTO> patchOrganization(@RequestBody CreateOrganizationDTO dto, @PathVariable String id) {
       OrganizationResponseDTO updatedOrg = service.renameOrganization(id, dto.orgName());
       if(updatedOrg == null) return ResponseEntity.badRequest().build();
@@ -64,7 +60,7 @@ public class OrganizationController {
     }
 
     @DeleteMapping(path = "{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN', 'ROLE_MANAGER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<Organization> deleteOrganization(@PathVariable String id) {
         service.deleteOrganization(id);
         return ResponseEntity.noContent().build();
