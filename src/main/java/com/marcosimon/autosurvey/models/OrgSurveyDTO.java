@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record OrgSurveyDTO(@JsonProperty String id,
                            @JsonProperty String country,
+                           @JsonProperty("year")
+                           long year,
                            @JsonProperty("rent")
                            long rent,
                            @JsonProperty("utilities")

@@ -45,6 +45,7 @@ public class AutoSurveyService {
 
     AutoSurvey survey = new AutoSurvey(
             dto.country(),
+            dto.year(),
             dto.rent(),
             dto.utilities(),
             dto.food(),
@@ -84,6 +85,10 @@ public class AutoSurveyService {
 
     if (!Objects.equals(newSurveyData.country(), "")) {
       storedSurvey.setCountry(newSurveyData.country());
+    }
+
+    if (newSurveyData.year() > 0) {
+      storedSurvey.setRent(newSurveyData.year());
     }
 
     if (newSurveyData.rent() > 0) {
