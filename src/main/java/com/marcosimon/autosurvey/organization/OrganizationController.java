@@ -44,6 +44,7 @@ public class OrganizationController {
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
         if (dto.orgName() == null || dto.orgName().equals(""))  return ResponseEntity.badRequest().build();
 
+        System.out.println("creator: " + dto.creatorName());
         UserModel creator = userService.getUserByName(dto.creatorName());
         OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(), creator));
         if (newOrg == null) return ResponseEntity.unprocessableEntity().build();
