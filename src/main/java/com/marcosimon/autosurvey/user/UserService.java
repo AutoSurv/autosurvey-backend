@@ -25,8 +25,14 @@ public class UserService {
 
 
     public String createUser(UserModel userModel) {
+        //check if the user already in db
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         userModel.setRoles(userModel.getRoles().toUpperCase());
+
+        //parse mail and check for org.
+            //if not do nothing
+        //add to org
+
         userRepository.save(userModel);
         return String.format("User [%s] has been added to the database", userModel.getUsername());
     }

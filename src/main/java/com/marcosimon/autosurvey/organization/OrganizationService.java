@@ -4,6 +4,7 @@ package com.marcosimon.autosurvey.organization;
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
+import com.marcosimon.autosurvey.user.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +42,10 @@ public class OrganizationService {
 
 
     public OrganizationResponseDTO addOrganization(Organization org) {
+
         Organization existingOrg = organizationRepository.getByOrgName(org.getOrgName());
         if(existingOrg == null) {
+            //add creator to org
             return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), autoSurveyRepository.getSurveyByIds(org.getSurveys()));
         }
         return null;
