@@ -1,9 +1,9 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+
 
 
 @Document
@@ -35,9 +35,7 @@ public class AutoSurvey {
     private String orgId;
     private String orgName;
 
-
-
-    public AutoSurvey() {
+   public AutoSurvey() {
     }
 
     public AutoSurvey(String id, String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
