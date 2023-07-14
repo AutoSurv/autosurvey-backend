@@ -39,6 +39,14 @@ public class Organization {
         this.users.add(creatorName);
     }
 
+    public Organization(String orgId, String orgName, UserModel user) {
+        this.orgId = orgId;
+        this.orgName = orgName;
+        this.surveys = new ArrayList<>();
+        this.users = new ArrayList<>();
+        this.users.add(user);
+    }
+
     public String getOrgId() {
         return orgId;
     }
@@ -69,5 +77,15 @@ public class Organization {
 
     public void setUsers(List<UserModel> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "orgId='" + orgId + '\'' +
+                ", orgName='" + orgName + '\'' +
+                ", surveys=" + surveys +
+                ", users=" + users +
+                '}';
     }
 }
