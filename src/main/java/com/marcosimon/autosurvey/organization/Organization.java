@@ -1,7 +1,9 @@
 package com.marcosimon.autosurvey.organization;
 
 
+import com.marcosimon.autosurvey.user.UserModel;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -18,6 +20,8 @@ public class Organization {
     private String orgId;
     private String orgName;
     private List<String> surveys;
+    @DocumentReference
+    private List<UserModel> users;
 
     public Organization() {
     }

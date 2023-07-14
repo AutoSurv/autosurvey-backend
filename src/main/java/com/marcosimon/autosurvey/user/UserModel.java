@@ -1,6 +1,8 @@
 package com.marcosimon.autosurvey.user;
 
+import com.marcosimon.autosurvey.organization.Organization;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 @Document(collection = "users")
@@ -12,6 +14,8 @@ public class UserModel {
     private String password;
     private String email;
     private String roles;
+    @DocumentReference(lazy = true)
+    private Organization organization;
 
     public UserModel() {
     }
