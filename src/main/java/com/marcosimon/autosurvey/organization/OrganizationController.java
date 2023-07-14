@@ -5,6 +5,8 @@ import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
 import com.marcosimon.autosurvey.models.*;
 
 
+import com.marcosimon.autosurvey.user.UserModel;
+import com.marcosimon.autosurvey.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,8 @@ public class OrganizationController {
     private OrganizationService service;
     @Autowired
     private AutoSurveyService surveyService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<List<OrganizationResponseDTO>> listOrganizations() {
@@ -40,7 +44,8 @@ public class OrganizationController {
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
         if (dto.orgName() == null || dto.orgName().equals(""))  return ResponseEntity.badRequest().build();
 
-        OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName()));
+        UserModel creator = userService.getUserByName(dto.creatorName());
+        OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(), creator));
         if (newOrg == null) return ResponseEntity.unprocessableEntity().build();
 
         URI location = URI.create((req.getRequestURI() + "/" + newOrg.orgId()).replace("//organizations", "/organizations" ));
