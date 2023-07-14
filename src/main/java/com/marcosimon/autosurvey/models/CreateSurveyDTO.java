@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record CreateSurveyDTO(
                               @JsonProperty("country")
                               String country,
+                              @JsonProperty("year")
+                              long year,
                               @JsonProperty("rent")
                               long rent,
                               @JsonProperty("utilities")

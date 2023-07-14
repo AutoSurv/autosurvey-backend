@@ -32,7 +32,9 @@ public class OrganizationRepository {
        return organizationDbRepository.findById(id).orElse(null);
      }
 
-    public Organization saveOrganization(Organization organization) { return organizationDbRepository.save(organization); }
+    public Organization saveOrganization(Organization organization) {
+        System.out.println(organization);
+        return organizationDbRepository.save(organization); }
 
     public void saveOrganizations(List<Organization> orgs) { organizationDbRepository.saveAll(orgs);}
 

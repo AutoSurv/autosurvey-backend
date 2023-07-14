@@ -17,7 +17,7 @@ class OrganizationServiceTest {
   public void addNewOrganization() {
     int initialSize = organizationService.getAllOrganizations().size();
 
-    Organization testOrganizationOne = new Organization(organizationName);
+    Organization testOrganizationOne = new Organization(organizationName, null);
     OrganizationResponseDTO responseDTO = organizationService.addOrganization(testOrganizationOne);
 
     int newSize = organizationService.getAllOrganizations().size();

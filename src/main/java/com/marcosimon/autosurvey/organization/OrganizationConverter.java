@@ -12,6 +12,7 @@ public class OrganizationConverter {
         List<OrgSurveyDTO> surveyDTOS = surveys.stream().map(autoSurvey -> {
             return new OrgSurveyDTO(  autoSurvey.getId(),
                     autoSurvey.getCountry(),
+                    autoSurvey.getYear(),
                     autoSurvey.getRent(),
                     autoSurvey.getUtilities(),
                     autoSurvey.getFood(),
@@ -34,7 +35,7 @@ public class OrganizationConverter {
                     autoSurvey.getOrgId(),
                     autoSurvey.getOrgName());
         }).toList();
-        return new OrganizationResponseDTO(organization.getOrgId(), organization.getOrgName(), surveyDTOS);
+        return new OrganizationResponseDTO(organization.getOrgId(), organization.getOrgName(), surveyDTOS, organization.getUsers());
     }
 
     public static Organization fromDto(OrganizationResponseDTO dto) {

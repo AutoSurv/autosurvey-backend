@@ -1,7 +1,7 @@
 package com.marcosimon.autosurvey.models;
 
 public record LoggedUserDto(
-        String userName,
+        String username,
         String role,
         String token
 ) {

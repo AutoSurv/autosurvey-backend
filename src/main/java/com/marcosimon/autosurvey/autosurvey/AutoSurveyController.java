@@ -21,8 +21,6 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000", "https://autosurvey-frontend.vercel.app"})
 public class AutoSurveyController {
 
-  Logger logger = Logger.getLogger(AutoSurveyRepository.class.getName());
-
   private final AutoSurveyService surveyService;
   private final OrganizationService organizationService;
 
@@ -43,7 +41,6 @@ public class AutoSurveyController {
       return ResponseEntity.badRequest().build();
     }
 
-    //if id is a proper UUID
     OrgSurveyDTO survey = surveyService.getSurveyById(id);
 
     if (survey == null) {

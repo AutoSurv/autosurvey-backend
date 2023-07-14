@@ -9,6 +9,7 @@ public class SurveyConverter {
         return new OrgSurveyDTO(
                 autoSurvey.getId(),
                 autoSurvey.getCountry(),
+                autoSurvey.getYear(),
                 autoSurvey.getRent(),
                 autoSurvey.getUtilities(),
                 autoSurvey.getFood(),

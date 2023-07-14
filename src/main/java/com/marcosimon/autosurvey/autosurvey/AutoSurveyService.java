@@ -4,13 +4,12 @@ import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.organization.OrganizationRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
+
 
 @Service
 public class AutoSurveyService {
@@ -46,6 +45,7 @@ public class AutoSurveyService {
 
     AutoSurvey survey = new AutoSurvey(
             dto.country(),
+            dto.year(),
             dto.rent(),
             dto.utilities(),
             dto.food(),
@@ -85,6 +85,10 @@ public class AutoSurveyService {
 
     if (!Objects.equals(newSurveyData.country(), "")) {
       storedSurvey.setCountry(newSurveyData.country());
+    }
+
+    if (newSurveyData.year() > 0) {
+      storedSurvey.setYear(newSurveyData.year());
     }
 
     if (newSurveyData.rent() > 0) {
