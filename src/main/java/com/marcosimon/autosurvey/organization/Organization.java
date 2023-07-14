@@ -35,6 +35,7 @@ public class Organization {
     public Organization(String orgName, UserModel creatorName) {
         this.orgName = orgName;
         this.surveys = new ArrayList<>();
+        this.users = new ArrayList<>();
         this.users.add(creatorName);
     }
 

@@ -20,12 +20,13 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String userId, String username, String password, String email, String roles) {
+    public UserModel(String userId, String username, String password, String email, String roles, Organization organization) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.roles = roles;
+        this.organization = new Organization();
     }
 
     public String getUserId() {
@@ -66,5 +67,13 @@ public class UserModel {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }
