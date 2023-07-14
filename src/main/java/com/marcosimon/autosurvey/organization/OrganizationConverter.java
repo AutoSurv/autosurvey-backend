@@ -35,7 +35,7 @@ public class OrganizationConverter {
                     autoSurvey.getOrgId(),
                     autoSurvey.getOrgName());
         }).toList();
-        return new OrganizationResponseDTO(organization.getOrgId(), organization.getOrgName(), surveyDTOS);
+        return new OrganizationResponseDTO(organization.getOrgId(), organization.getOrgName(), surveyDTOS, organization.getUsers());
     }
 
     public static Organization fromDto(OrganizationResponseDTO dto) {

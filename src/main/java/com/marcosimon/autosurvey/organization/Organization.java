@@ -30,10 +30,12 @@ public class Organization {
         this.orgId = orgId;
         this.orgName = orgName;
         this.surveys = surveys;
+        this.users = new ArrayList<>();
     }
-    public Organization(String orgName) {
+    public Organization(String orgName, UserModel creatorName) {
         this.orgName = orgName;
         this.surveys = new ArrayList<>();
+        this.users.add(creatorName);
     }
 
     public String getOrgId() {
@@ -58,5 +60,13 @@ public class Organization {
 
     public void setSurveys(List<String> surveys) {
         this.surveys = surveys;
+    }
+
+    public List<UserModel> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserModel> users) {
+        this.users = users;
     }
 }
