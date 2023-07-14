@@ -88,7 +88,7 @@ public class AutoSurveyService {
     }
 
     if (newSurveyData.year() > 0) {
-      storedSurvey.setRent(newSurveyData.year());
+      storedSurvey.setYear(newSurveyData.year());
     }
 
     if (newSurveyData.rent() > 0) {
