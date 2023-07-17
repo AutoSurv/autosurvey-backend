@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.organization;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcosimon.autosurvey.user.UserModel;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
@@ -20,6 +21,7 @@ public class Organization {
     private String orgId;
     private String orgName;
     private List<String> surveys;
+    @JsonManagedReference
     @DocumentReference
     private List<UserModel> users;
 

@@ -1,7 +1,11 @@
 package com.marcosimon.autosurvey.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.marcosimon.autosurvey.organization.Organization;
-import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document(collection = "users")
 public class UserModel {
@@ -13,6 +17,7 @@ public class UserModel {
     private String email;
     private String roles;
     @DocumentReference(lazy = true)
+    @JsonBackReference
     private Organization organization;
 
     public UserModel() {
