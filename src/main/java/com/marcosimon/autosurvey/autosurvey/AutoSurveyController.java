@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 
+import com.marcosimon.autosurvey.models.AutoSurveyListResDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 
 
@@ -29,9 +30,18 @@ public class AutoSurveyController {
     this.organizationService = organizationService;
    }
 
-  @GetMapping
+  /*@GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
        return ResponseEntity.ok(surveyService.getAllSurveys());
+  }
+*/
+  @GetMapping
+  ResponseEntity<AutoSurveyListResDTO> getPaginatedSurveys(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "") String country) {
+    AutoSurveyListResDTO surveys = surveyService.getPaginatedSurveys(page, country);
+    if (surveys.getSurveys().isEmpty() && !surveys.isFirst()){
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(surveys);
   }
 
   @GetMapping("{id}")
