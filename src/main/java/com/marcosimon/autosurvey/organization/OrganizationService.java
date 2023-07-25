@@ -1,7 +1,6 @@
 package com.marcosimon.autosurvey.organization;
 
 
-import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
 import com.marcosimon.autosurvey.user.UserModel;

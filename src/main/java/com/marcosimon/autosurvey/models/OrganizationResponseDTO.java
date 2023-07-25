@@ -15,7 +15,5 @@ public record OrganizationResponseDTO(
         @JsonProperty
         List<UserModel>  users
 
-
-
 ) {
 }

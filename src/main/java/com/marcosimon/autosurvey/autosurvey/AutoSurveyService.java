@@ -1,16 +1,18 @@
 package com.marcosimon.autosurvey.autosurvey;
 
+import org.modelmapper.ModelMapper;
+import com.marcosimon.autosurvey.models.AutoSurveyListResDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.organization.OrganizationRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
+
 
 @Service
 public class AutoSurveyService {
@@ -20,6 +22,8 @@ public class AutoSurveyService {
 
   @Autowired
   AutoSurveyRepository autoSurveyRepository;
+
+  ModelMapper mapper = new ModelMapper();
 
   public AutoSurveyService() {
   }
@@ -46,6 +50,7 @@ public class AutoSurveyService {
 
     AutoSurvey survey = new AutoSurvey(
             dto.country(),
+            dto.year(),
             dto.rent(),
             dto.utilities(),
             dto.food(),
@@ -85,6 +90,10 @@ public class AutoSurveyService {
 
     if (!Objects.equals(newSurveyData.country(), "")) {
       storedSurvey.setCountry(newSurveyData.country());
+    }
+
+    if (newSurveyData.year() > 0) {
+      storedSurvey.setYear(newSurveyData.year());
     }
 
     if (newSurveyData.rent() > 0) {
@@ -168,4 +177,19 @@ public class AutoSurveyService {
   public void deleteSurvey(String id) {
     autoSurveyRepository.deleteSurvey(id);
   }
+
+  public Page<AutoSurvey> getPaginatedSurveysController(int page, String country) {
+    if (country.isEmpty()) {
+      return  autoSurveyRepository.getPaginatedSurveys(page);
+    }
+    return autoSurveyRepository.getSurveysByCountry(page, country);
+  }
+
+  public AutoSurveyListResDTO getPaginatedSurveys(int page, String country) {
+    Page<AutoSurvey> surveys = getPaginatedSurveysController(page, country);
+    AutoSurveyListResDTO dto = mapper.map(surveys, AutoSurveyListResDTO.class);
+    dto.setSurveys(surveys.getContent());
+    return dto;
+  }
+
 }

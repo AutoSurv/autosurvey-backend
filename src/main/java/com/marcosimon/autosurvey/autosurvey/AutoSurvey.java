@@ -13,6 +13,7 @@ public class AutoSurvey {
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
     private String country;
+    private long year;
     private long rent;
     private long utilities;
     private long food;
@@ -40,9 +41,10 @@ public class AutoSurvey {
     public AutoSurvey() {
     }
 
-    public AutoSurvey(String id, String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
+    public AutoSurvey(String id, String country, long year, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
         this.id = id;
         this.country = country;
+        this.year = year;
         this.rent = rent;
         this.utilities = utilities;
         this.food = food;
@@ -66,8 +68,9 @@ public class AutoSurvey {
         this.orgName = orgName;
     }
 
-    public AutoSurvey(String country, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
+    public AutoSurvey(String country, long year, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
         this.country = country;
+        this.year = year;
         this.rent = rent;
         this.utilities = utilities;
         this.food = food;
@@ -273,5 +276,13 @@ public class AutoSurvey {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public long getYear() {
+        return year;
+    }
+
+    public void setYear(long year) {
+        this.year = year;
     }
 }

@@ -1,5 +1,8 @@
 package com.marcosimon.autosurvey.user;
 
+
+import com.marcosimon.autosurvey.organization.Organization;
+import com.marcosimon.autosurvey.organization.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,8 @@ public class UserService {
     @Autowired
     private UserDbRepository userRepository;
     @Autowired
+    private OrganizationRepository organizationRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public List<UserModel> getAllUsers() {
@@ -23,17 +28,21 @@ public class UserService {
         return userRepository.findUserModelByUsername(userName).orElse(null);
     }
 
-
     public String createUser(UserModel userModel) {
-        //check if the user already in db
+        UserModel isUser = userRepository.findUserModelByUsername(userModel.getUsername()).orElse(null);
+        if (isUser != null) return null;
+
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         userModel.setRoles(userModel.getRoles().toUpperCase());
+        UserModel newUser =  userRepository.save(userModel);
 
-        //parse mail and check for org.
-            //if not do nothing
-        //add to org
+        Organization org = new Organization ("", newUser);
+        Organization newOrg = organizationRepository.saveOrganization(org);
 
-        userRepository.save(userModel);
-        return String.format("User [%s] has been added to the database", userModel.getUsername());
+        newUser.setOrganization(newOrg);
+        userRepository.save(newUser);
+        return String.format("User [%s] has been added to the database", newUser.getUsername());
+
     }
+
 }

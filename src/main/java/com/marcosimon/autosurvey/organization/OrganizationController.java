@@ -15,18 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
-import java.util.logging.Logger;
+
 
 @Controller
 @RequestMapping("api/organizations")
 @CrossOrigin(origins = "http://localhost:3000")
-public class OrganizationController {
 
-    Logger logger = Logger.getLogger(OrganizationRepository.class.getName());
+public class OrganizationController {
 
     @Autowired
     private OrganizationService service;
@@ -36,7 +32,6 @@ public class OrganizationController {
     private UserService userService;
 
     @GetMapping
-    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<OrganizationResponseDTO>> listOrganizations() {
         return ResponseEntity.ok(service.getAllOrganizations());
     }
@@ -46,19 +41,22 @@ public class OrganizationController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
         if (dto.orgName() == null || dto.orgName().equals(""))  return ResponseEntity.badRequest().build();
-        //check for creator name not null or enpty
-        UserModel creator = userService.getUserByName(dto.creatorName());
 
-        OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(),  creator));
+        System.out.println("creator: " + dto.creatorName());
+        UserModel creator = userService.getUserByName(dto.creatorName());
+        OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(), creator));
+
         if (newOrg == null) return ResponseEntity.unprocessableEntity().build();
 
-        URI location = URI.create((req.getRequestURI() + "/" + newOrg.orgId()));
+        URI location = URI.create((req.getRequestURI() + "/" + newOrg.orgId()).replace("//organizations", "/organizations" ));
         return ResponseEntity.created(location).body(newOrg);
     }
 
     @PatchMapping(path = "{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<OrganizationResponseDTO> patchOrganization(@RequestBody CreateOrganizationDTO dto, @PathVariable String id) {
         OrganizationResponseDTO updatedOrg = service.renameOrganization(id, dto.orgName());
         if(updatedOrg == null) return ResponseEntity.badRequest().build();
@@ -67,6 +65,7 @@ public class OrganizationController {
     }
 
     @DeleteMapping(path = "{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<Organization> deleteOrganization(@PathVariable String id) {
         service.deleteOrganization(id);
         return ResponseEntity.noContent().build();

@@ -43,9 +43,9 @@ public class SecurityConfig {
         return http.cors().and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(new AntPathRequestMatcher("/users/welcome"),
-                        new AntPathRequestMatcher("/users/new"),
-                        new AntPathRequestMatcher("/authenticate"),
-                        new AntPathRequestMatcher("/authenticate/validate") ).permitAll()
+                                 new AntPathRequestMatcher("/users/**"),
+                                 new AntPathRequestMatcher("/authenticate"),
+                                 new AntPathRequestMatcher("/authenticate/validate") ).permitAll()
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
@@ -84,6 +84,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration config = new CorsConfiguration();
+
 
         config.setAllowedOrigins(List.of("http://localhost:3000"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));

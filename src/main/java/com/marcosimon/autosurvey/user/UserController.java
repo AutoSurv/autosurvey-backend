@@ -26,6 +26,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping(path = "{name}")
+    public UserModel getUser(@PathVariable String name) {
+        return  userService.getUserByName(name);
+    }
+
     @PostMapping("/new")
     public String createUser(@RequestBody UserModel userModel) {
         return userService.createUser(userModel);

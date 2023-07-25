@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 
+import com.marcosimon.autosurvey.models.AutoSurveyListResDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 
 
@@ -19,9 +20,8 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("/api/autosurveys")
 @CrossOrigin(origins = "http://localhost:3000")
-public class AutoSurveyController {
 
-  Logger logger = Logger.getLogger(AutoSurveyRepository.class.getName());
+public class AutoSurveyController {
 
   private final AutoSurveyService surveyService;
   private final OrganizationService organizationService;
@@ -31,9 +31,18 @@ public class AutoSurveyController {
     this.organizationService = organizationService;
   }
 
-  @GetMapping
+  /*@GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
     return ResponseEntity.ok(surveyService.getAllSurveys());
+  }
+*/
+  @GetMapping
+  ResponseEntity<AutoSurveyListResDTO> getPaginatedSurveys(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "") String country) {
+    AutoSurveyListResDTO surveys = surveyService.getPaginatedSurveys(page, country);
+    if (surveys.getSurveys().isEmpty() && !surveys.isFirst()){
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(surveys);
   }
 
   @GetMapping("{id}")
@@ -43,7 +52,6 @@ public class AutoSurveyController {
       return ResponseEntity.badRequest().build();
     }
 
-    //if id is a proper UUID
     OrgSurveyDTO survey = surveyService.getSurveyById(id);
 
     if (survey == null) {
@@ -56,7 +64,7 @@ public class AutoSurveyController {
   @PostMapping
   ResponseEntity<OrgSurveyDTO> addNewSurvey(@RequestBody CreateSurveyDTO dto, HttpServletRequest req) {
     OrgSurveyDTO newSurvey = surveyService.addSurvey(dto);
-    URI location = URI.create((req.getRequestURI() + "/" + newSurvey.id()));
+    URI location = URI.create((req.getRequestURI() + "/" + newSurvey.id()).replace("//autosurveys","/autosurveys"));
     return ResponseEntity.created(location).body(newSurvey);
   }
 

@@ -1,8 +1,15 @@
 package com.marcosimon.autosurvey.organization;
 
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcosimon.autosurvey.user.UserModel;
-import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+
 
 
 import java.util.ArrayList;
@@ -16,6 +23,7 @@ public class Organization {
     private String orgId;
     private String orgName;
     private List<String> surveys;
+    @JsonManagedReference
     @DocumentReference
     private List<UserModel> users;
 
@@ -33,6 +41,14 @@ public class Organization {
         this.surveys = new ArrayList<>();
         this.users = new ArrayList<>();
         this.users.add(creatorName);
+    }
+
+    public Organization(String orgId, String orgName, UserModel user) {
+        this.orgId = orgId;
+        this.orgName = orgName;
+        this.surveys = new ArrayList<>();
+        this.users = new ArrayList<>();
+        this.users.add(user);
     }
 
     public String getOrgId() {
@@ -66,4 +82,15 @@ public class Organization {
     public void setUsers(List<UserModel> users) {
         this.users = users;
     }
+
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "orgId='" + orgId + '\'' +
+                ", orgName='" + orgName + '\'' +
+                ", surveys=" + surveys +
+                ", users=" + users +
+                '}';
+    }
+
 }
