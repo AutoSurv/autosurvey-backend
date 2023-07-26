@@ -30,6 +30,7 @@ public class UserService {
 
     public String createUser(UserModel userModel) {
         UserModel isUser = userRepository.findUserModelByUsername(userModel.getUsername()).orElse(null);
+        System.out.println("isUser: " + isUser);
         if (isUser != null) return null;
 
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));

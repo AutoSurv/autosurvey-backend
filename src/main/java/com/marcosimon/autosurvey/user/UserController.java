@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,11 +29,16 @@ public class UserController {
 
     @GetMapping(path = "{name}")
     public UserModel getUser(@PathVariable String name) {
-        return  userService.getUserByName(name);
+
+        UserModel userModel = userService.getUserByName(name);
+        return  userModel;
     }
 
     @PostMapping("/new")
-    public String createUser(@RequestBody UserModel userModel) {
-        return userService.createUser(userModel);
+    public ResponseEntity<String> createUser(@RequestBody UserModel userModel) {
+        String result = userService.createUser(userModel);
+        if (result == null) return  ResponseEntity.status(409).build();
+
+        return ResponseEntity.status(201).build();
     }
 }
