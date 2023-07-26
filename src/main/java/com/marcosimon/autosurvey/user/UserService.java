@@ -36,10 +36,10 @@ public class UserService {
         userModel.setRoles(userModel.getRoles().toUpperCase());
         UserModel newUser =  userRepository.save(userModel);
 
-        Organization org = new Organization ("", newUser);
-        Organization newOrg = organizationRepository.saveOrganization(org);
-
-        newUser.setOrganization(newOrg);
+//        Organization org = new Organization ("", newUser);
+//        Organization newOrg = organizationRepository.saveOrganization(org);
+//
+//        newUser.setOrganization(newOrg);
         userRepository.save(newUser);
         return String.format("User [%s] has been added to the database", newUser.getUsername());
 
