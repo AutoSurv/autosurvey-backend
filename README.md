@@ -12,6 +12,15 @@ https://docs.google.com/presentation/d/1sFLdo-sCgNxrON7Qvv-SB8jJqen10MHNh7Mddato
 ### Application Purpose
 The project is a full-stack team management application. The backend connects to a remote database and provides an API that can be used to edit storage in the database.
 
+### Run the application
+- After cloning the project:
+  - The application uses env.properties file. User must create the file and fill it with the information requested:
+    - Mongo informations (user, passeod, db, cluster)
+    - SIGNING_KEY: randon long alfanumeric string
+    - JWT_256_BIT_SECRET: randon long alfanumeric string
+  - Open it in the IDE and run the application
+  - from terminal: mvn spring-boot:run 
+
 ### Json DATA
 
 <div align=center>
