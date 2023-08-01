@@ -17,21 +17,23 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome, this endpoint is not secure";
+    public ResponseEntity<String> welcome() {
+        return ResponseEntity.ok("Welcome, this endpoint is not secure");
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public List<UserModel> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserModel>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping(path = "{name}")
-    public UserModel getUser(@PathVariable String name) {
+    public ResponseEntity<UserModel> getUser(@PathVariable String name) {
 
         UserModel userModel = userService.getUserByName(name);
-        return  userModel;
+        if (userModel == null) return ResponseEntity.notFound().build();
+
+        return  ResponseEntity.ok(userModel);
     }
 
     @PostMapping("/new")
