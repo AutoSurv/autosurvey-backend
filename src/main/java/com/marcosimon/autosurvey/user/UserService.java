@@ -30,8 +30,10 @@ public class UserService {
 
     public String createUser(UserModel userModel) {
         UserModel isUser = userRepository.findUserModelByUsername(userModel.getUsername()).orElse(null);
-        System.out.println("isUser: " + isUser);
-        if (isUser != null) return null;
+
+        //if user is found return user
+        if (isUser != null) return "present";
+        //String.format("User [%s] already present in the database!", isUser.getUsername());
 
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         userModel.setRoles(userModel.getRoles().toUpperCase());
@@ -42,7 +44,7 @@ public class UserService {
 //
 //        newUser.setOrganization(newOrg);
         userRepository.save(newUser);
-        return String.format("User [%s] has been added to the database", newUser.getUsername());
+        return "created";
 
     }
 

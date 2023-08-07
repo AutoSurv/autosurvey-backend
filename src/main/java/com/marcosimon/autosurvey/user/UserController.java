@@ -39,8 +39,8 @@ public class UserController {
     @PostMapping("/new")
     public ResponseEntity<String> createUser(@RequestBody UserModel userModel) {
         String result = userService.createUser(userModel);
-        if (result == null) return  ResponseEntity.status(409).build();
+        if (result.contains("present")) return  ResponseEntity.status(409).body("User already present");
 
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(201).body(String.format("User created!"));
     }
 }
