@@ -3,11 +3,11 @@ server:
   port: 8080
 debug: true
 spring:
-  config:
-    import: env.properties
-    output:
-      ansi:
-        enabled: always
+  #config:
+  #  import: env.properties
+  #  output:
+  #    ansi:
+  #      enabled: always
 
   sql:
     init:
