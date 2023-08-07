@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("api/organizations")
-@CrossOrigin(origins = "https://autosurvey.vercel.app")
+@CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
 
 public class OrganizationController {
 
