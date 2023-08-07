@@ -23,24 +23,29 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
     public UserModel getUserByName(String userName) {
         return userRepository.findUserModelByUsername(userName).orElse(null);
     }
 
     public String createUser(UserModel userModel) {
         UserModel isUser = userRepository.findUserModelByUsername(userModel.getUsername()).orElse(null);
-        if (isUser != null) return null;
+
+        //if user is found return user
+        if (isUser != null) return "present";
+        //String.format("User [%s] already present in the database!", isUser.getUsername());
 
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         userModel.setRoles(userModel.getRoles().toUpperCase());
         UserModel newUser =  userRepository.save(userModel);
 
-        Organization org = new Organization ("", newUser);
-        Organization newOrg = organizationRepository.saveOrganization(org);
-
-        newUser.setOrganization(newOrg);
+//        Organization org = new Organization ("", newUser);
+//        Organization newOrg = organizationRepository.saveOrganization(org);
+//
+//        newUser.setOrganization(newOrg);
         userRepository.save(newUser);
-        return String.format("User [%s] has been added to the database", newUser.getUsername());
+        return "created";
+
     }
 
 }

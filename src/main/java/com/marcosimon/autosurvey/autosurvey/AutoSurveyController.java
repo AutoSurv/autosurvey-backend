@@ -19,7 +19,8 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/autosurveys")
-@CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000", "https://autosurvey-frontend.vercel.app"})
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class AutoSurveyController {
 
   private final AutoSurveyService surveyService;
@@ -28,11 +29,11 @@ public class AutoSurveyController {
   public AutoSurveyController(AutoSurveyService surveyService, OrganizationService organizationService) {
     this.surveyService = surveyService;
     this.organizationService = organizationService;
-   }
+  }
 
   /*@GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
-       return ResponseEntity.ok(surveyService.getAllSurveys());
+    return ResponseEntity.ok(surveyService.getAllSurveys());
   }
 */
   @GetMapping
@@ -62,8 +63,6 @@ public class AutoSurveyController {
 
   @PostMapping
   ResponseEntity<OrgSurveyDTO> addNewSurvey(@RequestBody CreateSurveyDTO dto, HttpServletRequest req) {
-    if (dto == null) return ResponseEntity.badRequest().build();
-
     OrgSurveyDTO newSurvey = surveyService.addSurvey(dto);
     URI location = URI.create((req.getRequestURI() + "/" + newSurvey.id()).replace("//autosurveys","/autosurveys"));
     return ResponseEntity.created(location).body(newSurvey);
@@ -71,8 +70,7 @@ public class AutoSurveyController {
 
   @PatchMapping("{id}")
   ResponseEntity<OrgSurveyDTO> editSurvey(@RequestBody CreateSurveyDTO dto, @PathVariable String id) {
-    System.out.println("dto: " + dto);
-    if (id == null || id.equals("")) return ResponseEntity.badRequest().build();
+    if (id.equals("")) return ResponseEntity.badRequest().build();
 
     OrgSurveyDTO updatedSurvey = surveyService.updateSurveyData(id, dto);
     if (updatedSurvey == null) return ResponseEntity.notFound().build();
@@ -82,7 +80,7 @@ public class AutoSurveyController {
 
   @DeleteMapping("{id}")
   ResponseEntity deleteSurvey(@PathVariable String id) {
-    if (id == null || id.equals("")) return ResponseEntity.badRequest().build();
+    if (id.equals("")) return ResponseEntity.badRequest().build();
     surveyService.deleteSurvey(id);
     return ResponseEntity.noContent().build();
   }

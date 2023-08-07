@@ -20,7 +20,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("api/organizations")
-@CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000", "https://autosurvey-frontend.vercel.app"})
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class OrganizationController {
 
     @Autowired
@@ -47,6 +48,7 @@ public class OrganizationController {
         System.out.println("creator: " + dto.creatorName());
         UserModel creator = userService.getUserByName(dto.creatorName());
         OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(), creator));
+
         if (newOrg == null) return ResponseEntity.unprocessableEntity().build();
 
         URI location = URI.create((req.getRequestURI() + "/" + newOrg.orgId()).replace("//organizations", "/organizations" ));
@@ -56,10 +58,10 @@ public class OrganizationController {
     @PatchMapping(path = "{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<OrganizationResponseDTO> patchOrganization(@RequestBody CreateOrganizationDTO dto, @PathVariable String id) {
-      OrganizationResponseDTO updatedOrg = service.renameOrganization(id, dto.orgName());
-      if(updatedOrg == null) return ResponseEntity.badRequest().build();
+        OrganizationResponseDTO updatedOrg = service.renameOrganization(id, dto.orgName());
+        if(updatedOrg == null) return ResponseEntity.badRequest().build();
 
-      return ResponseEntity.accepted().body(updatedOrg);
+        return ResponseEntity.accepted().body(updatedOrg);
     }
 
     @DeleteMapping(path = "{id}")

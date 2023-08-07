@@ -175,7 +175,7 @@ public class AutoSurveyService {
   }
 
   public void deleteSurvey(String id) {
-        autoSurveyRepository.deleteSurvey(id);
+    autoSurveyRepository.deleteSurvey(id);
   }
 
   public Page<AutoSurvey> getPaginatedSurveysController(int page, String country) {

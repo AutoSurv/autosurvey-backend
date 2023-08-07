@@ -29,8 +29,8 @@ public class OrganizationRepository {
     }
 
     public Organization getById(String id) {
-       return organizationDbRepository.findById(id).orElse(null);
-     }
+        return organizationDbRepository.findById(id).orElse(null);
+    }
 
     public Organization saveOrganization(Organization organization) {
         System.out.println(organization);

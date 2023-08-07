@@ -1,12 +1,14 @@
 package com.marcosimon.autosurvey.organization;
 
 
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcosimon.autosurvey.user.UserModel;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+
 
 
 
@@ -90,4 +92,5 @@ public class Organization {
                 ", users=" + users +
                 '}';
     }
+
 }

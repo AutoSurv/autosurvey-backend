@@ -21,7 +21,7 @@ public class JWTService {
     @Value("${jwt.secret}")
     private String SECRET;
 
-   public String generateToken(String username) {
+    public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
 
         return createToken(claims, username);

@@ -5,7 +5,7 @@ import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 
 public class SurveyConverter {
 
-   public static OrgSurveyDTO toResponseDto(AutoSurvey autoSurvey) {
+    public static OrgSurveyDTO toResponseDto(AutoSurvey autoSurvey) {
         return new OrgSurveyDTO(
                 autoSurvey.getId(),
                 autoSurvey.getCountry(),
