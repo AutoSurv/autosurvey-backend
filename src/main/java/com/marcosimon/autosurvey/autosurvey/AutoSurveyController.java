@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/autosurveys")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://autosurvey.vercel.app")
 
 public class AutoSurveyController {
 
