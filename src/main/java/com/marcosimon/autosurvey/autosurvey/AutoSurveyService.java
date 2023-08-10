@@ -175,7 +175,6 @@ public class AutoSurveyService {
   }
 
   public void deleteSurvey(String id) {
-    System.out.println("AutoSurveyService.delteSurvey.id: " + id);
     autoSurveyRepository.deleteSurvey(id);
   }
 

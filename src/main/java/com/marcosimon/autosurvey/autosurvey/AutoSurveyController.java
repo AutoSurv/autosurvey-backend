@@ -80,7 +80,6 @@ public class AutoSurveyController {
 
   @DeleteMapping("{id}")
   ResponseEntity deleteSurvey(@PathVariable String id) {
-    System.out.println("AUtoSurveyCOntroller.delteSurvey.id: " + id);
     if (id.equals("")) return ResponseEntity.badRequest().build();
     surveyService.deleteSurvey(id);
     return ResponseEntity.noContent().build();
