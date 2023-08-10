@@ -5,9 +5,7 @@ debug: true
 spring:
   #config:
   #  import: env.properties
-  #  output:
-  #    ansi:
-  #      enabled: always
+
 
   sql:
     init:
