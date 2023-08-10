@@ -46,7 +46,7 @@ public class AutoSurveyRepository {
     }
 
     public void deleteSurvey(String id) {
-
+        System.out.println("AUtosurveyRepository.delteSurvey.id: " + id);
         autoSurveyDbRepository.deleteById(id);
 
     }
