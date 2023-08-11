@@ -40,8 +40,10 @@ public class AutoSurveyService {
   }
 
   public OrgSurveyDTO getSurveyById(String id) {
+    AutoSurvey gotSurvey = autoSurveyRepository.getById(id);
+    if (gotSurvey == null) return null;
 
-    return SurveyConverter.toResponseDto(autoSurveyRepository.getById(id));
+    return SurveyConverter.toResponseDto(gotSurvey);
   }
 
   public OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
