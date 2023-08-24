@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_MANAGER')")
     public ResponseEntity<List<UserModel>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
