@@ -33,7 +33,7 @@ public class JWTController {
             UserModel userModel = userService.getUserByName(authRequestJWT.username());
             if (userModel == null) throw new UsernameNotFoundException("invalid user request!");
 
-            return ResponseEntity.ok(new LoggedUserDto(userModel.getUsername(), userModel.getEmail(), userModel.getRoles(), jwtService.generateToken(authRequestJWT.username())));
+            return ResponseEntity.ok(new LoggedUserDto(userModel.getUsername(), userModel.getEmail(), userModel.getRoles(), userModel.getStatus(), jwtService.generateToken(authRequestJWT.username())));
         } else {
             throw new UsernameNotFoundException("invalid user request!");
         }

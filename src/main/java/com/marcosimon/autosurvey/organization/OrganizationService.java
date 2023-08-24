@@ -75,14 +75,11 @@ public class OrganizationService {
 
     public Organization addUser(String orgId, String userId) {
         Organization org = organizationRepository.getById(orgId);
-        System.out.println("org: " + org);
         UserModel userModel = userService.getUserById(userId);
-        System.out.println("userModel: " + userModel);
         List<UserModel> userModels = org.getUsers();
         userModels.add(userModel);
         org.setUsers(userModels);
-        Organization updatedOrg = organizationRepository.saveOrganization(org);
 
-        return updatedOrg;
+        return organizationRepository.saveOrganization(org);
     }
 }

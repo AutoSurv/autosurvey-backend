@@ -16,6 +16,7 @@ public class UserModel {
     private String password;
     private String email;
     private String roles;
+    private String status;
     @DocumentReference(lazy = true)
     @JsonBackReference
     private Organization organization;
@@ -23,12 +24,13 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String userId, String username, String password, String email, String roles, Organization organization) {
+    public UserModel(String userId, String username, String password, String email, String roles, String status, Organization organization) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.roles = roles;
+        this.status = status;
         this.organization = organization;
     }
 
@@ -70,6 +72,14 @@ public class UserModel {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Organization getOrganization() {
