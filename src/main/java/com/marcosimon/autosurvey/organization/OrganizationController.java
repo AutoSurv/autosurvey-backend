@@ -64,6 +64,14 @@ public class OrganizationController {
         return ResponseEntity.accepted().body(updatedOrg);
     }
 
+    @PatchMapping(path = "{id}/manage")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+    ResponseEntity<Organization> addUserToOrg(@RequestBody UserIdDto UserIdDto, @PathVariable String id) {
+        System.out.println("usernam: " + UserIdDto + ", orgID: " + id);
+        Organization updatedOrg = service.addUser(id, UserIdDto.userId());
+        return ResponseEntity.accepted().body(updatedOrg);
+    }
+
     @DeleteMapping(path = "{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<Organization> deleteOrganization(@PathVariable String id) {

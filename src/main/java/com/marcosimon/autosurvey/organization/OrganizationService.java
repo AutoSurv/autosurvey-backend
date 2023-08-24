@@ -4,6 +4,7 @@ package com.marcosimon.autosurvey.organization;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
 import com.marcosimon.autosurvey.user.UserModel;
+import com.marcosimon.autosurvey.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ public class OrganizationService {
 
     @Autowired
     AutoSurveyRepository autoSurveyRepository;
-
+    @Autowired
+    UserService userService;
 
     public OrganizationService() {
     }
@@ -71,4 +73,16 @@ public class OrganizationService {
         organizationRepository.deleteOrgByName(name);
     }
 
+    public Organization addUser(String orgId, String userId) {
+        Organization org = organizationRepository.getById(orgId);
+        System.out.println("org: " + org);
+        UserModel userModel = userService.getUserById(userId);
+        System.out.println("userModel: " + userModel);
+        List<UserModel> userModels = org.getUsers();
+        userModels.add(userModel);
+        org.setUsers(userModels);
+        Organization updatedOrg = organizationRepository.saveOrganization(org);
+
+        return updatedOrg;
+    }
 }
