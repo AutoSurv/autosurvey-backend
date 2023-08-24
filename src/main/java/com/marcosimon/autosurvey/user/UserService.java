@@ -28,6 +28,10 @@ public class UserService {
         return userRepository.findUserModelByUsername(userName).orElse(null);
     }
 
+    public UserModel getUserById(String id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
     public String createUser(UserModel userModel) {
         UserModel isUser = userRepository.findUserModelByUsername(userModel.getUsername()).orElse(null);
 
