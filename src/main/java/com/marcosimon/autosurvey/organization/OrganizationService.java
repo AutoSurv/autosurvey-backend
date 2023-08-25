@@ -3,6 +3,7 @@ package com.marcosimon.autosurvey.organization;
 
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
+import com.marcosimon.autosurvey.user.UserDbRepository;
 import com.marcosimon.autosurvey.user.UserModel;
 import com.marcosimon.autosurvey.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class OrganizationService {
     AutoSurveyRepository autoSurveyRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    UserDbRepository userRepository;
 
     public OrganizationService() {
     }
@@ -79,7 +82,8 @@ public class OrganizationService {
         List<UserModel> userModels = org.getUsers();
         userModels.add(userModel);
         org.setUsers(userModels);
-
+        userModel.setOrganization(org);
+        userRepository.save(userModel);
         return organizationRepository.saveOrganization(org);
     }
 }
