@@ -67,7 +67,6 @@ public class OrganizationController {
     @PatchMapping(path = "{id}/manage")
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<Organization> addUserToOrg(@RequestBody UserIdDto UserIdDto, @PathVariable String id) {
-        System.out.println("usernam: " + UserIdDto + ", orgID: " + id);
         Organization updatedOrg = service.addUser(id, UserIdDto.userId());
         return ResponseEntity.accepted().body(updatedOrg);
     }
