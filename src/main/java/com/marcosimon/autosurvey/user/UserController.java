@@ -1,5 +1,8 @@
 package com.marcosimon.autosurvey.user;
 
+import com.marcosimon.autosurvey.models.CreateOrganizationDTO;
+import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
+import com.marcosimon.autosurvey.models.UserStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,5 +45,15 @@ public class UserController {
         if (result.contains("present")) return  ResponseEntity.status(409).body("User already present");
 
         return ResponseEntity.status(201).body(String.format("User created!"));
+    }
+
+    @PatchMapping(path = "{name}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+    ResponseEntity<UserModel> patchUser(@RequestBody UserStatusDTO dto, @PathVariable String name) {
+        System.out.println(name);
+        UserModel user = userService.editStatus(name, dto.status());
+        if(user == null) return ResponseEntity.badRequest().build();
+
+        return ResponseEntity.accepted().body(user);
     }
 }
