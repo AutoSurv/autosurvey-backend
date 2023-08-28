@@ -45,7 +45,6 @@ public class OrganizationController {
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {
         if (dto.orgName() == null || dto.orgName().equals(""))  return ResponseEntity.badRequest().build();
 
-        System.out.println("creator: " + dto.creatorName());
         UserModel creator = userService.getUserByName(dto.creatorName());
         OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(), creator));
 
@@ -66,10 +65,22 @@ public class OrganizationController {
 
     @PatchMapping(path = "{id}/manage")
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
-    ResponseEntity<Organization> addUserToOrg(@RequestBody UserIdDto UserIdDto, @PathVariable String id) {
-        Organization updatedOrg = service.addUser(id, UserIdDto.userId());
+    ResponseEntity<Organization> editUserToOrg(@RequestBody UserInfoDto userInfoDto, @PathVariable String id) {
+        OrganizationResponseDTO updatedOrgDto = service.getOrgById(id);
+        Organization updatedOrg = OrganizationConverter.fromDto(updatedOrgDto);
+
+        if(!userInfoDto.status().equals("approved")) {
+             updatedOrg = service.addUser(id, userInfoDto.userId());
+        }
+        if(userInfoDto.status().equals("approved")) {
+             updatedOrg = service.deleteUser(id, userInfoDto.userId());
+        }
+
+
         return ResponseEntity.accepted().body(updatedOrg);
     }
+
+
 
     @DeleteMapping(path = "{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")

@@ -33,7 +33,6 @@ public class OrganizationRepository {
     }
 
     public Organization saveOrganization(Organization organization) {
-        System.out.println(organization);
         return organizationDbRepository.save(organization); }
 
     public void saveOrganizations(List<Organization> orgs) { organizationDbRepository.saveAll(orgs);}

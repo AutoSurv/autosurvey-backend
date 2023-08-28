@@ -50,7 +50,6 @@ public class UserController {
     @PatchMapping(path = "{name}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<UserModel> patchUser(@RequestBody UserStatusDTO dto, @PathVariable String name) {
-        System.out.println(name);
         UserModel user = userService.editStatus(name, dto.status());
         if(user == null) return ResponseEntity.badRequest().build();
 

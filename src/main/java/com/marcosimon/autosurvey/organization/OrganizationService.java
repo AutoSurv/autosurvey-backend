@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrganizationService {
@@ -79,10 +80,24 @@ public class OrganizationService {
     public Organization addUser(String orgId, String userId) {
         Organization org = organizationRepository.getById(orgId);
         UserModel userModel = userService.getUserById(userId);
+        if(org.getUsers().contains(userModel)) {
+            return org;
+        }
         List<UserModel> userModels = org.getUsers();
         userModels.add(userModel);
         org.setUsers(userModels);
         userModel.setOrganization(org);
+        userRepository.save(userModel);
+        return organizationRepository.saveOrganization(org);
+    }
+
+    public Organization deleteUser(String orgId, String userId) {
+        Organization org = organizationRepository.getById(orgId);
+        UserModel userModel = userService.getUserById(userId);
+        List<UserModel> userModels = org.getUsers();
+        List<UserModel> filteredUser = userModels.stream().filter(user -> !user.getUserId().equals(userId)).collect(Collectors.toList());
+        org.setUsers(filteredUser);
+        userModel.setOrganization(null);
         userRepository.save(userModel);
         return organizationRepository.saveOrganization(org);
     }

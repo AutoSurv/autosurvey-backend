@@ -54,7 +54,6 @@ public class UserService {
 
     public UserModel editStatus(String name, String status) {
         UserModel user = userRepository.findUserModelByUsername(name).orElse(null);
-        System.out.println("user: " + user);
         if (user != null) {
             user.setStatus(status);
             UserModel updatedUser = userRepository.save(user);
