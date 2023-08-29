@@ -13,25 +13,25 @@ public class AutoSurvey {
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
     private String country;
-    private long year;
-    private long rent;
-    private long utilities;
-    private long food;
-    private long basicItems;
-    private long transportation;
-    private long educationTotal;
-    private long educationSupplies;
-    private long educationFee;
+    private Long year;
+    private Long rent;
+    private Long utilities;
+    private Long food;
+    private Long basicItems;
+    private Long transportation;
+    private Long educationTotal;
+    private Long educationSupplies;
+    private Long educationFee;
     private String educationType;
     private String accommodationType;
     private String profession;
     private String locationGiven;
     private String locationClustered;
-    private int numResidents;
-    private int numIncomes;
-    private int numFullIncomes;
-    private int numChildren;
-    private long totalIncome;
+    private Integer numResidents;
+    private Integer numIncomes;
+    private Integer numFullIncomes;
+    private Integer numChildren;
+    private Long totalIncome;
     private String comments;
     private String orgId;
     private String orgName;
@@ -41,7 +41,7 @@ public class AutoSurvey {
     public AutoSurvey() {
     }
 
-    public AutoSurvey(String id, String country, long year, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
+    public AutoSurvey(String id, String country, Long year, Long rent, Long utilities, Long food, Long basicItems, Long transportation, Long educationTotal, Long educationSupplies, Long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes, Integer numChildren, Long totalIncome, String comments, String orgId, String orgName) {
         this.id = id;
         this.country = country;
         this.year = year;
@@ -68,7 +68,7 @@ public class AutoSurvey {
         this.orgName = orgName;
     }
 
-    public AutoSurvey(String country, long year, long rent, long utilities, long food, long basicItems, long transportation, long educationTotal, long educationSupplies, long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, int numResidents, int numIncomes, int numFullIncomes, int numChildren, long totalIncome, String comments, String orgId, String orgName) {
+    public AutoSurvey(String country, Long year, Long rent, Long utilities, Long food, Long basicItems, Long transportation, Long educationTotal, Long educationSupplies, Long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes, Integer numChildren, Long totalIncome, String comments, String orgId, String orgName) {
         this.country = country;
         this.year = year;
         this.rent = rent;
@@ -110,67 +110,67 @@ public class AutoSurvey {
         this.country = country;
     }
 
-    public long getRent() {
+    public Long getRent() {
         return rent;
     }
 
-    public void setRent(long rent) {
+    public void setRent(Long rent) {
         this.rent = rent;
     }
 
-    public long getUtilities() {
+    public Long getUtilities() {
         return utilities;
     }
 
-    public void setUtilities(long utilities) {
+    public void setUtilities(Long utilities) {
         this.utilities = utilities;
     }
 
-    public long getFood() {
+    public Long getFood() {
         return food;
     }
 
-    public void setFood(long food) {
+    public void setFood(Long food) {
         this.food = food;
     }
 
-    public long getBasicItems() {
+    public Long getBasicItems() {
         return basicItems;
     }
 
-    public void setBasicItems(long basicItems) {
+    public void setBasicItems(Long basicItems) {
         this.basicItems = basicItems;
     }
 
-    public long getTransportation() {
+    public Long getTransportation() {
         return transportation;
     }
 
-    public void setTransportation(long transportation) {
+    public void setTransportation(Long transportation) {
         this.transportation = transportation;
     }
 
-    public long getEducationTotal() {
+    public Long getEducationTotal() {
         return educationTotal;
     }
 
-    public void setEducationTotal(long educationTotal) {
+    public void setEducationTotal(Long educationTotal) {
         this.educationTotal = educationTotal;
     }
 
-    public long getEducationSupplies() {
+    public Long getEducationSupplies() {
         return educationSupplies;
     }
 
-    public void setEducationSupplies(long educationSupplies) {
+    public void setEducationSupplies(Long educationSupplies) {
         this.educationSupplies = educationSupplies;
     }
 
-    public long getEducationFee() {
+    public Long getEducationFee() {
         return educationFee;
     }
 
-    public void setEducationFee(long educationFee) {
+    public void setEducationFee(Long educationFee) {
         this.educationFee = educationFee;
     }
 
@@ -214,43 +214,43 @@ public class AutoSurvey {
         this.locationClustered = locationClustered;
     }
 
-    public int getNumResidents() {
+    public Integer getNumResidents() {
         return numResidents;
     }
 
-    public void setNumResidents(int numResidents) {
+    public void setNumResidents(Integer numResidents) {
         this.numResidents = numResidents;
     }
 
-    public int getNumIncomes() {
+    public Integer getNumIncomes() {
         return numIncomes;
     }
 
-    public void setNumIncomes(int numIncomes) {
+    public void setNumIncomes(Integer numIncomes) {
         this.numIncomes = numIncomes;
     }
 
-    public int getNumFullIncomes() {
+    public Integer getNumFullIncomes() {
         return numFullIncomes;
     }
 
-    public void setNumFullIncomes(int numFullIncomes) {
+    public void setNumFullIncomes(Integer numFullIncomes) {
         this.numFullIncomes = numFullIncomes;
     }
 
-    public int getNumChildren() {
+    public Integer getNumChildren() {
         return numChildren;
     }
 
-    public void setNumChildren(int numChildren) {
+    public void setNumChildren(Integer numChildren) {
         this.numChildren = numChildren;
     }
 
-    public long getTotalIncome() {
+    public Long getTotalIncome() {
         return totalIncome;
     }
 
-    public void setTotalIncome(long totalIncome) {
+    public void setTotalIncome(Long totalIncome) {
         this.totalIncome = totalIncome;
     }
 
@@ -278,11 +278,11 @@ public class AutoSurvey {
         this.orgName = orgName;
     }
 
-    public long getYear() {
+    public Long getYear() {
         return year;
     }
 
-    public void setYear(long year) {
+    public void setYear(Long year) {
         this.year = year;
     }
 }
