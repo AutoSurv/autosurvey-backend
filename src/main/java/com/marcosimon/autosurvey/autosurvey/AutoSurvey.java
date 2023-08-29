@@ -1,7 +1,10 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.marcosimon.autosurvey.organization.Organization;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -33,15 +36,18 @@ public class AutoSurvey {
     private Integer numChildren;
     private Long totalIncome;
     private String comments;
-    private String orgId;
-    private String orgName;
+
+    @DocumentReference(lazy = true)
+    @JsonBackReference
+    private Organization organization;
+
 
 
 
     public AutoSurvey() {
     }
 
-    public AutoSurvey(String id, String country, Long year, Long rent, Long utilities, Long food, Long basicItems, Long transportation, Long educationTotal, Long educationSupplies, Long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes, Integer numChildren, Long totalIncome, String comments, String orgId, String orgName) {
+    public AutoSurvey(String id, String country, Long year, Long rent, Long utilities, Long food, Long basicItems, Long transportation, Long educationTotal, Long educationSupplies, Long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes, Integer numChildren, Long totalIncome, String comments, Organization organization) {
         this.id = id;
         this.country = country;
         this.year = year;
@@ -64,11 +70,10 @@ public class AutoSurvey {
         this.numChildren = numChildren;
         this.totalIncome = totalIncome;
         this.comments = comments;
-        this.orgId = orgId;
-        this.orgName = orgName;
+        this.organization = organization;
     }
 
-    public AutoSurvey(String country, Long year, Long rent, Long utilities, Long food, Long basicItems, Long transportation, Long educationTotal, Long educationSupplies, Long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes, Integer numChildren, Long totalIncome, String comments, String orgId, String orgName) {
+    public AutoSurvey(String country, Long year, Long rent, Long utilities, Long food, Long basicItems, Long transportation, Long educationTotal, Long educationSupplies, Long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes, Integer numChildren, Long totalIncome, String comments, Organization organization) {
         this.country = country;
         this.year = year;
         this.rent = rent;
@@ -90,8 +95,8 @@ public class AutoSurvey {
         this.numChildren = numChildren;
         this.totalIncome = totalIncome;
         this.comments = comments;
-        this.orgId = orgId;
-        this.orgName = orgName;
+        this.organization = organization;
+
     }
 
     public String getId() {
@@ -262,27 +267,19 @@ public class AutoSurvey {
         this.comments = comments;
     }
 
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public void setOrgId(String orgId) {
-        this.orgId = orgId;
-    }
-
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
-    }
-
     public Long getYear() {
         return year;
     }
 
     public void setYear(Long year) {
         this.year = year;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }

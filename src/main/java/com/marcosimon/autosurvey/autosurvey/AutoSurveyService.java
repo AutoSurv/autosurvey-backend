@@ -48,7 +48,7 @@ public class AutoSurveyService {
 
   public OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
 
-    Organization org = organizationRepository.getById(dto.orgId());
+    Organization org = organizationRepository.getById(dto.organization().getOrgId());
 
     AutoSurvey survey = new AutoSurvey(
             dto.country(),
@@ -72,11 +72,11 @@ public class AutoSurveyService {
             dto.numChildren(),
             dto.totalIncome(),
             dto.comments(),
-            dto.orgId(),
-            org.getOrgName());
+            dto.organization());
     AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey); //to have id
-    List<String> orgToSurvey = org.getSurveys();
-    orgToSurvey.add(newSurvey.getId());
+    System.out.println(newSurvey.getOrganization());
+    List<AutoSurvey> orgToSurvey = org.getSurveys();
+    orgToSurvey.add(newSurvey);
     org.setSurveys(orgToSurvey);
     organizationRepository.saveOrganization(org);
     return SurveyConverter.toResponseDto(newSurvey);

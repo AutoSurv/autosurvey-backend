@@ -36,13 +36,13 @@ public class OrganizationService {
 
     public List<OrganizationResponseDTO> getAllOrganizations() {
         return organizationRepository.listOrganizations().stream().map(org -> {
-            return OrganizationConverter.toResponseDto(org, autoSurveyRepository.getSurveyByIds(org.getSurveys()));
+            return OrganizationConverter.toResponseDto(org, org.getSurveys());
         }).toList();
     }
 
     public OrganizationResponseDTO getOrgById(String id) {
         Organization org = organizationRepository.getById(id);
-        return OrganizationConverter.toResponseDto(org, autoSurveyRepository.getSurveyByIds(org.getSurveys()));
+        return OrganizationConverter.toResponseDto(org, org.getSurveys());
     }
 
 
@@ -51,7 +51,7 @@ public class OrganizationService {
         Organization existingOrg = organizationRepository.getByOrgName(org.getOrgName());
         if(existingOrg == null) {
             //add creator to org
-            return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), autoSurveyRepository.getSurveyByIds(org.getSurveys()));
+            return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), org.getSurveys());
         }
         return null;
     }
@@ -61,14 +61,14 @@ public class OrganizationService {
         Organization existingOrg = organizationRepository.getByOrgName(name);
         if (existingOrg == null) {
             org.setOrgName(name);
-            return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), autoSurveyRepository.getSurveyByIds(org.getSurveys()));
+            return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), org.getSurveys());
         }
         return  null;
     }
 
     public void deleteOrganization(String orgId) {
         Organization org = organizationRepository.getById(orgId);
-        org.getSurveys().forEach(i -> autoSurveyRepository.deleteSurvey(i));
+        org.getSurveys().forEach(i -> autoSurveyRepository.deleteSurvey(i.getId()));
         organizationRepository.deleteOrganization(orgId);
     }
 

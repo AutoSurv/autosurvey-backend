@@ -3,6 +3,7 @@ package com.marcosimon.autosurvey.organization;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.user.UserModel;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
@@ -22,7 +23,9 @@ public class Organization {
     @MongoId(value = FieldType.OBJECT_ID)
     private String orgId;
     private String orgName;
-    private List<String> surveys;
+    @JsonManagedReference
+    @DocumentReference
+    private List<AutoSurvey> surveys;
     @JsonManagedReference
     @DocumentReference
     private List<UserModel> users;
@@ -30,10 +33,10 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(String orgId, String orgName, List<String> surveys) {
+    public Organization(String orgId, String orgName, List<AutoSurvey> surveys) {
         this.orgId = orgId;
         this.orgName = orgName;
-        this.surveys = surveys;
+        this.surveys = new ArrayList<>();
         this.users = new ArrayList<>();
     }
     public Organization(String orgName, UserModel creatorName) {
@@ -67,11 +70,11 @@ public class Organization {
         this.orgName = orgName;
     }
 
-    public List<String> getSurveys() {
+    public List<AutoSurvey> getSurveys() {
         return surveys;
     }
 
-    public void setSurveys(List<String> surveys) {
+    public void setSurveys(List<AutoSurvey> surveys) {
         this.surveys = surveys;
     }
 

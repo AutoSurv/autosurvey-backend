@@ -32,15 +32,14 @@ public class OrganizationConverter {
                     autoSurvey.getNumChildren(),
                     autoSurvey.getTotalIncome(),
                     autoSurvey.getComments(),
-                    autoSurvey.getOrgId(),
-                    autoSurvey.getOrgName());
+                    autoSurvey.getOrganization());
         }).toList();
-        return new OrganizationResponseDTO(organization.getOrgId(), organization.getOrgName(), surveyDTOS, organization.getUsers());
+        return new OrganizationResponseDTO(organization.getOrgId(), organization.getOrgName(), surveys, organization.getUsers());
     }
 
     public static Organization fromDto(OrganizationResponseDTO dto) {
-        List<String> surveys = dto.surveys().stream().map(OrgSurveyDTO::id).toList();
-        return new Organization(dto.orgId(), dto.orgName(), surveys);
+        //List<AutoSurvey> surveys = dto.surveys().stream().map(OrgSurveyDTO::id).toList();
+        return new Organization(dto.orgId(), dto.orgName(), dto.surveys());
     }
 
 }
