@@ -6,23 +6,23 @@ public record CreateSurveyDTO(
       @JsonProperty("country")
       String country,
       @JsonProperty("year")
-      long year,
+      Long year,
       @JsonProperty("rent")
-      long rent,
+      Long rent,
       @JsonProperty("utilities")
-      long utilities,
+      Long utilities,
       @JsonProperty("food")
-      long food,
+      Long food,
       @JsonProperty("basicItems")
-      long basicItems,
+      Long basicItems,
       @JsonProperty("transportation")
-      long transportation,
+      Long transportation,
       @JsonProperty("educationTotal")
-      long educationTotal,
+      Long educationTotal,
       @JsonProperty("educationSupplies")
-      long educationSupplies,
+      Long educationSupplies,
       @JsonProperty("educationFee")
-      long educationFee,
+      Long educationFee,
       @JsonProperty("educationType")
       String educationType,
       @JsonProperty("accommodationType")
@@ -34,15 +34,15 @@ public record CreateSurveyDTO(
       @JsonProperty("locationClustered")
       String locationClustered,
       @JsonProperty("numResidents")
-      int numResidents,
+      Integer numResidents,
       @JsonProperty("numIncomes")
-      int numIncomes,
+      Integer numIncomes,
       @JsonProperty("numFullIncomes")
-      int numFullIncomes,
+      Integer numFullIncomes,
       @JsonProperty("numChildren")
-      int numChildren,
+      Integer numChildren,
       @JsonProperty("totalIncome")
-      long totalIncome,
+      Long totalIncome,
       @JsonProperty("comments")
       String comments,
       @JsonProperty("orgId")
