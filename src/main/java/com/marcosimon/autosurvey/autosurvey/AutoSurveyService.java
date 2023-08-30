@@ -100,35 +100,35 @@ public class AutoSurveyService {
       storedSurvey.setYear(newSurveyData.year());
     }
 
-    if (newSurveyData.rent() != null && newSurveyData.rent() > 0) {
+    if (newSurveyData.rent() != null && newSurveyData.rent() >= 0) {
       storedSurvey.setRent(newSurveyData.rent());
     }
 
-    if (newSurveyData.utilities() != null && newSurveyData.utilities() > 0) {
+    if (newSurveyData.utilities() != null && newSurveyData.utilities() >= 0) {
       storedSurvey.setUtilities(newSurveyData.utilities());
     }
 
-    if (newSurveyData.food() != null && newSurveyData.food() > 0) {
+    if (newSurveyData.food() != null && newSurveyData.food() >= 0) {
       storedSurvey.setFood(newSurveyData.food());
     }
 
-    if (newSurveyData.basicItems() != null && newSurveyData.basicItems() > 0) {
+    if (newSurveyData.basicItems() != null && newSurveyData.basicItems() >= 0) {
       storedSurvey.setBasicItems(newSurveyData.basicItems());
     }
 
-    if (newSurveyData.transportation() != null && newSurveyData.transportation() > 0) {
+    if (newSurveyData.transportation() != null && newSurveyData.transportation() >= 0) {
       storedSurvey.setTransportation(newSurveyData.transportation());
     }
 
-    if (newSurveyData.educationTotal() != null && newSurveyData.educationTotal() > 0) {
+    if (newSurveyData.educationTotal() != null && newSurveyData.educationTotal() >= 0) {
       storedSurvey.setEducationTotal(newSurveyData.educationTotal());
     }
 
-    if (newSurveyData.educationSupplies() != null && newSurveyData.educationSupplies() > 0) {
+    if (newSurveyData.educationSupplies() != null && newSurveyData.educationSupplies() >= 0) {
       storedSurvey.setEducationSupplies(newSurveyData.educationSupplies());
     }
 
-    if (newSurveyData.educationFee() != null && newSurveyData.educationFee() > 0) {
+    if (newSurveyData.educationFee() != null && newSurveyData.educationFee() >= 0) {
       storedSurvey.setEducationFee(newSurveyData.educationFee());
     }
 
@@ -152,23 +152,23 @@ public class AutoSurveyService {
       storedSurvey.setLocationClustered(newSurveyData.locationClustered());
     }
 
-    if (newSurveyData.numResidents() != null && newSurveyData.numResidents() > 0) {
+    if (newSurveyData.numResidents() != null && newSurveyData.numResidents() >= 0) {
       storedSurvey.setNumResidents(newSurveyData.numResidents());
     }
 
-    if (newSurveyData.numIncomes() != null && newSurveyData.numIncomes() > 0) {
+    if (newSurveyData.numIncomes() != null && newSurveyData.numIncomes() >= 0) {
       storedSurvey.setNumIncomes(newSurveyData.numIncomes());
     }
 
-    if (newSurveyData.numFullIncomes() != null && newSurveyData.numFullIncomes() > 0) {
+    if (newSurveyData.numFullIncomes() != null && newSurveyData.numFullIncomes() >= 0) {
       storedSurvey.setNumFullIncomes(newSurveyData.numFullIncomes());
     }
 
-    if (newSurveyData.numChildren() != null && newSurveyData.numChildren() > 0) {
+    if (newSurveyData.numChildren() != null && newSurveyData.numChildren() >= 0) {
       storedSurvey.setNumChildren(newSurveyData.numChildren());
     }
 
-    if (newSurveyData.totalIncome() != null && newSurveyData.totalIncome() > 0) {
+    if (newSurveyData.totalIncome() != null && newSurveyData.totalIncome() >= 0) {
       storedSurvey.setTotalIncome(newSurveyData.totalIncome());
     }
 
