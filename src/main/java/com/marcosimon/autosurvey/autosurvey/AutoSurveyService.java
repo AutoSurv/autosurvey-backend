@@ -73,13 +73,17 @@ public class AutoSurveyService {
             dto.totalIncome(),
             dto.comments(),
             dto.organization());
-    AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey); //to have id
-    System.out.println(newSurvey.getOrganization());
+    AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey);
+    System.out.println(dto.organization().getOrgName());
+    System.out.println("1"+newSurvey.getOrganization());
     List<AutoSurvey> orgToSurvey = org.getSurveys();
     orgToSurvey.add(newSurvey);
     org.setSurveys(orgToSurvey);
-    organizationRepository.saveOrganization(org);
-    return SurveyConverter.toResponseDto(newSurvey);
+    Organization organization = organizationRepository.saveOrganization(org);
+    newSurvey.setOrganization(organization);
+    System.out.println("2"+newSurvey.getOrganization());
+    AutoSurvey updateNewSurvey = autoSurveyRepository.saveSurvey(newSurvey);
+    return SurveyConverter.toResponseDto(updateNewSurvey);
 
   }
 
@@ -191,6 +195,7 @@ public class AutoSurveyService {
     Page<AutoSurvey> surveys = getPaginatedSurveysController(page, country);
     AutoSurveyListResDTO dto = mapper.map(surveys, AutoSurveyListResDTO.class);
     dto.setSurveys(surveys.getContent());
+    System.out.println(dto.getSurveys().get(0).getOrganization().getOrgName());
     return dto;
   }
 

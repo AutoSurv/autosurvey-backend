@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
-import java.util.logging.Logger;
 
 
 @RestController
@@ -31,19 +30,20 @@ public class AutoSurveyController {
     this.organizationService = organizationService;
   }
 
-  /*@GetMapping
+  @GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
     return ResponseEntity.ok(surveyService.getAllSurveys());
   }
-*/
-  @GetMapping
+
+  /*@GetMapping
   ResponseEntity<AutoSurveyListResDTO> getPaginatedSurveys(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "") String country) {
     AutoSurveyListResDTO surveys = surveyService.getPaginatedSurveys(page, country);
+    System.out.println(surveys.getSurveys().get(0).getOrganization().getOrgName());
     if (surveys.getSurveys().isEmpty() && !surveys.isFirst()){
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(surveys);
-  }
+  }*/
 
   @GetMapping("{id}")
   ResponseEntity<OrgSurveyDTO> getSurvey(@PathVariable String id) {
@@ -64,6 +64,7 @@ public class AutoSurveyController {
   @PostMapping
   ResponseEntity<OrgSurveyDTO> addNewSurvey(@RequestBody CreateSurveyDTO dto, HttpServletRequest req) {
     OrgSurveyDTO newSurvey = surveyService.addSurvey(dto);
+    System.out.println("3"+newSurvey.organization());
     URI location = URI.create((req.getRequestURI() + "/" + newSurvey.id()).replace("//autosurveys","/autosurveys"));
     return ResponseEntity.created(location).body(newSurvey);
   }
