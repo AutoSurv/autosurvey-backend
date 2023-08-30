@@ -67,7 +67,7 @@ public class OrganizationController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<Organization> editUserToOrg(@RequestBody UserInfoDto userInfoDto, @PathVariable String id) {
         OrganizationResponseDTO updatedOrgDto = service.getOrgById(id);
-        Organization updatedOrg = OrganizationConverter.fromDto(updatedOrgDto);
+        Organization updatedOrg = new Organization(updatedOrgDto.orgId(), updatedOrgDto.orgName(), updatedOrgDto.surveys());
 
         if(!userInfoDto.status().equals("approved")) {
              updatedOrg = service.addUser(id, userInfoDto.userId());

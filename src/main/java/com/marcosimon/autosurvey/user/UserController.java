@@ -1,7 +1,5 @@
 package com.marcosimon.autosurvey.user;
 
-import com.marcosimon.autosurvey.models.CreateOrganizationDTO;
-import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
 import com.marcosimon.autosurvey.models.UserStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +32,6 @@ public class UserController {
     public ResponseEntity<UserModel> getUser(@PathVariable String name) {
 
         UserModel userModel = userService.getUserByName(name);
-        System.out.println("getUSer.usermode.status: " + userModel.getStatus());
         if (userModel == null) return ResponseEntity.notFound().build();
 
         return  ResponseEntity.ok(userModel);

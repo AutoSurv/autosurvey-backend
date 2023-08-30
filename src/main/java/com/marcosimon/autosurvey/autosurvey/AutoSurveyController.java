@@ -64,7 +64,6 @@ public class AutoSurveyController {
   @PostMapping
   ResponseEntity<OrgSurveyDTO> addNewSurvey(@RequestBody CreateSurveyDTO dto, HttpServletRequest req) {
     OrgSurveyDTO newSurvey = surveyService.addSurvey(dto);
-    System.out.println("3"+newSurvey.organization());
     URI location = URI.create((req.getRequestURI() + "/" + newSurvey.id()).replace("//autosurveys","/autosurveys"));
     return ResponseEntity.created(location).body(newSurvey);
   }

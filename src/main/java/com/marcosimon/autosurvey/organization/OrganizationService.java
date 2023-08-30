@@ -35,14 +35,15 @@ public class OrganizationService {
 
 
     public List<OrganizationResponseDTO> getAllOrganizations() {
+
         return organizationRepository.listOrganizations().stream().map(org -> {
-            return OrganizationConverter.toResponseDto(org, org.getSurveys());
+            return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveys(), org.getUsers());
         }).toList();
     }
 
     public OrganizationResponseDTO getOrgById(String id) {
         Organization org = organizationRepository.getById(id);
-        return OrganizationConverter.toResponseDto(org, org.getSurveys());
+        return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveys(), org.getUsers());
     }
 
 
@@ -51,7 +52,8 @@ public class OrganizationService {
         Organization existingOrg = organizationRepository.getByOrgName(org.getOrgName());
         if(existingOrg == null) {
             //add creator to org
-            return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), org.getSurveys());
+            organizationRepository.saveOrganization(org);
+            return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveys(), org.getUsers());
         }
         return null;
     }
@@ -61,7 +63,8 @@ public class OrganizationService {
         Organization existingOrg = organizationRepository.getByOrgName(name);
         if (existingOrg == null) {
             org.setOrgName(name);
-            return OrganizationConverter.toResponseDto(organizationRepository.saveOrganization(org), org.getSurveys());
+            Organization renamedOrg = organizationRepository.saveOrganization(org);
+            return new OrganizationResponseDTO(renamedOrg.getOrgId(), renamedOrg.getOrgName(), renamedOrg.getSurveys(), renamedOrg.getUsers());
         }
         return  null;
     }
