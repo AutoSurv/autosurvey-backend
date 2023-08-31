@@ -183,10 +183,9 @@ public class AutoSurveyService {
     Organization org = organizationRepository.getById(surveyToDelete.getOrganization().getOrgId());
     List<AutoSurvey> surveyList = org.getSurveys();
 
-    List<AutoSurvey> newList = surveyList.stream().filter(survey -> {
-      boolean b = !Objects.equals(survey.getId(), surveyToDelete.getId());
-      return b;
-    }).toList();
+    List<AutoSurvey> newList = surveyList.stream().filter(survey ->
+       !Objects.equals(survey.getId(), surveyToDelete.getId())
+    ).toList();
 
     org.setSurveys(newList);
     organizationRepository.saveOrganization(org);
