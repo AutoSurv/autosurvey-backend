@@ -24,10 +24,10 @@ public class Organization {
     private String orgId;
     private String orgName;
     @JsonManagedReference
-    @DocumentReference
+    @DocumentReference(lazy = true)
     private List<AutoSurvey> surveys;
     @JsonManagedReference
-    @DocumentReference
+    @DocumentReference(lazy = true)
     private List<UserModel> users;
 
     public Organization() {
