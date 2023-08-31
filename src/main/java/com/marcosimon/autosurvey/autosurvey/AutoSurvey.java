@@ -37,7 +37,7 @@ public class AutoSurvey {
     private Long totalIncome;
     private String comments;
 
-    @DocumentReference//(lazy = true)
+    @DocumentReference(lazy = true)
     @JsonBackReference
     private Organization organization;
 
