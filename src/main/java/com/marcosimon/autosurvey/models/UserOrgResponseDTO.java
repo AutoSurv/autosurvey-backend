@@ -9,11 +9,10 @@ public record UserOrgResponseDTO(
                                  @JsonProperty("username")
                                  String username,
                                  @JsonProperty
-                                 String password,
-                                 @JsonProperty
                                  String email,
                                  @JsonProperty
                                  String roles,
                                  @JsonProperty
-                                 Organization organization) {
+                                 String status
+          ) {
 }

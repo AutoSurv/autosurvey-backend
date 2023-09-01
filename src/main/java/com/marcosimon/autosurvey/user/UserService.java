@@ -1,12 +1,14 @@
 package com.marcosimon.autosurvey.user;
 
 
+import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
 import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.organization.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,13 +21,34 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<UserModel> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserOrgResponseDTO> getAllUsers() {
+        List<UserModel> userModels = userRepository.findAll();
+        List<UserOrgResponseDTO> dtoList = new ArrayList<>();
+        for(UserModel userModel : userModels) {
+            dtoList.add(new UserOrgResponseDTO(userModel.getUserId(),
+                            userModel.getUsername(),
+                            userModel.getEmail(),
+                            userModel.getRoles(),
+                            userModel.getStatus()));
+        }
+        return dtoList;
     }
 
 
     public UserModel getUserByName(String userName) {
         return userRepository.findUserModelByUsername(userName).orElse(null);
+    }
+
+    public UserOrgResponseDTO getUserDtoByName(String userName) {
+        UserModel userModel = userRepository.findUserModelByUsername(userName).orElse(null);
+        if(userModel != null) return new UserOrgResponseDTO(
+                userModel.getUserId(),
+                userModel.getUsername(),
+                userModel.getEmail(),
+                userModel.getRoles(),
+                userModel.getStatus());
+
+        return null;
     }
 
     public UserModel getUserById(String id) {

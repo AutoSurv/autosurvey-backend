@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.user;
 
+import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
 import com.marcosimon.autosurvey.models.UserStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,17 +25,18 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_MANAGER')")
-    public ResponseEntity<List<UserModel>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<UserOrgResponseDTO>> getAllUsers() {
+        List<UserOrgResponseDTO> dtoList = userService.getAllUsers();
+        return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping(path = "{name}")
-    public ResponseEntity<UserModel> getUser(@PathVariable String name) {
+    public ResponseEntity<UserOrgResponseDTO> getUser(@PathVariable String name) {
 
-        UserModel userModel = userService.getUserByName(name);
-        if (userModel == null) return ResponseEntity.notFound().build();
+        UserOrgResponseDTO userDto = userService.getUserDtoByName(name);
+        if (userDto == null) return ResponseEntity.notFound().build();
 
-        return  ResponseEntity.ok(userModel);
+        return  ResponseEntity.ok(userDto);
     }
 
     @PostMapping("/new")
