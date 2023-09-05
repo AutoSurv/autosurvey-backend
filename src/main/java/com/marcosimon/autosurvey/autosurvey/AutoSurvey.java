@@ -7,9 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
-
-import javax.persistence.Version;
-
+import org.springframework.data.annotation.Version;
 
 @Document
 public class AutoSurvey {
