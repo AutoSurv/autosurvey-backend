@@ -9,13 +9,10 @@ import com.marcosimon.autosurvey.organization.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
-import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 import java.util.Objects;
 
-@Transactional
 @Service
 public class AutoSurveyService {
 
@@ -48,7 +45,7 @@ public class AutoSurveyService {
     return SurveyConverter.toResponseDto(gotSurvey);
   }
 
-  public OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
+  public synchronized OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
 
     Organization org = organizationRepository.getById(dto.organization().getOrgId());
 
@@ -76,9 +73,16 @@ public class AutoSurveyService {
             dto.comments(),
             dto.organization());
     AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey);
-    List<AutoSurvey> orgToSurvey = org.getSurveys();
-    orgToSurvey.add(newSurvey);
-    org.setSurveys(orgToSurvey);
+
+    try {
+      List<AutoSurvey> orgToSurvey = org.getSurveys();
+      orgToSurvey.add(newSurvey);
+      org.setSurveys(orgToSurvey);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw  e;
+    }
+
     Organization organization = organizationRepository.saveOrganization(org);
     newSurvey.setOrganization(organization);
     AutoSurvey updateNewSurvey = autoSurveyRepository.saveSurvey(newSurvey);

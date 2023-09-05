@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
-import org.springframework.data.annotation.Version;
 
 @Document
 public class AutoSurvey {
@@ -39,7 +38,6 @@ public class AutoSurvey {
 
     @DocumentReference(lazy = true)
     @JsonBackReference
-    @Version
     private Organization organization;
 
 

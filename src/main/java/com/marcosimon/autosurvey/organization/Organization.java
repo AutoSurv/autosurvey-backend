@@ -5,7 +5,6 @@ package com.marcosimon.autosurvey.organization;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.user.UserModel;
-import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -24,7 +23,6 @@ public class Organization {
     private String orgName;
     @JsonManagedReference
     @DocumentReference(lazy = true)
-    @Version
     private List<AutoSurvey> surveys;
     @JsonManagedReference
     @DocumentReference(lazy = true)
