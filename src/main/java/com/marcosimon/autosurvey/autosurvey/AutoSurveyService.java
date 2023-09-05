@@ -77,7 +77,9 @@ public class AutoSurveyService {
     List<AutoSurvey> orgToSurvey = org.getSurveys();
     orgToSurvey.add(newSurvey);
     org.setSurveys(orgToSurvey);
+    System.out.println("before save"+org.getSurveys().size());
     Organization organization = organizationRepository.saveOrganization(org);
+    System.out.println("after save"+organization.getSurveys().size());
     newSurvey.setOrganization(organization);
     AutoSurvey updateNewSurvey = autoSurveyRepository.saveSurvey(newSurvey);
     return SurveyConverter.toResponseDto(updateNewSurvey);
