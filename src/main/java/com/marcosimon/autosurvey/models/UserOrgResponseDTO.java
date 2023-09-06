@@ -1,7 +1,10 @@
 package com.marcosimon.autosurvey.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.organization.Organization;
+
+import java.util.List;
 
 public record UserOrgResponseDTO(
                                  @JsonProperty("userId")
@@ -14,5 +17,6 @@ public record UserOrgResponseDTO(
                                  String roles,
                                  @JsonProperty
                                  String status
+
           ) {
 }

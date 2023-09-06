@@ -3,6 +3,7 @@ package com.marcosimon.autosurvey.organization;
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
+import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
 
 import java.util.List;
 
@@ -32,7 +33,10 @@ public class OrganizationConverter {
                     autoSurvey.getNumChildren(),
                     autoSurvey.getTotalIncome(),
                     autoSurvey.getComments(),
-                    autoSurvey.getOrganization());
+                    autoSurvey.getOrganization(),
+                    new UserOrgResponseDTO(autoSurvey.getUserModel().getUserId(), autoSurvey.getUserModel().getUsername(),
+                            autoSurvey.getUserModel().getEmail(), autoSurvey.getUserModel().getRoles(),
+                            autoSurvey.getUserModel().getStatus()));
         }).toList();
         return new OrganizationResponseDTO(organization.getOrgId(), organization.getOrgName(), surveys, organization.getUsers());
     }

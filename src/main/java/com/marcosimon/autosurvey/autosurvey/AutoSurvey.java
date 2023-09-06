@@ -3,6 +3,7 @@ package com.marcosimon.autosurvey.autosurvey;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.marcosimon.autosurvey.organization.Organization;
+import com.marcosimon.autosurvey.user.UserModel;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -37,16 +38,22 @@ public class AutoSurvey {
     private String comments;
 
     @DocumentReference(lazy = true)
-    @JsonBackReference
+    @JsonBackReference(value="organization-survey")
     private Organization organization;
 
-
+    @DocumentReference(lazy = true)
+    @JsonBackReference(value="user-survey")
+    private UserModel userModel;
 
 
     public AutoSurvey() {
     }
 
-    public AutoSurvey(String id, String country, Long year, Long rent, Long utilities, Long food, Long basicItems, Long transportation, Long educationTotal, Long educationSupplies, Long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes, Integer numChildren, Long totalIncome, String comments, Organization organization) {
+    public AutoSurvey(String id, String country, Long year, Long rent, Long utilities, Long food, Long basicItems,
+                      Long transportation, Long educationTotal, Long educationSupplies, Long educationFee,
+                      String educationType, String accommodationType, String profession, String locationGiven,
+                      String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes,
+                      Integer numChildren, Long totalIncome, String comments, Organization organization) {
         this.id = id;
         this.country = country;
         this.year = year;
@@ -72,7 +79,12 @@ public class AutoSurvey {
         this.organization = organization;
     }
 
-    public AutoSurvey(String country, Long year, Long rent, Long utilities, Long food, Long basicItems, Long transportation, Long educationTotal, Long educationSupplies, Long educationFee, String educationType, String accommodationType, String profession, String locationGiven, String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes, Integer numChildren, Long totalIncome, String comments, Organization organization) {
+    public AutoSurvey(String country, Long year, Long rent, Long utilities, Long food, Long basicItems,
+                      Long transportation, Long educationTotal, Long educationSupplies, Long educationFee,
+                      String educationType, String accommodationType, String profession, String locationGiven,
+                      String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes,
+                      Integer numChildren, Long totalIncome, String comments, Organization organization,
+                      UserModel userModel) {
         this.country = country;
         this.year = year;
         this.rent = rent;
@@ -95,7 +107,7 @@ public class AutoSurvey {
         this.totalIncome = totalIncome;
         this.comments = comments;
         this.organization = organization;
-
+        this.userModel = userModel;
     }
 
     public String getId() {
@@ -280,5 +292,13 @@ public class AutoSurvey {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
     }
 }

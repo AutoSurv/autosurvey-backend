@@ -1,5 +1,8 @@
 package com.marcosimon.autosurvey.autosurvey;
 
+import com.marcosimon.autosurvey.user.UserDbRepository;
+import com.marcosimon.autosurvey.user.UserModel;
+import com.marcosimon.autosurvey.user.UserService;
 import org.modelmapper.ModelMapper;
 import com.marcosimon.autosurvey.models.AutoSurveyListResDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
@@ -21,6 +24,10 @@ public class AutoSurveyService {
 
   @Autowired
   AutoSurveyRepository autoSurveyRepository;
+
+  @Autowired
+  //UserService userService;
+  UserDbRepository userDbRepository;
 
   ModelMapper mapper = new ModelMapper();
 
@@ -48,6 +55,11 @@ public class AutoSurveyService {
   public synchronized OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
 
     Organization org = organizationRepository.getById(dto.organization().getOrgId());
+    UserModel user = userDbRepository.findById(dto.user().userId()).orElse(null);
+
+    if (user == null) return null;
+
+    List<AutoSurvey> userSurveysList = user.getSurveys();
 
     AutoSurvey survey = new AutoSurvey(
             dto.country(),
@@ -71,20 +83,26 @@ public class AutoSurveyService {
             dto.numChildren(),
             dto.totalIncome(),
             dto.comments(),
-            dto.organization());
+            dto.organization(),
+            user);
     AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey);
 
     try {
       List<AutoSurvey> orgToSurvey = org.getSurveys();
       orgToSurvey.add(newSurvey);
       org.setSurveys(orgToSurvey);
+      userSurveysList.add(newSurvey);
+      user.setSurveys(userSurveysList);
     } catch (Exception e) {
       e.printStackTrace();
       throw  e;
     }
 
+
     Organization organization = organizationRepository.saveOrganization(org);
     newSurvey.setOrganization(organization);
+    newSurvey.setUserModel(user);
+    userDbRepository.save(user);
     AutoSurvey updateNewSurvey = autoSurveyRepository.saveSurvey(newSurvey);
     return SurveyConverter.toResponseDto(updateNewSurvey);
 
@@ -181,17 +199,38 @@ public class AutoSurveyService {
     if (!Objects.equals(newSurveyData.comments(), "")) {
       storedSurvey.setComments(newSurveyData.comments());
     }
+
+    if (!Objects.equals(newSurveyData.user().userId(), storedSurvey.getUserModel().getUserId())) {
+      UserModel userModel = userDbRepository.findById(newSurveyData.user().userId()).orElse(null);
+      if (userModel != null) {
+        storedSurvey.setUserModel(userModel);
+      }
+    }
+
     return SurveyConverter.toResponseDto(autoSurveyRepository.saveSurvey(storedSurvey));
   }
 
   public void deleteSurvey(String id) {
     AutoSurvey surveyToDelete = autoSurveyRepository.getById(id);
     Organization org = organizationRepository.getById(surveyToDelete.getOrganization().getOrgId());
-    List<AutoSurvey> surveyList = org.getSurveys();
+    String userId = surveyToDelete.getUserModel().getUserId();
+    UserModel user = userDbRepository.findById(userId).orElse(null); //userService.getUserById(userId);
 
+    if (user != null) {
+      List<AutoSurvey> newList = user.getSurveys().stream().filter(survey ->
+              !Objects.equals(survey.getId(), surveyToDelete.getId())
+      ).toList();
+      user.setSurveys(newList);
+      //userService.createUser(user);
+      userDbRepository.save(user);
+    }
+
+    List<AutoSurvey> surveyList = org.getSurveys();
     List<AutoSurvey> newList = surveyList.stream().filter(survey ->
        !Objects.equals(survey.getId(), surveyToDelete.getId())
     ).toList();
+
+
 
     org.setSurveys(newList);
     organizationRepository.saveOrganization(org);

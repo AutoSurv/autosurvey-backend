@@ -2,6 +2,7 @@ package com.marcosimon.autosurvey.autosurvey;
 
 
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
+import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
 
 public class SurveyConverter {
 
@@ -29,6 +30,9 @@ public class SurveyConverter {
                 autoSurvey.getNumChildren(),
                 autoSurvey.getTotalIncome(),
                 autoSurvey.getComments(),
-                autoSurvey.getOrganization());
+                autoSurvey.getOrganization(),
+                new UserOrgResponseDTO(autoSurvey.getUserModel().getUserId(), autoSurvey.getUserModel().getUsername(),
+                        autoSurvey.getUserModel().getEmail(), autoSurvey.getUserModel().getRoles(),
+                        autoSurvey.getUserModel().getStatus()));
     }
 }

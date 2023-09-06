@@ -35,6 +35,7 @@ public class UserService {
     }
 
 
+    //we should change to UserOrgResponseDTO in order to avoid sending the password
     public UserModel getUserByName(String userName) {
         return userRepository.findUserModelByUsername(userName).orElse(null);
     }
@@ -55,11 +56,11 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public String createUser(UserModel userModel) {
+    public UserModel createUser(UserModel userModel) {
         UserModel isUser = userRepository.findUserModelByUsername(userModel.getUsername()).orElse(null);
 
         //if user is found return user
-        if (isUser != null) return "present";
+        if (isUser != null) return null;
         //String.format("User [%s] already present in the database!", isUser.getUsername());
 
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
@@ -70,8 +71,8 @@ public class UserService {
 //        Organization newOrg = organizationRepository.saveOrganization(org);
 //
 //        newUser.setOrganization(newOrg);
-        userRepository.save(newUser);
-        return "created";
+
+        return userRepository.save(newUser);
 
     }
 

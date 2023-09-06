@@ -1,11 +1,16 @@
 package com.marcosimon.autosurvey.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.organization.Organization;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "users")
 public class UserModel {
@@ -18,8 +23,11 @@ public class UserModel {
     private String roles;
     private String status;
     @DocumentReference(lazy = true)
-    @JsonBackReference
+    @JsonBackReference(value="organization-user")
     private Organization organization;
+    @JsonManagedReference(value="user-survey")
+    @DocumentReference(lazy = true)
+    private List<AutoSurvey> surveys;
 
     public UserModel() {
     }
@@ -32,6 +40,7 @@ public class UserModel {
         this.roles = roles;
         this.status = status;
         this.organization = organization;
+        this.surveys = new ArrayList<>();
     }
 
     public String getUserId() {
@@ -88,5 +97,13 @@ public class UserModel {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public List<AutoSurvey> getSurveys() {
+        return surveys;
+    }
+
+    public void setSurveys(List<AutoSurvey> surveys) {
+        this.surveys = surveys;
     }
 }

@@ -40,11 +40,18 @@ public class UserController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<String> createUser(@RequestBody UserModel userModel) {
-        String result = userService.createUser(userModel);
-        if (result.contains("present")) return  ResponseEntity.status(409).body("User already present");
+    public ResponseEntity<UserOrgResponseDTO> createUser(@RequestBody UserModel userModel) {
+        UserModel user = userService.createUser(userModel);
 
-        return ResponseEntity.status(201).body(String.format("User created!"));
+        if (user == null) return  ResponseEntity.status(409).body(null);
+
+        UserOrgResponseDTO dto = new UserOrgResponseDTO(userModel.getUserId(),
+                userModel.getUsername(),
+                userModel.getEmail(),
+                userModel.getRoles(),
+                userModel.getStatus());
+
+        return ResponseEntity.status(201).body(dto);
     }
 
     @PatchMapping(path = "{name}")

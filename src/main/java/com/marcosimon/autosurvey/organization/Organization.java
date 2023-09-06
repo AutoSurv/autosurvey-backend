@@ -21,10 +21,10 @@ public class Organization {
     @MongoId(value = FieldType.OBJECT_ID)
     private String orgId;
     private String orgName;
-    @JsonManagedReference
+    @JsonManagedReference(value="organization-survey")
     @DocumentReference(lazy = true)
     private List<AutoSurvey> surveys;
-    @JsonManagedReference
+    @JsonManagedReference(value="organization-user")
     @DocumentReference(lazy = true)
     private List<UserModel> users;
 

@@ -32,7 +32,9 @@ public class AutoSurveyController {
 
   @GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
-    return ResponseEntity.ok(surveyService.getAllSurveys());
+
+    List<OrgSurveyDTO> list = surveyService.getAllSurveys();
+    return ResponseEntity.ok(list);
   }
 
   /*@GetMapping

@@ -2,6 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.marcosimon.autosurvey.organization.Organization;
+import com.marcosimon.autosurvey.user.UserModel;
 
 public record OrgSurveyDTO(@JsonProperty String id,
                            @JsonProperty String country,
@@ -46,5 +47,8 @@ public record OrgSurveyDTO(@JsonProperty String id,
                            @JsonProperty("comments")
                            String comments,
                            @JsonProperty
-                           Organization organization) {
+                           Organization organization,
+                           @JsonProperty
+                           UserOrgResponseDTO user
+                           ) {
 }
