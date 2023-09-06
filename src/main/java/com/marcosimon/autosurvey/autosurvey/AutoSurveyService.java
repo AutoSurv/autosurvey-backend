@@ -2,7 +2,6 @@ package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.user.UserDbRepository;
 import com.marcosimon.autosurvey.user.UserModel;
-import com.marcosimon.autosurvey.user.UserService;
 import org.modelmapper.ModelMapper;
 import com.marcosimon.autosurvey.models.AutoSurveyListResDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
@@ -26,7 +25,6 @@ public class AutoSurveyService {
   AutoSurveyRepository autoSurveyRepository;
 
   @Autowired
-  //UserService userService;
   UserDbRepository userDbRepository;
 
   ModelMapper mapper = new ModelMapper();
@@ -39,9 +37,7 @@ public class AutoSurveyService {
     this.autoSurveyRepository = autoSurveyRepository;
   }
 
-
   public List<OrgSurveyDTO> getAllSurveys() {
-
     return autoSurveyRepository.listSurveys().stream().map(SurveyConverter::toResponseDto).toList();
   }
 
@@ -97,7 +93,6 @@ public class AutoSurveyService {
       e.printStackTrace();
       throw  e;
     }
-
 
     Organization organization = organizationRepository.saveOrganization(org);
     newSurvey.setOrganization(organization);
@@ -229,8 +224,6 @@ public class AutoSurveyService {
     List<AutoSurvey> newList = surveyList.stream().filter(survey ->
        !Objects.equals(survey.getId(), surveyToDelete.getId())
     ).toList();
-
-
 
     org.setSurveys(newList);
     organizationRepository.saveOrganization(org);

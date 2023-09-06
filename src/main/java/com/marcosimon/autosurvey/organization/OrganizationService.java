@@ -1,6 +1,5 @@
 package com.marcosimon.autosurvey.organization;
 
-
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
 import com.marcosimon.autosurvey.user.UserDbRepository;
@@ -33,7 +32,6 @@ public class OrganizationService {
         this.autoSurveyRepository = autoSurveyRepository;
     }
 
-
     public List<OrganizationResponseDTO> getAllOrganizations() {
 
         return organizationRepository.listOrganizations().stream().map(org -> {
@@ -45,7 +43,6 @@ public class OrganizationService {
         Organization org = organizationRepository.getById(id);
         return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveys(), org.getUsers());
     }
-
 
     public OrganizationResponseDTO addOrganization(Organization org) {
 

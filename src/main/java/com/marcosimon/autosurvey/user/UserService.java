@@ -1,8 +1,6 @@
 package com.marcosimon.autosurvey.user;
 
-
 import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
-import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.organization.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,8 +32,6 @@ public class UserService {
         return dtoList;
     }
 
-
-    //we should change to UserOrgResponseDTO in order to avoid sending the password
     public UserModel getUserByName(String userName) {
         return userRepository.findUserModelByUsername(userName).orElse(null);
     }

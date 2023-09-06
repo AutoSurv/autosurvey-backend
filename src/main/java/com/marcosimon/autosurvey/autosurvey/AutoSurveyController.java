@@ -1,10 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-
-import com.marcosimon.autosurvey.models.AutoSurveyListResDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
-
-
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.organization.OrganizationService;
 
@@ -15,11 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/autosurveys")
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
-
 public class AutoSurveyController {
 
   private final AutoSurveyService surveyService;

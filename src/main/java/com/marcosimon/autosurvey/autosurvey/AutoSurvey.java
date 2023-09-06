@@ -1,6 +1,5 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.user.UserModel;
@@ -11,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document
 public class AutoSurvey {
-
 
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
@@ -44,7 +42,6 @@ public class AutoSurvey {
     @DocumentReference(lazy = true)
     @JsonBackReference(value="user-survey")
     private UserModel userModel;
-
 
     public AutoSurvey() {
     }

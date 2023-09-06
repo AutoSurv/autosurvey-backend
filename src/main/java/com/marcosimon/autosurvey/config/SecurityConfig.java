@@ -35,9 +35,6 @@ public class SecurityConfig {
 
     //authenticate rest endpoints
 
-
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors().and().csrf().disable()

@@ -4,7 +4,6 @@ package com.marcosimon.autosurvey.organization;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
 import com.marcosimon.autosurvey.models.*;
 
-
 import com.marcosimon.autosurvey.user.UserModel;
 import com.marcosimon.autosurvey.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import java.util.List;
 @Controller
 @RequestMapping("api/organizations")
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
-
 public class OrganizationController {
 
     @Autowired
@@ -79,8 +77,6 @@ public class OrganizationController {
 
         return ResponseEntity.accepted().body(updatedOrg);
     }
-
-
 
     @DeleteMapping(path = "{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
