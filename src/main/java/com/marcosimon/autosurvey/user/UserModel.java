@@ -106,4 +106,18 @@ public class UserModel {
     public void setSurveys(List<AutoSurvey> surveys) {
         this.surveys = surveys;
     }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", roles='" + roles + '\'' +
+                ", status='" + status + '\'' +
+                ", organization=" + organization.getOrgName() +
+                ", surveys=" + surveys.size() +
+                '}';
+    }
 }

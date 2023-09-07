@@ -2,9 +2,9 @@ package com.marcosimon.autosurvey.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.marcosimon.autosurvey.organization.Organization;
-import com.marcosimon.autosurvey.user.UserModel;
 
 public record CreateSurveyDTO(
+
       @JsonProperty("country")
       String country,
       @JsonProperty("year")

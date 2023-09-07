@@ -298,4 +298,34 @@ public class AutoSurvey {
     public void setUserModel(UserModel userModel) {
         this.userModel = userModel;
     }
+
+    @Override
+    public String toString() {
+        return "AutoSurvey{" +
+                "id='" + id + '\'' +
+                ", country='" + country + '\'' +
+                ", year=" + year +
+                ", rent=" + rent +
+                ", utilities=" + utilities +
+                ", food=" + food +
+                ", basicItems=" + basicItems +
+                ", transportation=" + transportation +
+                ", educationTotal=" + educationTotal +
+                ", educationSupplies=" + educationSupplies +
+                ", educationFee=" + educationFee +
+                ", educationType='" + educationType + '\'' +
+                ", accommodationType='" + accommodationType + '\'' +
+                ", profession='" + profession + '\'' +
+                ", locationGiven='" + locationGiven + '\'' +
+                ", locationClustered='" + locationClustered + '\'' +
+                ", numResidents=" + numResidents +
+                ", numIncomes=" + numIncomes +
+                ", numFullIncomes=" + numFullIncomes +
+                ", numChildren=" + numChildren +
+                ", totalIncome=" + totalIncome +
+                ", comments='" + comments + '\'' +
+                ", organization=" + organization.getOrgName() +
+                ", userModel=" + userModel.getUsername() +
+                '}';
+    }
 }

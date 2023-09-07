@@ -85,8 +85,8 @@ public class Organization {
         return "Organization{" +
                 "orgId='" + orgId + '\'' +
                 ", orgName='" + orgName + '\'' +
-                ", surveys=" + surveys +
-                ", users=" + users +
+                ", surveys=" + surveys.size() +
+                ", users=" + users.size() +
                 '}';
     }
 

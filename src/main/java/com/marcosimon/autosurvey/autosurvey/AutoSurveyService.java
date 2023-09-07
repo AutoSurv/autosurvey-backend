@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class AutoSurveyService {
@@ -49,7 +50,6 @@ public class AutoSurveyService {
   }
 
   public synchronized OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
-
     Organization org = organizationRepository.getById(dto.organization().getOrgId());
     UserModel user = userDbRepository.findById(dto.user().userId()).orElse(null);
 
@@ -58,29 +58,30 @@ public class AutoSurveyService {
     List<AutoSurvey> userSurveysList = user.getSurveys();
 
     AutoSurvey survey = new AutoSurvey(
-            dto.country(),
-            dto.year(),
-            dto.rent(),
-            dto.utilities(),
-            dto.food(),
-            dto.basicItems(),
-            dto.transportation(),
-            dto.educationTotal(),
-            dto.educationSupplies(),
-            dto.educationFee(),
-            dto.educationType(),
-            dto.accommodationType(),
-            dto.profession(),
-            dto.locationGiven(),
-            dto.locationClustered(),
-            dto.numResidents(),
-            dto.numIncomes(),
-            dto.numFullIncomes(),
-            dto.numChildren(),
-            dto.totalIncome(),
-            dto.comments(),
-            dto.organization(),
-            user);
+              dto.country(),
+              dto.year(),
+              dto.rent(),
+              dto.utilities(),
+              dto.food(),
+              dto.basicItems(),
+              dto.transportation(),
+              dto.educationTotal(),
+              dto.educationSupplies(),
+              dto.educationFee(),
+              dto.educationType(),
+              dto.accommodationType(),
+              dto.profession(),
+              dto.locationGiven(),
+              dto.locationClustered(),
+              dto.numResidents(),
+              dto.numIncomes(),
+              dto.numFullIncomes(),
+              dto.numChildren(),
+              dto.totalIncome(),
+              dto.comments(),
+              dto.organization(),
+              user);
+
     AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey);
 
     try {
