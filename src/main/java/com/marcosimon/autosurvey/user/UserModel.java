@@ -22,25 +22,21 @@ public class UserModel {
     private String email;
     private String roles;
     private String status;
-    @DocumentReference(lazy = true)
-    @JsonBackReference(value="organization-user")
-    private Organization organization;
-    @JsonManagedReference(value="user-survey")
-    @DocumentReference(lazy = true)
-    private List<AutoSurvey> surveys;
+    private String orgId;
+    private List<String> surveysIds;
 
     public UserModel() {
     }
 
-    public UserModel(String userId, String username, String password, String email, String roles, String status, Organization organization) {
+    public UserModel(String userId, String username, String password, String email, String roles, String status, String orgId) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.roles = roles;
         this.status = status;
-        this.organization = organization;
-        this.surveys = new ArrayList<>();
+        this.orgId = orgId;
+        this.surveysIds = new ArrayList<>();
     }
 
     public String getUserId() {
@@ -91,20 +87,20 @@ public class UserModel {
         this.status = status;
     }
 
-    public Organization getOrganization() {
-        return organization;
+    public String getOrgId() {
+        return orgId;
     }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
     }
 
-    public List<AutoSurvey> getSurveys() {
-        return surveys;
+    public List<String> getSurveysIds() {
+        return surveysIds;
     }
 
-    public void setSurveys(List<AutoSurvey> surveys) {
-        this.surveys = surveys;
+    public void setSurveysIds(List<String> surveysIds) {
+        this.surveysIds = surveysIds;
     }
 
     @Override
@@ -116,8 +112,8 @@ public class UserModel {
                 ", email='" + email + '\'' +
                 ", roles='" + roles + '\'' +
                 ", status='" + status + '\'' +
-                ", organization=" + organization.getOrgName() +
-                ", surveys=" + surveys.size() +
+                ", organization=" + orgId +
+                ", surveys=" + surveysIds +
                 '}';
     }
 }

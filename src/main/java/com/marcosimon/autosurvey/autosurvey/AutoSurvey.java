@@ -34,14 +34,9 @@ public class AutoSurvey {
     private Integer numChildren;
     private Long totalIncome;
     private String comments;
-
-    @DocumentReference(lazy = true)
-    @JsonBackReference(value="organization-survey")
-    private Organization organization;
-
-    @DocumentReference(lazy = true)
-    @JsonBackReference(value="user-survey")
-    private UserModel userModel;
+    private String orgId;
+    private String orgName;
+    private String userId;
 
     public AutoSurvey() {
     }
@@ -50,7 +45,7 @@ public class AutoSurvey {
                       Long transportation, Long educationTotal, Long educationSupplies, Long educationFee,
                       String educationType, String accommodationType, String profession, String locationGiven,
                       String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes,
-                      Integer numChildren, Long totalIncome, String comments, Organization organization) {
+                      Integer numChildren, Long totalIncome, String comments, String orgId, String orgName, String userId) {
         this.id = id;
         this.country = country;
         this.year = year;
@@ -73,15 +68,16 @@ public class AutoSurvey {
         this.numChildren = numChildren;
         this.totalIncome = totalIncome;
         this.comments = comments;
-        this.organization = organization;
+        this.orgId = orgId;
+        this.orgName = orgName;
+        this.userId = userId;
     }
 
     public AutoSurvey(String country, Long year, Long rent, Long utilities, Long food, Long basicItems,
                       Long transportation, Long educationTotal, Long educationSupplies, Long educationFee,
                       String educationType, String accommodationType, String profession, String locationGiven,
                       String locationClustered, Integer numResidents, Integer numIncomes, Integer numFullIncomes,
-                      Integer numChildren, Long totalIncome, String comments, Organization organization,
-                      UserModel userModel) {
+                      Integer numChildren, Long totalIncome, String comments, String orgId, String orgName, String userId) {
         this.country = country;
         this.year = year;
         this.rent = rent;
@@ -103,8 +99,9 @@ public class AutoSurvey {
         this.numChildren = numChildren;
         this.totalIncome = totalIncome;
         this.comments = comments;
-        this.organization = organization;
-        this.userModel = userModel;
+        this.orgId = orgId;
+        this.orgName = orgName;
+        this.userId = userId;
     }
 
     public String getId() {
@@ -283,20 +280,28 @@ public class AutoSurvey {
         this.year = year;
     }
 
-    public Organization getOrganization() {
-        return organization;
+    public String getOrgId() {
+        return orgId;
     }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
     }
 
-    public UserModel getUserModel() {
-        return userModel;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setUserModel(UserModel userModel) {
-        this.userModel = userModel;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String collectorId) {
+        this.userId = userId;
     }
 
     @Override
@@ -324,8 +329,9 @@ public class AutoSurvey {
                 ", numChildren=" + numChildren +
                 ", totalIncome=" + totalIncome +
                 ", comments='" + comments + '\'' +
-                ", organization=" + organization.getOrgName() +
-                ", userModel=" + userModel.getUsername() +
+                ", orgId=" + orgId +
+                ", orgName='" + orgName + '\'' +
+                ", collectorId=" + userId +
                 '}';
     }
 }

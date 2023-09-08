@@ -44,7 +44,7 @@ public class OrganizationController {
         if (dto.orgName() == null || dto.orgName().equals(""))  return ResponseEntity.badRequest().build();
 
         UserModel creator = userService.getUserByName(dto.creatorName());
-        OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(), creator));
+        OrganizationResponseDTO newOrg = service.addOrganization( new Organization(dto.orgName(), creator.getUserId()));
 
         if (newOrg == null) return ResponseEntity.unprocessableEntity().build();
 
@@ -65,7 +65,7 @@ public class OrganizationController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     ResponseEntity<Organization> editUserToOrg(@RequestBody UserInfoDto userInfoDto, @PathVariable String id) {
         OrganizationResponseDTO updatedOrgDto = service.getOrgById(id);
-        Organization updatedOrg = new Organization(updatedOrgDto.orgId(), updatedOrgDto.orgName(), updatedOrgDto.surveys());
+        Organization updatedOrg = new Organization(updatedOrgDto.orgId(), updatedOrgDto.orgName(), updatedOrgDto.surveysIds());
 
         if(!userInfoDto.status().equals("approved")) {
              updatedOrg = service.addUser(id, userInfoDto.userId());

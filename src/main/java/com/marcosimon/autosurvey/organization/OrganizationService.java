@@ -35,22 +35,21 @@ public class OrganizationService {
     public List<OrganizationResponseDTO> getAllOrganizations() {
 
         return organizationRepository.listOrganizations().stream().map(org -> {
-            return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveys(), org.getUsers());
+            return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveysIds(), org.getUsersIds());
         }).toList();
     }
 
     public OrganizationResponseDTO getOrgById(String id) {
         Organization org = organizationRepository.getById(id);
-        return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveys(), org.getUsers());
+        return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveysIds(), org.getUsersIds());
     }
 
     public OrganizationResponseDTO addOrganization(Organization org) {
 
-        Organization existingOrg = organizationRepository.getByOrgName(org.getOrgName());
+        Organization existingOrg = organizationRepository.getById(org.getOrgId());
         if(existingOrg == null) {
-            //add creator to org
-            organizationRepository.saveOrganization(org);
-            return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveys(), org.getUsers());
+            Organization newOrg = organizationRepository.saveOrganization(org);
+            return new OrganizationResponseDTO(newOrg.getOrgId(), newOrg.getOrgName(),newOrg.getSurveysIds(), newOrg.getUsersIds());
         }
         return null;
     }
@@ -61,32 +60,34 @@ public class OrganizationService {
         if (existingOrg == null) {
             org.setOrgName(name);
             Organization renamedOrg = organizationRepository.saveOrganization(org);
-            return new OrganizationResponseDTO(renamedOrg.getOrgId(), renamedOrg.getOrgName(), renamedOrg.getSurveys(), renamedOrg.getUsers());
+            return new OrganizationResponseDTO(renamedOrg.getOrgId(), renamedOrg.getOrgName(), renamedOrg.getSurveysIds(), renamedOrg.getUsersIds());
         }
         return  null;
     }
 
     public void deleteOrganization(String orgId) {
         Organization org = organizationRepository.getById(orgId);
-        org.getSurveys().forEach(i -> autoSurveyRepository.deleteSurvey(i.getId()));
+        org.getSurveysIds().forEach(i -> autoSurveyRepository.deleteSurvey(i));
         organizationRepository.deleteOrganization(orgId);
     }
 
     public void deleteOrgByName(String name) {
-
         organizationRepository.deleteOrgByName(name);
     }
 
     public Organization addUser(String orgId, String userId) {
         Organization org = organizationRepository.getById(orgId);
         UserModel userModel = userService.getUserById(userId);
-        if(org.getUsers().contains(userModel)) {
+        if (userModel == null) return null;
+
+        if(org.getUsersIds().contains(userModel.getOrgId())) {
             return org;
         }
-        List<UserModel> userModels = org.getUsers();
-        userModels.add(userModel);
-        org.setUsers(userModels);
-        userModel.setOrganization(org);
+
+        List<String> userIds = org.getUsersIds();
+        userIds.add(userModel.getUserId());
+        org.setUsersIds(userIds);
+        userModel.setOrgId(org.getOrgId());
         userRepository.save(userModel);
         return organizationRepository.saveOrganization(org);
     }
@@ -94,10 +95,11 @@ public class OrganizationService {
     public Organization deleteUser(String orgId, String userId) {
         Organization org = organizationRepository.getById(orgId);
         UserModel userModel = userService.getUserById(userId);
-        List<UserModel> userModels = org.getUsers();
-        List<UserModel> filteredUser = userModels.stream().filter(user -> !user.getUserId().equals(userId)).collect(Collectors.toList());
-        org.setUsers(filteredUser);
-        userModel.setOrganization(null);
+
+        List<String> userIds = org.getUsersIds();
+        List<String> filteredUserIds = userIds.stream().filter(id -> !id.equals(userId)).collect(Collectors.toList());
+        org.setUsersIds(filteredUserIds);
+        userModel.setOrgId(null);
         userRepository.save(userModel);
         return organizationRepository.saveOrganization(org);
     }

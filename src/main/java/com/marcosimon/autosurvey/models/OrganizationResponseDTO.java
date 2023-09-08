@@ -12,9 +12,9 @@ public record OrganizationResponseDTO(
         @JsonProperty("orgName")
         String orgName,
         @JsonProperty
-        List<AutoSurvey>  surveys,
+        List<String>  surveysIds,
         @JsonProperty
-        List<UserModel>  users
+        List<String>  usersIds
 
 ) {
 }

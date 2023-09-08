@@ -46,8 +46,8 @@ public record OrgSurveyDTO(@JsonProperty String id,
                            @JsonProperty("comments")
                            String comments,
                            @JsonProperty
-                           Organization organization,
+                           String orgId,
                            @JsonProperty
-                           UserOrgResponseDTO user
+                           String userId
                            ) {
 }

@@ -17,35 +17,31 @@ public class Organization {
     @MongoId(value = FieldType.OBJECT_ID)
     private String orgId;
     private String orgName;
-    @JsonManagedReference(value="organization-survey")
-    @DocumentReference(lazy = true)
-    private List<AutoSurvey> surveys;
-    @JsonManagedReference(value="organization-user")
-    @DocumentReference(lazy = true)
-    private List<UserModel> users;
+
+    private List<String> surveysIds;
+    private List<String> usersIds;
 
     public Organization() {
     }
 
-    public Organization(String orgId, String orgName, List<AutoSurvey> surveys) {
+    public Organization(String orgId, String orgName, List<String> surveysId) {
         this.orgId = orgId;
         this.orgName = orgName;
-        this.surveys = new ArrayList<>();
-        this.users = new ArrayList<>();
+        this.surveysIds = surveysId;
     }
-    public Organization(String orgName, UserModel creatorName) {
+    public Organization(String orgName, String creatorId) {
         this.orgName = orgName;
-        this.surveys = new ArrayList<>();
-        this.users = new ArrayList<>();
-        this.users.add(creatorName);
+        this.surveysIds = new ArrayList<>();
+        this.usersIds = new ArrayList<>();
+        this.usersIds.add(creatorId);
     }
 
-    public Organization(String orgId, String orgName, UserModel user) {
+    public Organization(String orgId, String orgName, String userId) {
         this.orgId = orgId;
         this.orgName = orgName;
-        this.surveys = new ArrayList<>();
-        this.users = new ArrayList<>();
-        this.users.add(user);
+        this.surveysIds = new ArrayList<>();
+        this.usersIds = new ArrayList<>();
+        this.usersIds.add(userId);
     }
 
     public String getOrgId() {
@@ -64,20 +60,20 @@ public class Organization {
         this.orgName = orgName;
     }
 
-    public List<AutoSurvey> getSurveys() {
-        return surveys;
+    public List<String> getSurveysIds() {
+        return surveysIds;
     }
 
-    public void setSurveys(List<AutoSurvey> surveys) {
-        this.surveys = surveys;
+    public void setSurveysIds(List<String> surveysId) {
+        this.surveysIds = surveysId;
     }
 
-    public List<UserModel> getUsers() {
-        return users;
+    public List<String> getUsersIds() {
+        return usersIds;
     }
 
-    public void setUsers(List<UserModel> users) {
-        this.users = users;
+    public void setUsersIds(List<String> usersId) {
+        this.usersIds = usersId;
     }
 
     @Override
@@ -85,8 +81,8 @@ public class Organization {
         return "Organization{" +
                 "orgId='" + orgId + '\'' +
                 ", orgName='" + orgName + '\'' +
-                ", surveys=" + surveys.size() +
-                ", users=" + users.size() +
+                ", surveys=" + surveysIds +
+                ", users=" + usersIds +
                 '}';
     }
 

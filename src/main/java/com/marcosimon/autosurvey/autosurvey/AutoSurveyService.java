@@ -50,12 +50,12 @@ public class AutoSurveyService {
   }
 
   public synchronized OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
-    Organization org = organizationRepository.getById(dto.organization().getOrgId());
-    UserModel user = userDbRepository.findById(dto.user().userId()).orElse(null);
+    UserModel user = userDbRepository.findById(dto.userId()).orElse(null);
+    Organization org;
 
     if (user == null) return null;
 
-    List<AutoSurvey> userSurveysList = user.getSurveys();
+    List<String> userSurveysListIds = user.getSurveysIds();
 
     AutoSurvey survey = new AutoSurvey(
               dto.country(),
@@ -79,25 +79,27 @@ public class AutoSurveyService {
               dto.numChildren(),
               dto.totalIncome(),
               dto.comments(),
-              dto.organization(),
-              user);
+              dto.orgId(),
+              dto.orgName(),
+              dto.userId());
 
     AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey);
 
     try {
-      List<AutoSurvey> orgToSurvey = org.getSurveys();
-      orgToSurvey.add(newSurvey);
-      org.setSurveys(orgToSurvey);
-      userSurveysList.add(newSurvey);
-      user.setSurveys(userSurveysList);
+      org = organizationRepository.getById(dto.orgId());
+      List<String> orgSurveysIds = org.getSurveysIds();
+      orgSurveysIds.add(newSurvey.getId());
+      org.setSurveysIds(orgSurveysIds);
+      userSurveysListIds.add(newSurvey.getId());
+      user.setSurveysIds(userSurveysListIds);
     } catch (Exception e) {
       e.printStackTrace();
       throw  e;
     }
 
     Organization organization = organizationRepository.saveOrganization(org);
-    newSurvey.setOrganization(organization);
-    newSurvey.setUserModel(user);
+    newSurvey.setOrgId(organization.getOrgId());
+    newSurvey.setUserId(user.getUserId());
     userDbRepository.save(user);
     AutoSurvey updateNewSurvey = autoSurveyRepository.saveSurvey(newSurvey);
     return SurveyConverter.toResponseDto(updateNewSurvey);
@@ -196,10 +198,10 @@ public class AutoSurveyService {
       storedSurvey.setComments(newSurveyData.comments());
     }
 
-    if (!Objects.equals(newSurveyData.user().userId(), storedSurvey.getUserModel().getUserId())) {
-      UserModel userModel = userDbRepository.findById(newSurveyData.user().userId()).orElse(null);
+    if (!Objects.equals(newSurveyData.userId(), storedSurvey.getUserId())) {
+      UserModel userModel = userDbRepository.findById(newSurveyData.userId()).orElse(null);
       if (userModel != null) {
-        storedSurvey.setUserModel(userModel);
+        storedSurvey.setUserId(userModel.getUserId());
       }
     }
 
@@ -208,25 +210,24 @@ public class AutoSurveyService {
 
   public void deleteSurvey(String id) {
     AutoSurvey surveyToDelete = autoSurveyRepository.getById(id);
-    Organization org = organizationRepository.getById(surveyToDelete.getOrganization().getOrgId());
-    String userId = surveyToDelete.getUserModel().getUserId();
+    Organization org = organizationRepository.getById(surveyToDelete.getOrgId());
+    String userId = surveyToDelete.getUserId();
     UserModel user = userDbRepository.findById(userId).orElse(null); //userService.getUserById(userId);
 
     if (user != null) {
-      List<AutoSurvey> newList = user.getSurveys().stream().filter(survey ->
-              !Objects.equals(survey.getId(), surveyToDelete.getId())
+      List<String> newList = user.getSurveysIds().stream().filter(surveyId ->
+              !Objects.equals(surveyId, surveyToDelete.getId())
       ).toList();
-      user.setSurveys(newList);
-      //userService.createUser(user);
+      user.setSurveysIds(newList);
       userDbRepository.save(user);
     }
 
-    List<AutoSurvey> surveyList = org.getSurveys();
-    List<AutoSurvey> newList = surveyList.stream().filter(survey ->
-       !Objects.equals(survey.getId(), surveyToDelete.getId())
+    List<String> surveyList = org.getSurveysIds();
+    List<String> newList = surveyList.stream().filter(surveyId ->
+       !Objects.equals(surveyId, surveyToDelete.getId())
     ).toList();
 
-    org.setSurveys(newList);
+    org.setSurveysIds(newList);
     organizationRepository.saveOrganization(org);
     autoSurveyRepository.deleteSurvey(id);
   }

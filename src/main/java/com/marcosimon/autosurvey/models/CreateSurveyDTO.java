@@ -47,10 +47,11 @@ public record CreateSurveyDTO(
       Long totalIncome,
       @JsonProperty("comments")
       String comments,
+      String orgId,
       @JsonProperty
-      Organization organization,
+      String orgName,
       @JsonProperty
-      UserOrgResponseDTO user
+      String userId
 
 ) {
 }
