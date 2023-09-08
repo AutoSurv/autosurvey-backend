@@ -48,6 +48,8 @@ public record OrgSurveyDTO(@JsonProperty String id,
                            @JsonProperty
                            String orgId,
                            @JsonProperty
+                           String orgName,
+                           @JsonProperty
                            String userId
                            ) {
 }

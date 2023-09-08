@@ -29,7 +29,9 @@ public class SurveyConverter {
                 autoSurvey.getNumChildren(),
                 autoSurvey.getTotalIncome(),
                 autoSurvey.getComments(),
-                autoSurvey.getOrgId(),autoSurvey.getUserId()
+                autoSurvey.getOrgId(),
+                autoSurvey.getOrgName(),
+                autoSurvey.getUserId()
         );
     }
 }

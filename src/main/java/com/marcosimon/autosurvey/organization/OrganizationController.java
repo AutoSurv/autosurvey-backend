@@ -38,6 +38,18 @@ public class OrganizationController {
         return ResponseEntity.ok(service.getOrgById(id));
     }
 
+    @GetMapping(path = "{id}/surveys")
+    public ResponseEntity<List<OrgSurveyDTO>> getOrgSurveys(@PathVariable String id) {
+
+        return ResponseEntity.ok(service.getOrgSurveys(id));
+    }
+
+    @GetMapping(path = "{id}/surveys/{surveyId}")
+    public ResponseEntity<OrgSurveyDTO> getOrgSurvey(@PathVariable String id, @PathVariable String surveyId ) {
+
+        return ResponseEntity.ok(service.getOrgSurvey(surveyId));
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
     public ResponseEntity<OrganizationResponseDTO> addOrganization(@RequestBody CreateOrganizationDTO dto, HttpServletRequest req) {

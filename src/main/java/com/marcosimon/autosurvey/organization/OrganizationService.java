@@ -1,6 +1,8 @@
 package com.marcosimon.autosurvey.organization;
 
+import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
+import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
 import com.marcosimon.autosurvey.user.UserDbRepository;
 import com.marcosimon.autosurvey.user.UserModel;
@@ -46,7 +48,7 @@ public class OrganizationService {
 
     public OrganizationResponseDTO addOrganization(Organization org) {
 
-        Organization existingOrg = organizationRepository.getById(org.getOrgId());
+        Organization existingOrg = organizationRepository.getByOrgName(org.getOrgName());
         if(existingOrg == null) {
             Organization newOrg = organizationRepository.saveOrganization(org);
             return new OrganizationResponseDTO(newOrg.getOrgId(), newOrg.getOrgName(),newOrg.getSurveysIds(), newOrg.getUsersIds());
@@ -63,6 +65,38 @@ public class OrganizationService {
             return new OrganizationResponseDTO(renamedOrg.getOrgId(), renamedOrg.getOrgName(), renamedOrg.getSurveysIds(), renamedOrg.getUsersIds());
         }
         return  null;
+    }
+
+    public OrgSurveyDTO getOrgSurvey(String surveyId) {
+       AutoSurvey survey = autoSurveyRepository.getById(surveyId);
+       return new OrgSurveyDTO(survey.getId(), survey.getCountry(),
+               survey.getYear(), survey.getRent(),
+               survey.getUtilities(), survey.getFood(),
+               survey.getBasicItems(), survey.getTransportation(),
+               survey.getEducationTotal(), survey.getEducationSupplies(),
+               survey.getEducationFee(), survey.getEducationType(),
+               survey.getAccommodationType(), survey.getProfession(), survey.getLocationGiven(),
+               survey.getLocationClustered(), survey.getNumResidents(), survey.getNumIncomes(),
+               survey.getNumFullIncomes(), survey.getNumChildren(), survey.getTotalIncome(),
+               survey.getComments(), survey.getOrgId(),survey.getOrgName(), survey.getUserId());
+    }
+
+    public List<OrgSurveyDTO> getOrgSurveys(String id) {
+        Organization org = organizationRepository.getById(id);
+        List<AutoSurvey> surveyList = autoSurveyRepository.listSurveys();
+        return surveyList.stream()
+                .filter(survey -> survey.getOrgId().equals(org.getOrgId()))
+                .map(survey -> new OrgSurveyDTO(survey.getId(), survey.getCountry(),
+                                                survey.getYear(), survey.getRent(),
+                                                survey.getUtilities(), survey.getFood(),
+                                                survey.getBasicItems(), survey.getTransportation(),
+                                                survey.getEducationTotal(), survey.getEducationSupplies(),
+                                                survey.getEducationFee(), survey.getEducationType(),
+                                                survey.getAccommodationType(), survey.getProfession(), survey.getLocationGiven(),
+                                                survey.getLocationClustered(), survey.getNumResidents(), survey.getNumIncomes(),
+                                                survey.getNumFullIncomes(), survey.getNumChildren(), survey.getTotalIncome(),
+                                                survey.getComments(), survey.getOrgId(), survey.getOrgName(), survey.getUserId())).collect(Collectors.toList());
+
     }
 
     public void deleteOrganization(String orgId) {
