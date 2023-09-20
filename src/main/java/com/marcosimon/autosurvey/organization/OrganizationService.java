@@ -7,32 +7,20 @@ import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
 import com.marcosimon.autosurvey.user.UserDbRepository;
 import com.marcosimon.autosurvey.user.UserModel;
 import com.marcosimon.autosurvey.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OrganizationService {
 
-    @Autowired
-    OrganizationRepository organizationRepository;
-
-    @Autowired
-    AutoSurveyRepository autoSurveyRepository;
-    @Autowired
-    UserService userService;
-    @Autowired
-    UserDbRepository userRepository;
-
-    public OrganizationService() {
-    }
-
-    public OrganizationService(OrganizationRepository organizationRepository, AutoSurveyRepository autoSurveyRepository) {
-        this.organizationRepository = organizationRepository;
-        this.autoSurveyRepository = autoSurveyRepository;
-    }
+    private final OrganizationRepository organizationRepository;
+    private final AutoSurveyRepository autoSurveyRepository;
+    private final UserService userService;
+    private final UserDbRepository userRepository;
 
     public List<OrganizationResponseDTO> getAllOrganizations() {
 
@@ -101,7 +89,7 @@ public class OrganizationService {
 
     public void deleteOrganization(String orgId) {
         Organization org = organizationRepository.getById(orgId);
-        org.getSurveysIds().forEach(i -> autoSurveyRepository.deleteSurvey(i));
+        org.getSurveysIds().forEach(autoSurveyRepository::deleteSurvey);
         organizationRepository.deleteOrganization(orgId);
     }
 

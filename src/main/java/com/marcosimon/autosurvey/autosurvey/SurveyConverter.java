@@ -1,7 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
-import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
 
 public class SurveyConverter {
 

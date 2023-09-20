@@ -1,8 +1,6 @@
 package com.marcosimon.autosurvey.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
-import com.marcosimon.autosurvey.user.UserModel;
 
 import java.util.List;
 

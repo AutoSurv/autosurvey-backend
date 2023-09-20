@@ -2,41 +2,29 @@ package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.user.UserDbRepository;
 import com.marcosimon.autosurvey.user.UserModel;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import com.marcosimon.autosurvey.models.AutoSurveyListResDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.organization.OrganizationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
-
 @Service
+@RequiredArgsConstructor
 public class AutoSurveyService {
 
-  @Autowired
-  OrganizationRepository organizationRepository;
+  private final OrganizationRepository organizationRepository;
 
-  @Autowired
-  AutoSurveyRepository autoSurveyRepository;
+  private final AutoSurveyRepository autoSurveyRepository;
 
-  @Autowired
-  UserDbRepository userDbRepository;
+  private final UserDbRepository userDbRepository;
 
   ModelMapper mapper = new ModelMapper();
-
-  public AutoSurveyService() {
-  }
-
-  public AutoSurveyService(OrganizationRepository organizationRepository, AutoSurveyRepository autoSurveyRepository) {
-    this.organizationRepository = organizationRepository;
-    this.autoSurveyRepository = autoSurveyRepository;
-  }
 
   public List<OrgSurveyDTO> getAllSurveys() {
     return autoSurveyRepository.listSurveys().stream().map(SurveyConverter::toResponseDto).toList();

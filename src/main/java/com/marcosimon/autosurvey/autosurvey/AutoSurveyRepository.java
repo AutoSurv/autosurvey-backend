@@ -1,6 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,19 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class AutoSurveyRepository {
 
-    @Autowired
-    AutoSurveyDbRepository autoSurveyDbRepository;
+    private final AutoSurveyDbRepository autoSurveyDbRepository;
 
     int pageSize = 10;
-
-    public AutoSurveyRepository() {
-    }
-
-    public AutoSurveyRepository(AutoSurveyDbRepository jpaAutoSurveyRepository) {
-        this.autoSurveyDbRepository = jpaAutoSurveyRepository;
-    }
 
     public List<AutoSurvey> listSurveys() {
 

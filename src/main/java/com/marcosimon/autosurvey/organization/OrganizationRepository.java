@@ -1,24 +1,16 @@
 package com.marcosimon.autosurvey.organization;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
+@RequiredArgsConstructor
 public class OrganizationRepository {
 
-    @Autowired
-    OrganizationDbRepository organizationDbRepository;
-
-    public OrganizationRepository() {
-    }
-
-    public OrganizationRepository(OrganizationDbRepository organizationDbRepository) {
-        this.organizationDbRepository = organizationDbRepository;
-    }
+    private final OrganizationDbRepository organizationDbRepository;
 
     public List<Organization> listOrganizations() {
         return Streamable.of(organizationDbRepository.findAll()).toList();
@@ -34,8 +26,6 @@ public class OrganizationRepository {
 
     public Organization saveOrganization(Organization organization) {
         return organizationDbRepository.save(organization); }
-
-    public void saveOrganizations(List<Organization> orgs) { organizationDbRepository.saveAll(orgs);}
 
     public void deleteOrganization(String id) {
         organizationDbRepository.deleteById(id);

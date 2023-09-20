@@ -4,6 +4,7 @@ import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.organization.OrganizationService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,17 +13,13 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/autosurveys")
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
 public class AutoSurveyController {
 
   private final AutoSurveyService surveyService;
   private final OrganizationService organizationService;
-
-  public AutoSurveyController(AutoSurveyService surveyService, OrganizationService organizationService) {
-    this.surveyService = surveyService;
-    this.organizationService = organizationService;
-  }
 
   @GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {

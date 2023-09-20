@@ -1,11 +1,6 @@
 package com.marcosimon.autosurvey.user;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
-import com.marcosimon.autosurvey.organization.Organization;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 

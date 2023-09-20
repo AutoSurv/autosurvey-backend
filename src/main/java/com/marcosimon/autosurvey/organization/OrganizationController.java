@@ -1,15 +1,13 @@
 package com.marcosimon.autosurvey.organization;
 
 
-import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
 import com.marcosimon.autosurvey.models.*;
 
 import com.marcosimon.autosurvey.user.UserModel;
 import com.marcosimon.autosurvey.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,17 +15,14 @@ import java.net.URI;
 import java.util.List;
 
 
-@Controller
+@RestController
+@RequiredArgsConstructor
 @RequestMapping("api/organizations")
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
 public class OrganizationController {
 
-    @Autowired
-    private OrganizationService service;
-    @Autowired
-    private AutoSurveyService surveyService;
-    @Autowired
-    private UserService userService;
+    private final OrganizationService service;
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<List<OrganizationResponseDTO>> listOrganizations() {
@@ -45,7 +40,7 @@ public class OrganizationController {
     }
 
     @GetMapping(path = "{id}/surveys/{surveyId}")
-    public ResponseEntity<OrgSurveyDTO> getOrgSurvey(@PathVariable String id, @PathVariable String surveyId ) {
+    public ResponseEntity<OrgSurveyDTO> getOrgSurvey(@PathVariable String surveyId ) {
 
         return ResponseEntity.ok(service.getOrgSurvey(surveyId));
     }
