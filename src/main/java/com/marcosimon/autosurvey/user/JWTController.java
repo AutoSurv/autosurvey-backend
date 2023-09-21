@@ -3,6 +3,7 @@ package com.marcosimon.autosurvey.user;
 import com.marcosimon.autosurvey.config.DatabaseUserDetailsService;
 import com.marcosimon.autosurvey.models.LoggedUserDto;
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,18 +14,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/authenticate")
+@RequiredArgsConstructor
+@RequestMapping("authenticate")
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
 public class JWTController {
 
-    @Autowired
-    private JWTService jwtService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private DatabaseUserDetailsService databaseUserDetailsService;
-    @Autowired
-    UserService userService;
+    private final JWTService jwtService;
+    private final AuthenticationManager authenticationManager;
+    private final DatabaseUserDetailsService databaseUserDetailsService;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<LoggedUserDto> authenticateAndGetToken(@RequestBody AuthRequestJWT authRequestJWT) {

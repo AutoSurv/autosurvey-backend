@@ -14,13 +14,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/autosurveys")
+@RequestMapping("api/autosurveys")
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
 public class AutoSurveyController {
 
   private final AutoSurveyService surveyService;
-  private final OrganizationService organizationService;
-
   @GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
 

@@ -1,8 +1,7 @@
 package com.marcosimon.autosurvey.user;
 
 import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
-import com.marcosimon.autosurvey.organization.OrganizationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserDbRepository userRepository;
-    @Autowired
-    private OrganizationRepository organizationRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserDbRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserOrgResponseDTO> getAllUsers() {
         List<UserModel> userModels = userRepository.findAll();
