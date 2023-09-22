@@ -6,7 +6,6 @@ import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
 import com.marcosimon.autosurvey.user.UserDbRepository;
 import com.marcosimon.autosurvey.user.UserModel;
-import com.marcosimon.autosurvey.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,6 @@ public class OrganizationService {
 
     private final OrganizationRepository organizationRepository;
     private final AutoSurveyRepository autoSurveyRepository;
-    private final UserService userService;
     private final UserDbRepository userRepository;
 
     public List<OrganizationResponseDTO> getAllOrganizations() {
@@ -93,16 +91,13 @@ public class OrganizationService {
         organizationRepository.deleteOrganization(orgId);
     }
 
-    public void deleteOrgByName(String name) {
-        organizationRepository.deleteOrgByName(name);
-    }
-
     public Organization addUser(String orgId, String userId) {
         Organization org = organizationRepository.getById(orgId);
-        UserModel userModel = userService.getUserById(userId);
+        UserModel userModel = userRepository.findById(userId).orElse(null);
+
         if (userModel == null) return null;
 
-        if(org.getUsersIds().contains(userModel.getOrgId())) {
+        if(org.getUsersIds().contains(userModel.getUserId())) {
             return org;
         }
 
@@ -116,13 +111,14 @@ public class OrganizationService {
 
     public Organization deleteUser(String orgId, String userId) {
         Organization org = organizationRepository.getById(orgId);
-        UserModel userModel = userService.getUserById(userId);
-
         List<String> userIds = org.getUsersIds();
         List<String> filteredUserIds = userIds.stream().filter(id -> !id.equals(userId)).collect(Collectors.toList());
         org.setUsersIds(filteredUserIds);
-        userModel.setOrgId(null);
-        userRepository.save(userModel);
+
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setOrgId(null);
+            userRepository.save(user);
+        });
         return organizationRepository.saveOrganization(org);
     }
 }

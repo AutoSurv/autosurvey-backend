@@ -187,10 +187,7 @@ public class AutoSurveyService {
     }
 
     if (!Objects.equals(newSurveyData.userId(), storedSurvey.getUserId())) {
-      UserModel userModel = userDbRepository.findById(newSurveyData.userId()).orElse(null);
-      if (userModel != null) {
-        storedSurvey.setUserId(userModel.getUserId());
-      }
+      userDbRepository.findById(newSurveyData.userId()).ifPresent(user -> storedSurvey.setUserId(user.getUserId()));
     }
 
     return SurveyConverter.toResponseDto(autoSurveyRepository.saveSurvey(storedSurvey));
@@ -200,15 +197,15 @@ public class AutoSurveyService {
     AutoSurvey surveyToDelete = autoSurveyRepository.getById(id);
     Organization org = organizationRepository.getById(surveyToDelete.getOrgId());
     String userId = surveyToDelete.getUserId();
-    UserModel user = userDbRepository.findById(userId).orElse(null); //userService.getUserById(userId);
 
-    if (user != null) {
-      List<String> newList = user.getSurveysIds().stream().filter(surveyId ->
-              !Objects.equals(surveyId, surveyToDelete.getId())
-      ).toList();
-      user.setSurveysIds(newList);
-      userDbRepository.save(user);
-    }
+    userDbRepository
+            .findById(userId)
+            .ifPresent( userPresent -> {
+              userPresent.setSurveysIds(userPresent.getSurveysIds().stream().filter(surveyId ->
+                      !Objects.equals(surveyId, surveyToDelete.getId())
+              ).toList());
+              userDbRepository.save(userPresent);
+            });
 
     List<String> surveyList = org.getSurveysIds();
     List<String> newList = surveyList.stream().filter(surveyId ->

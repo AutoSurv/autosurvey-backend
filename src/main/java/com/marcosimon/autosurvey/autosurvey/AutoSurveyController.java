@@ -2,12 +2,9 @@ package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
-import com.marcosimon.autosurvey.organization.OrganizationService;
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
@@ -21,12 +18,12 @@ public class AutoSurveyController {
   private final AutoSurveyService surveyService;
   @GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
-
     List<OrgSurveyDTO> list = surveyService.getAllSurveys();
     return ResponseEntity.ok(list);
   }
 
-  /*@GetMapping
+  /*
+  @GetMapping
   ResponseEntity<AutoSurveyListResDTO> getPaginatedSurveys(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "") String country) {
     AutoSurveyListResDTO surveys = surveyService.getPaginatedSurveys(page, country);
     System.out.println(surveys.getSurveys().get(0).getOrganization().getOrgName());
@@ -38,13 +35,11 @@ public class AutoSurveyController {
 
   @GetMapping("{id}")
   ResponseEntity<OrgSurveyDTO> getSurvey(@PathVariable String id) {
-
     if (id == null || id.equals("")) {
       return ResponseEntity.badRequest().build();
     }
 
     OrgSurveyDTO survey = surveyService.getSurveyById(id);
-
     if (survey == null) {
       return ResponseEntity.notFound().build();
     }
