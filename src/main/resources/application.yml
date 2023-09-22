@@ -4,7 +4,7 @@ server:
 debug: true
 spring:
   #config:
-   #import: env.properties
+    #import: env.properties
   sql:
     init:
       platform: mongodb

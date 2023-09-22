@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
+import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.user.UserDbRepository;
 import com.marcosimon.autosurvey.user.UserModel;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +12,13 @@ import com.marcosimon.autosurvey.organization.Organization;
 import com.marcosimon.autosurvey.organization.OrganizationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.marcosimon.autosurvey.constants.ErrorCode.*;
+
 @Service
 @RequiredArgsConstructor
 public class AutoSurveyService {
@@ -32,18 +37,17 @@ public class AutoSurveyService {
 
   public OrgSurveyDTO getSurveyById(String id) {
     AutoSurvey gotSurvey = autoSurveyRepository.getById(id);
-    if (gotSurvey == null) return null;
+    if (gotSurvey == null) {
+      throw new CustomException(SAVED_SURVEY_NOT_FOUND);
+    }
 
     return SurveyConverter.toResponseDto(gotSurvey);
   }
-
+  @Transactional
   public synchronized OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
-    UserModel user = userDbRepository.findById(dto.userId()).orElse(null);
-    Organization org;
-
-    if (user == null) return null;
-
-    List<String> userSurveysListIds = user.getSurveysIds();
+    UserModel user = userDbRepository
+            .findById(dto.userId())
+            .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
     AutoSurvey survey = new AutoSurvey(
               dto.country(),
@@ -73,17 +77,18 @@ public class AutoSurveyService {
 
     AutoSurvey newSurvey = autoSurveyRepository.saveSurvey(survey);
 
-    try {
-      org = organizationRepository.getById(dto.orgId());
-      List<String> orgSurveysIds = org.getSurveysIds();
-      orgSurveysIds.add(newSurvey.getId());
-      org.setSurveysIds(orgSurveysIds);
-      userSurveysListIds.add(newSurvey.getId());
-      user.setSurveysIds(userSurveysListIds);
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw  e;
+    Organization org = organizationRepository.getById(dto.orgId());
+    if (org == null) {
+      throw new CustomException(ORGANIZATION_NOT_FOUND);
     }
+
+    List<String> orgSurveysIds = org.getSurveysIds();
+    orgSurveysIds.add(newSurvey.getId());
+    org.setSurveysIds(orgSurveysIds);
+
+    List<String> userSurveysListIds = user.getSurveysIds();
+    userSurveysListIds.add(newSurvey.getId());
+    user.setSurveysIds(userSurveysListIds);
 
     Organization organization = organizationRepository.saveOrganization(org);
     newSurvey.setOrgId(organization.getOrgId());
@@ -96,11 +101,15 @@ public class AutoSurveyService {
 
   public OrgSurveyDTO updateSurveyData(String id, CreateSurveyDTO newSurveyData) {
 
-    if (newSurveyData == null) return null;
+    if (newSurveyData == null) {
+      throw new CustomException(INVALID_PARAMETER);
+    }
 
     AutoSurvey storedSurvey = autoSurveyRepository.getById(id);
 
-    if (storedSurvey == null) return null;
+    if (storedSurvey == null) {
+      throw new CustomException(SAVED_SURVEY_NOT_FOUND);
+    }
 
     if (!Objects.equals(newSurveyData.country(), "")) {
       storedSurvey.setCountry(newSurveyData.country());
@@ -209,7 +218,7 @@ public class AutoSurveyService {
 
     List<String> surveyList = org.getSurveysIds();
     List<String> newList = surveyList.stream().filter(surveyId ->
-       !Objects.equals(surveyId, surveyToDelete.getId())
+        !Objects.equals(surveyId, surveyToDelete.getId())
     ).toList();
 
     org.setSurveysIds(newList);
