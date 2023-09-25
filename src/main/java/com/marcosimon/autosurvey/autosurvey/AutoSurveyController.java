@@ -16,6 +16,7 @@ import java.util.List;
 public class AutoSurveyController {
 
   private final AutoSurveyService surveyService;
+
   @GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
     List<OrgSurveyDTO> list = surveyService.getAllSurveys();
