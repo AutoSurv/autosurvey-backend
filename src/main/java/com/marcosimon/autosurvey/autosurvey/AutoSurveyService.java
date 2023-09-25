@@ -45,9 +45,15 @@ public class AutoSurveyService {
   }
   @Transactional
   public synchronized OrgSurveyDTO addSurvey(CreateSurveyDTO dto) {
-    UserModel user = userDbRepository
-            .findById(dto.userId())
-            .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+    UserModel user;
+    try {
+      user = userDbRepository
+              .findById(dto.userId())
+              .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+    } catch (IllegalArgumentException iae) {
+      throw new CustomException(USER_NOT_FOUND);
+    }
+
 
     AutoSurvey survey = new AutoSurvey(
               dto.country(),
@@ -204,17 +210,25 @@ public class AutoSurveyService {
 
   public void deleteSurvey(String id) {
     AutoSurvey surveyToDelete = autoSurveyRepository.getById(id);
+    if (surveyToDelete == null) {
+      throw new CustomException(SAVED_SURVEY_NOT_FOUND);
+    }
     Organization org = organizationRepository.getById(surveyToDelete.getOrgId());
+    if (org == null) {
+      throw new CustomException(ORGANIZATION_NOT_FOUND);
+    }
     String userId = surveyToDelete.getUserId();
 
     userDbRepository
             .findById(userId)
-            .ifPresent( userPresent -> {
+            .ifPresentOrElse( userPresent -> {
               userPresent.setSurveysIds(userPresent.getSurveysIds().stream().filter(surveyId ->
                       !Objects.equals(surveyId, surveyToDelete.getId())
               ).toList());
               userDbRepository.save(userPresent);
-            });
+            }, () -> {
+              throw new CustomException(USER_NOT_FOUND);
+            } );
 
     List<String> surveyList = org.getSurveysIds();
     List<String> newList = surveyList.stream().filter(surveyId ->

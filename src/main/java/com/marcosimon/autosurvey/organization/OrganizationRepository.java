@@ -5,6 +5,7 @@ import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,7 +22,8 @@ public class OrganizationRepository {
     }
 
     public Organization getById(String id) {
-        return organizationDbRepository.findById(id).orElse(null);
+        Optional<Organization> byId = organizationDbRepository.findById(id);
+        return byId.orElse(null);
     }
 
     public Organization saveOrganization(Organization organization) {

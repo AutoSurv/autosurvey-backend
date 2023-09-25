@@ -13,5 +13,4 @@ public interface AutoSurveyDbRepository extends MongoRepository<AutoSurvey, Stri
 
    Page<AutoSurvey> findAllByCountry(String country, Pageable page);
 
-
 }
