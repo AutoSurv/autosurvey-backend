@@ -1,7 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.exception.CustomException;
-import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.testutils.TestData;
 import org.junit.jupiter.api.*;
