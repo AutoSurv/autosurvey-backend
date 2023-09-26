@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.marcosimon.autosurvey.constants.ErrorCode.ALREADY_SAVED_ORGANIZATION;
-import static com.marcosimon.autosurvey.constants.ErrorCode.USER_NOT_FOUND;
+import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -95,6 +94,9 @@ public class OrganizationService {
 
     public void deleteOrganization(String orgId) {
         Organization org = organizationRepository.getById(orgId);
+        if(org == null) {
+            throw new CustomException(SAVED_ORGANIZATION_NOT_FOUND);
+        }
         org.getSurveysIds().forEach(autoSurveyRepository::deleteSurvey);
         organizationRepository.deleteOrganization(orgId);
     }

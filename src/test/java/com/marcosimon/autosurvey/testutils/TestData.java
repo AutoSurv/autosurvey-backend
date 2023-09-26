@@ -2,19 +2,28 @@ package com.marcosimon.autosurvey.testutils;
 
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
+import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
+import com.marcosimon.autosurvey.organization.Organization;
 import lombok.experimental.UtilityClass;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @UtilityClass
 public class TestData {
+  //Utils for surveys
   public OrgSurveyDTO setupSurveyDTO;
+  public final String testOrganizationId = "65129d4d661d37420021aeaf";
+  public final String testOrganizationName = "TestOrganization";
   public final String testCountry = "Test Country";
-  public final String testOrganizationId = "651176a534067a39d9ec6d4b";
-  public final String testUserId = "6500b2bdb967834d719fe886";
+  public final String testUserId = "65129c13661d37420021aeae";
   public final String wrongTestUserId = "6500b2bdb967834d719fe887";
   public final String wrongSurveyId = "64fb0ba096acb91cc7d09f8b";
-
   public final String surveyId = "64fb0ba096acb91cc7d09f8a";
   public final String country = "Norway";
+
 
   public final CreateSurveyDTO testDTO = new CreateSurveyDTO(testCountry, 0L, 0L, 0L, 0L, 0L,
           0L, 0L, 0L,
@@ -39,5 +48,12 @@ public class TestData {
           0, 0, 0, 0, 0L, "", testOrganizationId,
           "", testUserId);
 
+  // Utils for organizations
+
+  public final String testOrgName = "TestOrg0";
+  public final String updateOrgName = "TestOrg";
+  public final String wrongOrganizationId = "651176a534067a39d9ec6d4f";
+  public final List<String> testUserIds = new ArrayList<>(Collections.singleton(testUserId));
+  public final Organization testOrg = new Organization(testOrgName, testUserId);
 
 }

@@ -1,7 +1,6 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.exception.CustomException;
-import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.testutils.TestData;
 import org.junit.jupiter.api.*;
@@ -147,7 +146,7 @@ class AutoSurveyServiceTest {
 
     CustomException exception =
             assertThrows(CustomException.class, () -> {
-              service.updateSurveyData(TestData.wrongSurveyId, TestData.updatedTestDTO);
+              service.deleteSurvey(TestData.wrongSurveyId);
             });
 
     String expectedMessage = "Survey is not in DB";
