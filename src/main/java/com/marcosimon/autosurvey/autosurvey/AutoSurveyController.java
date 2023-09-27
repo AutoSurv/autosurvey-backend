@@ -19,7 +19,9 @@ public class AutoSurveyController {
 
   @GetMapping
   ResponseEntity<List<OrgSurveyDTO>> getAllSurveys() {
+
     List<OrgSurveyDTO> list = surveyService.getAllSurveys();
+
     return ResponseEntity.ok(list);
   }
 
@@ -36,20 +38,15 @@ public class AutoSurveyController {
 
   @GetMapping("{id}")
   ResponseEntity<OrgSurveyDTO> getSurvey(@PathVariable String id) {
-    if (id == null || id.equals("")) {
-      return ResponseEntity.badRequest().build();
-    }
 
     OrgSurveyDTO survey = surveyService.getSurveyById(id);
-    if (survey == null) {
-      return ResponseEntity.notFound().build();
-    }
 
     return ResponseEntity.ok(survey);
   }
 
   @PostMapping
   ResponseEntity<OrgSurveyDTO> addNewSurvey(@RequestBody CreateSurveyDTO dto, HttpServletRequest req) {
+
     OrgSurveyDTO newSurvey = surveyService.addSurvey(dto);
     URI location = URI.create((req.getRequestURI() + "/" + newSurvey.id()).replace("//autosurveys","/autosurveys"));
     return ResponseEntity.created(location).body(newSurvey);
@@ -57,19 +54,17 @@ public class AutoSurveyController {
 
   @PatchMapping("{id}")
   ResponseEntity<OrgSurveyDTO> editSurvey(@RequestBody CreateSurveyDTO dto, @PathVariable String id) {
-    if (id == null || id.isEmpty()) return ResponseEntity.badRequest().build();
 
     OrgSurveyDTO updatedSurvey = surveyService.updateSurveyData(id, dto);
-    if (updatedSurvey == null) return ResponseEntity.notFound().build();
 
     return ResponseEntity.accepted().body(updatedSurvey);
   }
 
   @DeleteMapping("{id}")
-  ResponseEntity deleteSurvey(@PathVariable String id) {
-    if (id == null || id.isEmpty()) return ResponseEntity.badRequest().build();
-    surveyService.deleteSurvey(id);
-    return ResponseEntity.noContent().build();
+  public String deleteSurvey(@PathVariable String id) {
+
+    return surveyService.deleteSurvey(id);
+
   }
 
 }

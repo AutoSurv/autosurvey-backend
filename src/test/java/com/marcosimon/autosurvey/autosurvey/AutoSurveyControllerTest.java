@@ -4,83 +4,158 @@ import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.testutils.TestData;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 class AutoSurveyControllerTest {
 
-    private final OrgSurveyDTO testOrgSurvey = new OrgSurveyDTO(UUID.randomUUID().toString(), "Norway", 0L, 0L, 0L, 0L, 0L,
-            0L, 0L, 0L,
-            0L, "", "", "", "", "",
-            0, 0, 0, 0, 0L, "", TestData.testOrganizationId,
-            "", TestData.testUserId);
-
-    private final CreateSurveyDTO testSurveyDTO = TestData.testDTO;
-
     @Mock
     AutoSurveyService mockedService;
-
     @InjectMocks
     AutoSurveyController controller;
 
     @Test
-    public void shouldReturnOrgSurveyListWith2Entries() {
-        OrgSurveyDTO testOrgSurvey2 = new OrgSurveyDTO(UUID.randomUUID().toString(), "Sweden", 0L, 0L, 0L, 0L, 0L,
-                0L, 0L, 0L,
-                0L, "", "", "", "", "",
-                0, 0, 0, 0, 0L, "", TestData.testOrganizationId,
-                "", TestData.testUserId);
-        Mockito.when(mockedService.getAllSurveys()).thenReturn(Arrays.asList(testOrgSurvey, testOrgSurvey2));
-        List<OrgSurveyDTO> orgSurveyDTOList = controller.getAllSurveys().getBody();
+    public void shouldReturnSurveyListWith2Entries() {
 
-        assertThat(orgSurveyDTOList.get(0)).isEqualTo(testOrgSurvey);
-        assertThat(orgSurveyDTOList.size()).isEqualTo(2);
+    Mockito.when(mockedService.getAllSurveys()).thenReturn(Arrays.asList(TestData.testSurvey, TestData.testSurvey2));
+
+    List<OrgSurveyDTO> orgSurveyDTOList = controller.getAllSurveys().getBody();
+
+    assertThat(orgSurveyDTOList.get(0)).isEqualTo(TestData.testSurvey);
+    assertThat(orgSurveyDTOList.size()).isEqualTo(2);
 
     }
 
     @Test
     public void shouldReturnSpecificSurveyWhenRequested() {
-        String id = testOrgSurvey.id();
-        OrgSurveyDTO expectedOrgSurvey = new OrgSurveyDTO(id, "Sweden", 0L, 0L, 0L, 0L, 0L,
-                0L, 0L, 0L,
-                0L, "", "", "", "", "",
-                0, 0, 0, 0, 0L, "", TestData.testOrganizationId,
-                "", TestData.testUserId);
-        Mockito.when(mockedService.getSurveyById(id)).thenReturn(testOrgSurvey);
 
-        OrgSurveyDTO orgSurvey = controller.getSurvey(id).getBody();
+    String id = TestData.testSurvey.id();
 
-        assertThat(orgSurvey).isEqualTo(testOrgSurvey);
+    Mockito.when(mockedService.getSurveyById(id)).thenReturn(TestData.testSurvey);
+    OrgSurveyDTO orgSurveyDTO = controller.getSurvey(id).getBody();
+
+    assertThat(orgSurveyDTO).isEqualTo(TestData.testSurvey);
+
     }
 
     @Test
-    public void shouldReturnStatus409ConflictedForFailedAdd() {
+    public void shouldReturn400BadRequestWhenIdIsMissingOnGetById () {
+
+        Mockito.when(mockedService.getSurveyById(null)).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.getSurvey(null));
+    }
+
+    @Test
+    public void shouldReturn400BadRequestWhenIdIsEmptyOnGetById () {
+
+        Mockito.when(mockedService.getSurveyById("")).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.getSurvey(""));
+
+    }
+
+    @Test
+    public void shouldReturn400BadRequestWhenIdIsNotValidOnGetById () {
+
+        Mockito.when(mockedService.getSurveyById("1")).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.getSurvey("1"));
+
+    }
 
 
-        HttpServletRequest mockedReq = new MockHttpServletRequest();
-        Mockito.when(mockedService.addSurvey(TestData.testDTO)).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT));
+    @Test
+    public void shouldReturnS409ConflictedForFailedAdd() {
 
-        assertThrows( ResponseStatusException.class, ()-> controller.addNewSurvey(TestData.testDTO, mockedReq));
+    HttpServletRequest mockedReq = new MockHttpServletRequest();
+    Mockito.when(mockedService.addSurvey(TestData.testDTO)).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT));
+
+    assertThrows(ResponseStatusException.class, () -> controller.addNewSurvey(TestData.testDTO, mockedReq));
+
+    }
+
+    @Test
+    public void shouldUpdateSurvey() {
+
+    String id = TestData.testSurvey.id();
+    CreateSurveyDTO dataToUpdateDto = TestData.updatedTestDTO;
+    Mockito.when(mockedService.updateSurveyData(id, dataToUpdateDto)).thenReturn(TestData.updatedTestSurvey);
+
+    OrgSurveyDTO updatedSurveyDTO = controller.editSurvey(dataToUpdateDto, id).getBody();
+
+    assertThat(updatedSurveyDTO).isEqualTo(TestData.updatedTestSurvey);
+    assertThat(TestData.testSurvey.country()).isNotEqualTo(updatedSurveyDTO.country());
+
+    }
+
+    @Test
+    public void shouldReturn400BadRequestWhenIdIsMissingOnUpdate () {
+
+        Mockito.when(mockedService.updateSurveyData(null,TestData.updatedTestDTO)).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.editSurvey(TestData.updatedTestDTO,null));
+
+    }
+
+    @Test
+    public void shouldReturn400BadRequestWhenIdIsEmptyOnUpdate () {
+
+        Mockito.when(mockedService.updateSurveyData("",TestData.updatedTestDTO)).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.editSurvey(TestData.updatedTestDTO,""));
+
+    }
+
+
+    @Test
+    public void shouldReturn400BadRequestWhenIdIsNotValidOnUpdate () {
+
+        Mockito.when(mockedService.updateSurveyData("1", TestData.updatedTestDTO)).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.editSurvey(TestData.updatedTestDTO,"1"));
+
+    }
+
+    @Test
+    public void shouldNotUpdateSurveyDueToEmptyBodyOnUpdate () {
+
+        Mockito.when(mockedService.updateSurveyData(TestData.surveyId, null)).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.editSurvey(null, TestData.surveyId));
+
+    }
+
+    @Test
+    public void shouldDelete() {
+
+        Mockito.when(mockedService.deleteSurvey(TestData.surveyId)).thenReturn("204");
+
+        String deleteMSG = controller.deleteSurvey(TestData.surveyId);
+
+        assertThat(deleteMSG).isEqualTo("204");
+
+    }
+
+    @Test
+    public void shouldNotDelete() {
+
 
     }
 

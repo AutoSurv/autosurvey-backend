@@ -4,6 +4,7 @@ import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.user.UserDbRepository;
 import com.marcosimon.autosurvey.user.UserModel;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
 import com.marcosimon.autosurvey.models.AutoSurveyListResDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 
@@ -36,6 +38,17 @@ public class AutoSurveyService {
   }
 
   public OrgSurveyDTO getSurveyById(String id) {
+
+    Optional.of(!ObjectId.isValid(id)).ifPresent((v) -> {
+      if (v) throw new CustomException(INVALID_PARAMETER);
+    });
+
+    /*
+    if (id.equals("") || !ObjectId.isValid(id)) {
+      throw new CustomException(INVALID_PARAMETER);
+    }
+    */
+
     AutoSurvey gotSurvey = autoSurveyRepository.getById(id);
     if (gotSurvey == null) {
       throw new CustomException(SAVED_SURVEY_NOT_FOUND);
@@ -106,6 +119,10 @@ public class AutoSurveyService {
   }
 
   public OrgSurveyDTO updateSurveyData(String id, CreateSurveyDTO newSurveyData) {
+
+    Optional.of(!ObjectId.isValid(id)).ifPresent((v) -> {
+      if (v) throw new CustomException(INVALID_PARAMETER);
+    });
 
     if (newSurveyData == null) {
       throw new CustomException(INVALID_PARAMETER);
@@ -208,7 +225,14 @@ public class AutoSurveyService {
     return SurveyConverter.toResponseDto(autoSurveyRepository.saveSurvey(storedSurvey));
   }
 
-  public void deleteSurvey(String id) {
+  public String deleteSurvey(String id) {
+
+    Optional.ofNullable(id).orElseThrow(() -> new CustomException(INVALID_PARAMETER));
+
+    if (id.equals("") || !ObjectId.isValid(id)) {
+      throw new CustomException(INVALID_PARAMETER);
+    }
+
     AutoSurvey surveyToDelete = autoSurveyRepository.getById(id);
     if (surveyToDelete == null) {
       throw new CustomException(SAVED_SURVEY_NOT_FOUND);
@@ -238,6 +262,7 @@ public class AutoSurveyService {
     org.setSurveysIds(newList);
     organizationRepository.saveOrganization(org);
     autoSurveyRepository.deleteSurvey(id);
+    return "204";
   }
 
   public Page<AutoSurvey> getPaginatedSurveysController(int page, String country) {
