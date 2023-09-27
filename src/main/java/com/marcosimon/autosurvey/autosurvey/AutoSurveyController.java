@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,9 +37,6 @@ public class AutoSurveyController {
 
   @GetMapping("{id}")
   ResponseEntity<OrgSurveyDTO> getSurvey(@PathVariable String id) {
-    if (id == null || id.equals("")) {
-      return ResponseEntity.badRequest().build();
-    }
 
     OrgSurveyDTO survey = surveyService.getSurveyById(id);
     if (survey == null) {
@@ -57,7 +55,6 @@ public class AutoSurveyController {
 
   @PatchMapping("{id}")
   ResponseEntity<OrgSurveyDTO> editSurvey(@RequestBody CreateSurveyDTO dto, @PathVariable String id) {
-    if (id == null || id.isEmpty()) return ResponseEntity.badRequest().build();
 
     OrgSurveyDTO updatedSurvey = surveyService.updateSurveyData(id, dto);
     if (updatedSurvey == null) return ResponseEntity.notFound().build();
@@ -67,7 +64,7 @@ public class AutoSurveyController {
 
   @DeleteMapping("{id}")
   ResponseEntity deleteSurvey(@PathVariable String id) {
-    if (id == null || id.isEmpty()) return ResponseEntity.badRequest().build();
+
     surveyService.deleteSurvey(id);
     return ResponseEntity.noContent().build();
   }
