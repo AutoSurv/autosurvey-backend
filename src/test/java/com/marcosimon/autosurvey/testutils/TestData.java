@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.testutils;
 
+import com.marcosimon.autosurvey.models.CreateOrganizationDTO;
 import com.marcosimon.autosurvey.models.CreateSurveyDTO;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
@@ -85,5 +86,7 @@ public class TestData {
   public final String wrongOrganizationId = "651176a534067a39d9ec6d4f";
   public final List<String> testUserIds = new ArrayList<>(Collections.singleton(testUserId));
   public final Organization testOrg = new Organization(testOrgName, testUserId);
+
+  public final CreateOrganizationDTO fakeOrgDTO = new CreateOrganizationDTO("fakeOrg" , "fakeId");
 
 }
