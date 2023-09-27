@@ -45,7 +45,7 @@ public class SecurityConfig {
                                  new AntPathRequestMatcher("/authenticate/validate") ).permitAll()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
+                .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()//authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

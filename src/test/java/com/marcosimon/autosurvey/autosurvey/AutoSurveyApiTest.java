@@ -1,16 +1,15 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
-import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
-import com.marcosimon.autosurvey.organization.OrganizationController;
+
 import com.marcosimon.autosurvey.testutils.TestData;
-import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.DBObject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -20,25 +19,49 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-@ActiveProfiles("test")
-//@SpringBootTest
-//@RunWith(MockitoJUnitRunner.class)
-@ExtendWith(SpringExtension.class)
-@DataMongoTest(properties = {"spring.mongodb.embedded.version=4.9.2"})
+@SpringBootTest
+@CrossOrigin(origins = "*")
+//@ActiveProfiles("test")
 public class AutoSurveyApiTest {
 
+  @Value("${server.port}")
+  private int configPort;
+  @Autowired
+  AutoSurveyService service;
   @Autowired
   private TestRestTemplate restTemplate;
 
+  @AfterEach
+  public void cleanUp() {
+    if (TestData.setupSurveyDTO != null)
+    service.deleteSurvey(TestData.setupSurveyDTO.id());
+  }
 
+  @Test
+  public void portShouldBeTestPort(){
+
+    assertThat(configPort).isEqualTo(8080);
+  }
+
+  @Test
+  public void assertThatTheNewSurveyIsCorrectlyReturned() {
+    //Arrange
+    TestData.setupSurveyDTO = service.addSurvey(TestData.testDTO);
+
+    //Act
+    ResponseEntity<OrgSurveyDTO> exchange1 = restTemplate
+            .exchange("http://localhost:" + configPort + "/api/autosurveys", HttpMethod.POST, new HttpEntity<OrgSurveyDTO>(TestData.setupSurveyDTO), OrgSurveyDTO.class);
+    //Assert
+    OrgSurveyDTO body = exchange1.getBody();
+    System.out.println(exchange1.getHeaders().toString());
+    assertThat(body.country()).isEqualTo("Test Country");
+    assertThat(exchange1.getHeaders().getFirst("location")).isEqualTo("/api/autosurveys/" + body.id());
+  }
   @Test
   public void getSurveyById(@Autowired MongoTemplate mongoTemplate) throws URISyntaxException {
 
