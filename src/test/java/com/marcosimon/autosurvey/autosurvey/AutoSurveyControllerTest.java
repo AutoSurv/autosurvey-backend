@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletRequest;
@@ -145,18 +146,38 @@ class AutoSurveyControllerTest {
     @Test
     public void shouldDelete() {
 
-        Mockito.when(mockedService.deleteSurvey(TestData.surveyId)).thenReturn("204");
+        Mockito.when(mockedService.deleteSurvey(TestData.surveyId)).thenReturn("Survey deleted!");
 
-        String deleteMSG = controller.deleteSurvey(TestData.surveyId);
-
-        assertThat(deleteMSG).isEqualTo("204");
+        String deleteMSG = controller.deleteSurvey(TestData.surveyId).getBody();
+        assertThat((deleteMSG)).isEqualTo("Survey deleted!");
 
     }
 
     @Test
-    public void shouldNotDelete() {
+    public void shouldReturn400BadRequestWhenIdIsMissingOnDelete () {
+
+        Mockito.when(mockedService.deleteSurvey(null)).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.deleteSurvey(null));
+
+    }
+
+    @Test
+    public void shouldReturn400BadRequestWhenIdIsEmptyOnDelete () {
+
+        Mockito.when(mockedService.deleteSurvey("")).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.deleteSurvey(""));
+
+    }
 
 
+    @Test
+    public void shouldReturn400BadRequestWhenIdIsNotValidOnDelete () {
+
+        Mockito.when(mockedService.deleteSurvey("1")).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        assertThrows(ResponseStatusException.class, () -> controller.deleteSurvey("1"));
     }
 
 }

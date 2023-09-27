@@ -56,15 +56,17 @@ public class AutoSurveyController {
   ResponseEntity<OrgSurveyDTO> editSurvey(@RequestBody CreateSurveyDTO dto, @PathVariable String id) {
 
     OrgSurveyDTO updatedSurvey = surveyService.updateSurveyData(id, dto);
+    ResponseEntity<String> dfsd = ResponseEntity.ok("fdf");
 
     return ResponseEntity.accepted().body(updatedSurvey);
   }
 
   @DeleteMapping("{id}")
-  public String deleteSurvey(@PathVariable String id) {
-
-    return surveyService.deleteSurvey(id);
+  public ResponseEntity<String> deleteSurvey(@PathVariable String id) {
+    return ResponseEntity.ok(surveyService.deleteSurvey(id));
 
   }
+
+
 
 }

@@ -227,11 +227,9 @@ public class AutoSurveyService {
 
   public String deleteSurvey(String id) {
 
-    Optional.ofNullable(id).orElseThrow(() -> new CustomException(INVALID_PARAMETER));
-
-    if (id.equals("") || !ObjectId.isValid(id)) {
-      throw new CustomException(INVALID_PARAMETER);
-    }
+    Optional.of(!ObjectId.isValid(id)).ifPresent((v) -> {
+      if (v) throw new CustomException(INVALID_PARAMETER);
+    });
 
     AutoSurvey surveyToDelete = autoSurveyRepository.getById(id);
     if (surveyToDelete == null) {
@@ -262,7 +260,7 @@ public class AutoSurveyService {
     org.setSurveysIds(newList);
     organizationRepository.saveOrganization(org);
     autoSurveyRepository.deleteSurvey(id);
-    return "204";
+    return "Survey deleted!";
   }
 
   public Page<AutoSurvey> getPaginatedSurveysController(int page, String country) {
