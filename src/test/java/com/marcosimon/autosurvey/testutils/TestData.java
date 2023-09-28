@@ -54,7 +54,7 @@ public class TestData {
 
   public final OrgSurveyDTO testSurvey =
           new OrgSurveyDTO(
-                  UUID.randomUUID().toString(), testCountry, 1L, 2L, 3L, 4L, 5L,
+                  "650d5cb45ae72b0e1bce9696", testCountry, 1L, 2L, 3L, 4L, 5L,
                   0L, 0L, 0L,
                   0L, "", "", "", "", "",
                   0, 0, 0, 0, 0L, "", testOrganizationId,

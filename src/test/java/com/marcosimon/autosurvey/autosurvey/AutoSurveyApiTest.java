@@ -39,7 +39,7 @@ public class AutoSurveyApiTest {
   @AfterEach
   public void cleanUp() {
     if (TestData.setupSurveyDTO != null)
-    service.deleteSurvey(TestData.setupSurveyDTO.id());
+    service.deleteSurvey(TestData.testSurvey.id());
   }
 
   @Test
@@ -51,16 +51,16 @@ public class AutoSurveyApiTest {
   @Test
   public void assertThatTheNewSurveyIsCorrectlyReturned() {
     //Arrange
-    TestData.setupSurveyDTO = service.addSurvey(TestData.testDTO);
+    OrgSurveyDTO testOrgSurvey = TestData.testSurvey;
 
     //Act
     ResponseEntity<OrgSurveyDTO> exchange1 = restTemplate
-            .exchange("http://localhost:" + configPort + "/api/autosurveys", HttpMethod.POST, new HttpEntity<OrgSurveyDTO>(TestData.setupSurveyDTO), OrgSurveyDTO.class);
+            .exchange("http://localhost:" + configPort + "/api/autosurveys", HttpMethod.POST, new HttpEntity<OrgSurveyDTO>(testOrgSurvey), OrgSurveyDTO.class);
     //Assert
     OrgSurveyDTO body = exchange1.getBody();
-    System.out.println(exchange1.getHeaders().toString());
     assertThat(body.country()).isEqualTo("Test Country");
     assertThat(exchange1.getHeaders().getFirst("location")).isEqualTo("/api/autosurveys/" + body.id());
+    service.deleteSurvey(body.id());
   }
   @Test
   public void getSurveyById(@Autowired MongoTemplate mongoTemplate) throws URISyntaxException {
