@@ -3,6 +3,7 @@ package com.marcosimon.autosurvey.autosurvey;
 import com.marcosimon.autosurvey.models.OrgSurveyDTO;
 
 import com.marcosimon.autosurvey.testutils.TestData;
+import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,6 +63,7 @@ public class AutoSurveyApiTest {
     assertThat(exchange1.getHeaders().getFirst("location")).isEqualTo("/api/autosurveys/" + body.id());
     service.deleteSurvey(body.id());
   }
+  /*
   @Test
   public void getSurveyById(@Autowired MongoTemplate mongoTemplate) throws URISyntaxException {
 
@@ -94,6 +96,22 @@ public class AutoSurveyApiTest {
 // assert
     assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     assertThat(exchange.getHeaders().getFirst("location")).isEqualTo("/api/autosurveys/" + id);
+  }
+   */
+  @Test
+  public void assertThatACreatedSurveyCanBeRetrieved() {
+    // arrange
+    // act
+    // -- make a call to the API to create the joke
+    ResponseEntity<OrgSurveyDTO> createdSurvey = restTemplate.exchange("http://localhost:" + configPort + "/api/autosurveys", HttpMethod.POST, new HttpEntity<OrgSurveyDTO>(TestData.testSurvey), OrgSurveyDTO.class);
+    ResponseEntity<OrgSurveyDTO> retrieveSurvey = restTemplate.getForEntity("http://localhost:" + configPort + "/api/autosurveys/" + createdSurvey.getBody().id(), OrgSurveyDTO.class);
+
+    // assert
+
+    assertThat(createdSurvey.getBody().country()).isEqualTo("Test Country");
+    assertThat(createdSurvey.getHeaders().getFirst("location")).isEqualTo("/api/autosurveys/"+createdSurvey.getBody().id());
+    assertThat(retrieveSurvey.getBody().country()).isEqualTo("Test Country");
+    service.deleteSurvey(createdSurvey.getBody().id());
   }
 
 
