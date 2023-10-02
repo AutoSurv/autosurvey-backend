@@ -1,6 +1,6 @@
 package com.marcosimon.autosurvey.models;
 
-public record FunctionInfoDTO(
+public record NewFunctionInfoDTO(
         //FunctionInfoDTO funcInfo,
         String functionId,
         String functionOrgInfoId,

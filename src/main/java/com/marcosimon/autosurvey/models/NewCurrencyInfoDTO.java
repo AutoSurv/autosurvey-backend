@@ -1,6 +1,6 @@
 package com.marcosimon.autosurvey.models;
 
-public record CurrencyInfoDTO(
+public record NewCurrencyInfoDTO(
 
         //CurrencyInfoDTO currInfo,
         String currencyCountryId,
