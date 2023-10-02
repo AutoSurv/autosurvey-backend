@@ -4,10 +4,11 @@ import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository
+@Service
 @RequiredArgsConstructor
 public class MsfOrgInfoService {
 
