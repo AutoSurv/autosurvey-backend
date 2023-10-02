@@ -7,14 +7,15 @@ spring:
    #import: env.properties
   sql:
     init:
+      platform: postgresql
       mode: always
   output:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:postgresql://localhost:5432/org_info
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${PSQL_DB}.db.elephantsql.com:5432/${PSQL_USER}
+    username: ${PSQL_USER}
+    password: ${PSQL_PASSWORD}
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
