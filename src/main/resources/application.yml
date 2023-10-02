@@ -5,10 +5,10 @@ debug: true
 spring:
   #config:
    # import: env.properties
-#  sql:
-#    init:
-#      platform: mongodb
-#      mode: always
+  sql:
+    init:
+      platform: mongodb, postgresql
+      mode: always
   output:
     ansi:
       enabled: always
