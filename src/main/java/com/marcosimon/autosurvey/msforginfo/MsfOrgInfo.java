@@ -24,9 +24,9 @@ public class MsfOrgInfo {
   private String orgName;
   @Column(name = "working_hours")
   private Integer workingHours;
-  @Column(name = "13th_salary ")
+  @Column(name = "thirteenth_salary ")
   private Integer thirteenthSalary;
-  @ManyToOne
+  //@ManyToOne
   @Column(name = "country_id")
   private String countryId;
   @Column(name = "currency_in_use")
