@@ -3,6 +3,12 @@ server:
   port: 8080
 debug: true
 spring:
+#  sql:
+#    init:
+#      platform: mongodb
+#      mode: always
+#  config:
+#   import: env.properties
   sql:
     init:
       platform: postgresql
@@ -25,7 +31,7 @@ spring:
       ddl-auto: create-drop # none, create ...
   data:
     mongodb:
-      uri: ${MONGO_URI}
+      uri: mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_CLUSTER}/${MONGO_DATABASE}
       database: ${MONGO_DATABASE}
 jwt:
   secret: ${JWT_256_BIT_SECRET}
