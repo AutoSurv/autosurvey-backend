@@ -7,8 +7,8 @@ spring:
 #    init:
 #      platform: mongodb
 #      mode: always
-  config:
-   import: env.properties
+#  config:
+#   import: env.properties
   sql:
     init:
       platform: postgresql
