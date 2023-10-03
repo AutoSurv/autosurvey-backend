@@ -3,8 +3,8 @@ server:
   port: 8080
 debug: true
 spring:
-  #config:
-   # import: env.properties
+  config:
+    import: env.properties
 #  sql:
 #    init:
 #      platform: mongodb
@@ -13,9 +13,9 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:postgresql://localhost:5432/org_info
-    username: postgres
-    password: postgres
+    url: ${PSQL_DB}
+    username: ${PSQL_USER}
+    password: ${PSQL_PASSWORD}
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
