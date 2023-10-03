@@ -1,10 +1,9 @@
 package com.marcosimon.autosurvey.user;
 
 import com.marcosimon.autosurvey.config.DatabaseUserDetailsService;
-import com.marcosimon.autosurvey.models.LoggedUserDto;
+import com.marcosimon.autosurvey.models.user.LoggedUserDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

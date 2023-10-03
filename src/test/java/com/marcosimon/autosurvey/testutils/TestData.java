@@ -1,9 +1,8 @@
 package com.marcosimon.autosurvey.testutils;
 
-import com.marcosimon.autosurvey.models.CreateOrganizationDTO;
-import com.marcosimon.autosurvey.models.CreateSurveyDTO;
-import com.marcosimon.autosurvey.models.OrgSurveyDTO;
-import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
+import com.marcosimon.autosurvey.models.organization.CreateOrganizationDTO;
+import com.marcosimon.autosurvey.models.survey.CreateSurveyDTO;
+import com.marcosimon.autosurvey.models.survey.OrgSurveyDTO;
 import com.marcosimon.autosurvey.organization.Organization;
 import lombok.experimental.UtilityClass;
 

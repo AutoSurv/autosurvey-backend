@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 import java.util.Date;
 
-public record NewCountryInfo(
+public record NewCountryInfoDTO(
         //CountryInfoDTO countryInfo,
         String countryId,
         String countryName,

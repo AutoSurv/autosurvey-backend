@@ -1,7 +1,7 @@
 package com.marcosimon.autosurvey.user;
 
-import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
-import com.marcosimon.autosurvey.models.UserStatusDTO;
+import com.marcosimon.autosurvey.models.user.UserOrgResponseDTO;
+import com.marcosimon.autosurvey.models.user.UserStatusDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

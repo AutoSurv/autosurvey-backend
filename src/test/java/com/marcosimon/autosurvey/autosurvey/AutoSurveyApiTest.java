@@ -1,28 +1,18 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-import com.marcosimon.autosurvey.models.OrgSurveyDTO;
+import com.marcosimon.autosurvey.models.survey.OrgSurveyDTO;
 
 import com.marcosimon.autosurvey.testutils.TestData;
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
-import java.net.URISyntaxException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest

@@ -1,7 +1,7 @@
 package com.marcosimon.autosurvey.autosurvey;
 
 import com.marcosimon.autosurvey.exception.CustomException;
-import com.marcosimon.autosurvey.models.OrgSurveyDTO;
+import com.marcosimon.autosurvey.models.survey.OrgSurveyDTO;
 import com.marcosimon.autosurvey.testutils.TestData;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

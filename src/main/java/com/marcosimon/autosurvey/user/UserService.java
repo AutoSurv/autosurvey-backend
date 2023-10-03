@@ -1,6 +1,6 @@
 package com.marcosimon.autosurvey.user;
 
-import com.marcosimon.autosurvey.models.UserOrgResponseDTO;
+import com.marcosimon.autosurvey.models.user.UserOrgResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

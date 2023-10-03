@@ -1,6 +1,6 @@
 package com.marcosimon.autosurvey.models;
 
-public record NewPaymentInfo(
+public record NewPaymentInfoDTO(
         //PaymentInfoDTO payInfo,
         String paymentId,
         Double basicSalary,

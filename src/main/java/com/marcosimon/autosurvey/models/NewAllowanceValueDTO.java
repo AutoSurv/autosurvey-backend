@@ -1,7 +1,7 @@
 package com.marcosimon.autosurvey.models;
 
-public record NewAllowancePercentage(
-        //AllowancePercentageDTO allPerc,
+public record NewAllowanceValueDTO(
+        //AllowanceValueDTO allValue
         String allowancePercentageId,
         Float COLA,
         Float transportation,

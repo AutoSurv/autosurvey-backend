@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.organization;
 
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyService;
 import com.marcosimon.autosurvey.exception.CustomException;
-import com.marcosimon.autosurvey.models.OrganizationResponseDTO;
+import com.marcosimon.autosurvey.models.organization.OrganizationResponseDTO;
 import com.marcosimon.autosurvey.testutils.TestData;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.marcosimon.autosurvey.models;
+package com.marcosimon.autosurvey.models.survey;
 
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 

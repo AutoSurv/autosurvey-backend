@@ -1,4 +1,4 @@
-package com.marcosimon.autosurvey.models;
+package com.marcosimon.autosurvey.models.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,8 +1,10 @@
 package com.marcosimon.autosurvey.organization;
 
 
-import com.marcosimon.autosurvey.models.*;
-
+import com.marcosimon.autosurvey.models.organization.CreateOrganizationDTO;
+import com.marcosimon.autosurvey.models.organization.OrganizationResponseDTO;
+import com.marcosimon.autosurvey.models.survey.OrgSurveyDTO;
+import com.marcosimon.autosurvey.models.user.UserInfoDto;
 import com.marcosimon.autosurvey.user.UserModel;
 import com.marcosimon.autosurvey.user.UserService;
 import lombok.RequiredArgsConstructor;

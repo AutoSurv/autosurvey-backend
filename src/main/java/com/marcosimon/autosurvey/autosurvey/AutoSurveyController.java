@@ -1,7 +1,7 @@
 package com.marcosimon.autosurvey.autosurvey;
 
-import com.marcosimon.autosurvey.models.CreateSurveyDTO;
-import com.marcosimon.autosurvey.models.OrgSurveyDTO;
+import com.marcosimon.autosurvey.models.survey.CreateSurveyDTO;
+import com.marcosimon.autosurvey.models.survey.OrgSurveyDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
