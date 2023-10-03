@@ -22,30 +22,36 @@ public class MsfOrgInfo {
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @Column(name = "org_id")
   private String orgId;
+
   @Column(name = "org_full_name")
   private String orgFullName;
+
   @Column(name = "org_name")
   private String orgName;
+
   @Column(name = "working_hours")
   private Integer workingHours;
+
   @Column(name = "thirteenth_salary ")
   private Integer thirteenthSalary;
-  //@ManyToOne
+
   @OneToOne
   @PrimaryKeyJoinColumn
-  private ContactInfo contact; //Country countryId
-//  @Column(name = "contact_person")
-//  private String contactInfo; //ContactInfo contactId
+  private ContactInfo contact;
 
   @Column(name = "currency_in_use")
   private String currencyInUse;
 
-  public MsfOrgInfo(String orgName, Integer workingHours, Integer thirteenthSalary, String currencyInUse) {
-    this.orgFullName = orgName;
+  @ManyToOne
+  @JoinColumn(name = "country_info_id", nullable = false)
+  private CountryInfo countryInfo;
+
+  public MsfOrgInfo(String orgFullName, String orgName, Integer workingHours, Integer thirteenthSalary, String currencyInUse) {
+    this.orgFullName = orgFullName;
+    this.orgName = orgName;
     this.workingHours = workingHours;
     this.thirteenthSalary = thirteenthSalary;
     this.currencyInUse = currencyInUse;
   }
-
 
 }

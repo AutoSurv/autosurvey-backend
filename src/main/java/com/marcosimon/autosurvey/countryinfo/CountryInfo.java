@@ -1,9 +1,14 @@
 package com.marcosimon.autosurvey.countryinfo;
 
+import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
+import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -21,4 +26,21 @@ public class CountryInfo {
 
   private String countryName;
 
+  private SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+
+  private String currencyRef;
+
+  @OneToMany(mappedBy = "countryInfo")
+  private List<MsfOrgInfo> orgInfoList;
+
+  @OneToOne
+  @PrimaryKeyJoinColumn
+  private CurrencyInfo currencyInfo;
+
+
+  public CountryInfo(String countryName, SimpleDateFormat date, String currencyRef) {
+    this.countryName = countryName;
+    this.date = date;
+    this.currencyRef = currencyRef;
+  }
 }
