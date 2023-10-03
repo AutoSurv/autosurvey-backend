@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @Setter
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-@RequiredArgsConstructor
 @ToString
 public class AutoSurvey {
 
@@ -20,49 +19,86 @@ public class AutoSurvey {
     private String country;
     @NonNull
     private Long year;
-    @NonNull
+
     private Long rent;
-    @NonNull
+
     private Long utilities;
-    @NonNull
+
     private Long food;
-    @NonNull
+
     private Long basicItems;
-    @NonNull
+
     private Long transportation;
-    @NonNull
+
     private Long educationTotal;
-    @NonNull
+
     private Long educationSupplies;
-    @NonNull
+
     private Long educationFee;
-    @NonNull
+
     private String educationType;
-    @NonNull
+
     private String accommodationType;
-    @NonNull
+
     private String profession;
-    @NonNull
+
     private String locationGiven;
-    @NonNull
+
     private String locationClustered;
-    @NonNull
+
     private Integer numResidents;
-    @NonNull
+
     private Integer numIncomes;
-    @NonNull
+
     private Integer numFullIncomes;
-    @NonNull
+
     private Integer numChildren;
-    @NonNull
+
     private Long totalIncome;
-    @NonNull
+
     private String comments;
-    @NonNull
+
     private String orgId;
-    @NonNull
+
     private String orgName;
-    @NonNull
+
     private String userId;
 
+    public AutoSurvey(
+            @NonNull String country, @NonNull Long year,
+            Long rent, Long utilities,
+            Long food, Long basicItems, Long transportation,
+            Long educationTotal, Long educationSupplies,
+            Long educationFee, String educationType,
+            String accommodationType, String profession,
+            String locationGiven, String locationClustered,
+            Integer numResidents, Integer numIncomes,
+            Integer numFullIncomes, Integer numChildren,
+            Long totalIncome, String comments, String orgId,
+            String orgName, String userId) {
+        this.country = country;
+        this.year = year;
+        this.rent = rent;
+        this.utilities = utilities;
+        this.food = food;
+        this.basicItems = basicItems;
+        this.transportation = transportation;
+        this.educationTotal = educationTotal;
+        this.educationSupplies = educationSupplies;
+        this.educationFee = educationFee;
+        this.educationType = educationType;
+        this.accommodationType = accommodationType;
+        this.profession = profession;
+        this.locationGiven = locationGiven;
+        this.locationClustered = locationClustered;
+        this.numResidents = numResidents;
+        this.numIncomes = numIncomes;
+        this.numFullIncomes = numFullIncomes;
+        this.numChildren = numChildren;
+        this.totalIncome = totalIncome;
+        this.comments = comments;
+        this.orgId = orgId;
+        this.orgName = orgName;
+        this.userId = userId;
+    }
 }
