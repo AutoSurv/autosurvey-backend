@@ -2,11 +2,13 @@ package com.marcosimon.autosurvey.msforginfo;
 
 import com.marcosimon.autosurvey.contactinfo.ContactInfo;
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.functionsalaryinfo.FunctionSalaryInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -45,6 +47,11 @@ public class MsfOrgInfo {
   @ManyToOne
   @JoinColumn(name = "country_info_id", nullable = false)
   private CountryInfo countryInfo;
+
+  @OneToMany(mappedBy = "functionSalaryInfoId")
+  private List<FunctionSalaryInfo> functionSalaryInfoList;
+
+
 
   public MsfOrgInfo(String orgFullName, String orgName, Integer workingHours, Integer thirteenthSalary, String currencyInUse) {
     this.orgFullName = orgFullName;
