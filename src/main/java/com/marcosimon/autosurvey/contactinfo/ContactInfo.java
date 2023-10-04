@@ -18,11 +18,12 @@ public class ContactInfo implements Serializable {
   @Id
   @GeneratedValue(generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @Column(name = "contact_Info_Id")
   private String contactInfoId;
 
   @MapsId
   @OneToOne(mappedBy = "contact")
-  @JoinColumn(name = "contactInfoId")
+  @JoinColumn(name = "contact_Info_Id")
   private MsfOrgInfo msfOrgInfo;
 
   @Column(name = "contact_person")

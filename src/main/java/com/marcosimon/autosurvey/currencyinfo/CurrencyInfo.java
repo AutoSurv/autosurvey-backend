@@ -26,7 +26,7 @@ public class CurrencyInfo {
 
     @MapsId
     @OneToOne(mappedBy =  "currencyInfo")
-    @JoinColumn(name = "country_info_id")
+    @JoinColumn(name = "currency_info_id")
     private CountryInfo countryInfo;
 
     public CurrencyInfo(String currency, Float exchangeRate) {

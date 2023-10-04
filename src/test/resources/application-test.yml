@@ -1,6 +1,10 @@
 server:
   port : 9091
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/org_info #${PSQL_DB}
+    username: postgres #${PSQL_USER}
+    password: postgres #${PSQL_PASSWORD}
 #spring:
 #  data:
 #    mongodb:

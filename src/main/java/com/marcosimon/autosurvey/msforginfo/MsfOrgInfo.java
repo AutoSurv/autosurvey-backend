@@ -1,5 +1,7 @@
 package com.marcosimon.autosurvey.msforginfo;
 
+import com.marcosimon.autosurvey.allowanceinfo.AllowanceInfo;
+import com.marcosimon.autosurvey.allowancepercentinfo.AllowancePercentInfo;
 import com.marcosimon.autosurvey.contactinfo.ContactInfo;
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
 import com.marcosimon.autosurvey.functionsalaryinfo.FunctionSalaryInfo;
@@ -40,6 +42,14 @@ public class MsfOrgInfo {
   @OneToOne
   @PrimaryKeyJoinColumn
   private ContactInfo contact;
+
+  @OneToOne
+  @PrimaryKeyJoinColumn
+  private AllowanceInfo allowance;
+
+  @OneToOne
+  @PrimaryKeyJoinColumn
+  private AllowancePercentInfo allowancePercent;
 
   @Column(name = "currency_in_use")
   private String currencyInUse;

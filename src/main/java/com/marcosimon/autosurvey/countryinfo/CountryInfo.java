@@ -26,7 +26,7 @@ public class CountryInfo {
 
   private String countryName;
 
-  private SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+  private String date;
 
   private String currencyRef;
 
@@ -38,7 +38,7 @@ public class CountryInfo {
   private CurrencyInfo currencyInfo;
 
 
-  public CountryInfo(String countryName, SimpleDateFormat date, String currencyRef) {
+  public CountryInfo(String countryName, String date, String currencyRef) {
     this.countryName = countryName;
     this.date = date;
     this.currencyRef = currencyRef;
