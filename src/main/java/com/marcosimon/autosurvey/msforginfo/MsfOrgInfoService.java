@@ -1,12 +1,17 @@
 package com.marcosimon.autosurvey.msforginfo;
 
+import com.marcosimon.autosurvey.constants.ErrorCode;
+import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.marcosimon.autosurvey.constants.ErrorCode.ORG_INFO_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +23,14 @@ public class MsfOrgInfoService {
     return iMsfOrgInfoDbRepository.findAll();
   }
 
-  public MsfOrgInfo createMsfOrgInfo(NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
+  public MsfOrgInfo getMsfOrgInfoById(String id) {
+    return iMsfOrgInfoDbRepository
+            .findById(id)
+            .orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
+  }
+  @Transactional
+  public synchronized MsfOrgInfo addMsfOrgInfo(NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
+
 
     return null;
   }

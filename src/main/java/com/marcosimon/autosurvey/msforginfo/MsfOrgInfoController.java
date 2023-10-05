@@ -22,7 +22,7 @@ public class MsfOrgInfoController {
 
   @PostMapping
   public ResponseEntity<MsfOrgInfo> createMsfOrgInfo(@RequestBody NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
-    return ResponseEntity.ok(msfOrgInfoService.createMsfOrgInfo(newMsfOrgInfoDTO));
+    return ResponseEntity.ok(msfOrgInfoService.addMsfOrgInfo(newMsfOrgInfoDTO));
   }
 
 /*  @PatchMapping

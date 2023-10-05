@@ -24,10 +24,12 @@ public class CountryInfo {
   @Column(name = "country_info_id")
   private String countryInfoId;
 
+  @Column(name = "country_name")
   private String countryName;
 
   private String date;
 
+  @Column(name = "currency_ref")
   private String currencyRef;
 
   @OneToMany(mappedBy = "countryInfo")

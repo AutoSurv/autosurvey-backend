@@ -11,15 +11,21 @@ public enum ErrorCode {
     INVALID_PARAMETER(400, "check your parameter value"),
 
     //404 NOT_FOUND  Wrong Resource Access
+    CURRENCY_INFO_NOT_FOUND(404, "Currency info ID not exist"),
+    COUNTRY_INFO_NOT_FOUND(404, "Country info ID not exist"),
+    ORG_INFO_NOT_FOUND(404, "Organization info ID not exist"),
     SURVEY_NOT_FOUND(404, "Survey ID not exist"),
     ORGANIZATION_NOT_FOUND(404, "Organization ID not exist"),
     USER_NOT_FOUND(404, "User ID not exist"),
+
     SAVED_SURVEY_NOT_FOUND(404, "Survey is not in DB"),
     SAVED_ORGANIZATION_NOT_FOUND(404, "Organization is not in DB"),
     SAVED_USER_NOT_FOUND(404, "User is not in DB"),
 
 
     //409 CONFLICT Duplicate Resource
+    ALREADY_SAVED_Currency_INFO(409, "Currency info is already saved"),
+    ALREADY_SAVED_COUNTRY_INFO(409, "Country info is already saved"),
     ALREADY_SAVED_SURVEY(409, "Survey is already saved"),
     ALREADY_SAVED_ORGANIZATION(409, "Organization is already saved"),
     ALREADY_SAVED_USER(409, "User is already saved"),

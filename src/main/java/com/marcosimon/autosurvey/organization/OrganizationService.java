@@ -2,7 +2,6 @@ package com.marcosimon.autosurvey.organization;
 
 import com.marcosimon.autosurvey.autosurvey.AutoSurvey;
 import com.marcosimon.autosurvey.autosurvey.AutoSurveyRepository;
-import com.marcosimon.autosurvey.constants.ErrorCode;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.survey.OrgSurveyDTO;
 import com.marcosimon.autosurvey.models.organization.OrganizationResponseDTO;
@@ -34,7 +33,7 @@ public class OrganizationService {
     public OrganizationResponseDTO getOrgById(String id) {
         Organization org = organizationRepository.getById(id);
         if(org == null) {
-            throw new CustomException(ErrorCode.SAVED_ORGANIZATION_NOT_FOUND);
+            throw new CustomException(ORGANIZATION_NOT_FOUND);
         }
         return new OrganizationResponseDTO(org.getOrgId(), org.getOrgName(),org.getSurveysIds(), org.getUsersIds());
     }
@@ -95,7 +94,7 @@ public class OrganizationService {
     public void deleteOrganization(String orgId) {
         Organization org = organizationRepository.getById(orgId);
         if(org == null) {
-            throw new CustomException(SAVED_ORGANIZATION_NOT_FOUND);
+            throw new CustomException(ORGANIZATION_NOT_FOUND);
         }
         org.getSurveysIds().forEach(autoSurveyRepository::deleteSurvey);
         organizationRepository.deleteOrganization(orgId);

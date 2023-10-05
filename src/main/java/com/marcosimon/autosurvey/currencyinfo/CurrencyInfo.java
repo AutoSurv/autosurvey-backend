@@ -15,8 +15,8 @@ import javax.persistence.*;
 @Table(name = "currency_info")
 public class CurrencyInfo {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    //@GeneratedValue(generator = "system-uuid")
+    //@GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "currency_info_id")
     private String currencyInfoId;
 
@@ -30,6 +30,12 @@ public class CurrencyInfo {
     private CountryInfo countryInfo;
 
     public CurrencyInfo(String currency, Float exchangeRate) {
+        this.currency = currency;
+        this.exchangeRate = exchangeRate;
+    }
+
+    public CurrencyInfo(String currencyInfoId, String currency, Float exchangeRate) {
+        this.currencyInfoId = currencyInfoId;
         this.currency = currency;
         this.exchangeRate = exchangeRate;
     }

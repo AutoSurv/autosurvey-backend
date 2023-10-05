@@ -6,7 +6,7 @@ public record NewCountryInfoDTO(
         //CountryInfoDTO countryInfo,
         String countryId,
         String countryName,
-        Date date,
+        String date,
         String currencyRef
 ) {
 }
