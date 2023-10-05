@@ -13,7 +13,7 @@ import static com.marcosimon.autosurvey.constants.ErrorCode.CURRENCY_INFO_NOT_FO
 
 @Service
 @RequiredArgsConstructor
-public class CurrencyService {
+public class CurrencyInfoService {
 
     private final ICurrencyInfoDbRepository currencyInfoDbRepository;
 

@@ -7,14 +7,11 @@ public record NewMsfOrgInfoDTO(
         //MsfOrgInfoDTO orgInfo,
         String orgId,
         String orgName,
+        String orgFullName,
         Integer workingHours,
         Integer thirteenthSalary,
-        String currencyInUse
-
-
-
-
-
+        String currencyInUse,
+        String countryInfoName
 
 ) {
 }

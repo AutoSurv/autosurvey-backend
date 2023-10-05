@@ -29,6 +29,12 @@ public class CountryInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     }
+    public CountryInfo getCountryInfoByOrgName(String orgName) {
+        return countryInfoDbRepository
+                .findByCountryName(orgName)
+                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
+    }
+
     @Transactional //You need to add country and currency together due to ID
     public synchronized CountryInfo addCountryAndCurrencyInfo(NewCountryInfoDTO newCountryInfoDTO, NewCurrencyInfoDTO newCurrencyInfoDTO) {
         Optional.of(countryInfoDbRepository

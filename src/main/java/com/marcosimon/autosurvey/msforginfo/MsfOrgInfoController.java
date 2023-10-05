@@ -1,6 +1,6 @@
 package com.marcosimon.autosurvey.msforginfo;
 
-import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
+import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class MsfOrgInfoController {
   }
 
   @PostMapping
-  public ResponseEntity<MsfOrgInfo> createMsfOrgInfo(@RequestBody NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
+  public ResponseEntity<MsfOrgInfo> createMsfOrgInfo(@RequestBody NewCountryInfoDTO newMsfOrgInfoDTO) {
     return ResponseEntity.ok(msfOrgInfoService.addMsfOrgInfo(newMsfOrgInfoDTO));
   }
 

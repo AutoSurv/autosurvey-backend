@@ -1,7 +1,10 @@
 package com.marcosimon.autosurvey.msforginfo;
 
 import com.marcosimon.autosurvey.constants.ErrorCode;
+import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.countryinfo.CountryInfoService;
 import com.marcosimon.autosurvey.exception.CustomException;
+import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
 import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import static com.marcosimon.autosurvey.constants.ErrorCode.ORG_INFO_NOT_FOUND;
 public class MsfOrgInfoService {
 
   private final IMsfOrgInfoDbRepository iMsfOrgInfoDbRepository;
+  private final CountryInfoService countryInfoService;
 
   public List<MsfOrgInfo> getAllMsfOrgInfo() {
     return iMsfOrgInfoDbRepository.findAll();
@@ -29,8 +33,8 @@ public class MsfOrgInfoService {
             .orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
   }
   @Transactional
-  public synchronized MsfOrgInfo addMsfOrgInfo(NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
-
+  public synchronized MsfOrgInfo addMsfOrgInfo(NewCountryInfoDTO newMsfOrgInfoDTO) {
+    //CountryInfo countryInfo = countryInfoService.addCountryAndCurrencyInfo(newMsfOrgInfoDTO);
 
     return null;
   }
