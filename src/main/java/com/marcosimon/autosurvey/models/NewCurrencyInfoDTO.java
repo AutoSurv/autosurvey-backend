@@ -3,8 +3,11 @@ package com.marcosimon.autosurvey.models;
 public record NewCurrencyInfoDTO(
 
         //CurrencyInfoDTO currInfo,
-        String currencyId,
+        //String currencyId,
         String currency,
-        Float exchangeRate
+        Float exchangeRate,
+
+        String countryName,
+        String date
 ) {
 }

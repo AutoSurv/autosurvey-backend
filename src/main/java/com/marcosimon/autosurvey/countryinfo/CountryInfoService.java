@@ -29,10 +29,15 @@ public class CountryInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     }
-    public CountryInfo getCountryInfoByOrgName(String orgName) {
+//    public CountryInfo getCountryInfoByCountryName(String countryName) {
+//        return countryInfoDbRepository
+//                .findByCountryName(countryName)
+//                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
+//    }
+
+    public CountryInfo getCountryInfoByNameAndDate(String countryName, String date) {
         return countryInfoDbRepository
-                .findByCountryName(orgName)
-                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
+                .findByNameAndDate(countryName, date);
     }
 
     @Transactional //You need to add country and currency together due to ID
