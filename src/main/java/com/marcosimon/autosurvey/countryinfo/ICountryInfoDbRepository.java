@@ -13,7 +13,5 @@ public interface ICountryInfoDbRepository extends JpaRepository<CountryInfo, Str
     //Do not use column name, use entity variable name
     CountryInfo findByNameAndDate(@Param("name") String name, @Param("date") String date);
 
-    Optional<CountryInfo> findByCountryName(String countryName);
-
 
 }

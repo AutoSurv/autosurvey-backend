@@ -3,6 +3,7 @@ package com.marcosimon.autosurvey.msforginfo;
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
 import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
+import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
 import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,11 +34,10 @@ public class MsfOrgInfoService {
   }
 
   @Transactional //You need country name and date to get country id/ orgInfo
-  public synchronized MsfOrgInfo addMsfOrgInfo( String countryName,
-                                                String date,
+  public synchronized MsfOrgInfo addMsfOrgInfo( NewCountryInfoDTO newCountryInfoDTO,
                                                 NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
     CountryInfo countryInfo = Optional.of(countryInfoDbRepository
-                    .findByNameAndDate(countryName, date))
+                    .findByNameAndDate(newCountryInfoDTO.countryName(), newCountryInfoDTO.date()))
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
     return msfOrgInfoDbRepository.save(new MsfOrgInfo(newMsfOrgInfoDTO.orgFullName(),

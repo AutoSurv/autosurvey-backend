@@ -13,6 +13,7 @@ public enum ErrorCode {
     //404 NOT_FOUND  Wrong Resource Access
     CURRENCY_INFO_NOT_FOUND(404, "Currency info ID not exist"),
     COUNTRY_INFO_NOT_FOUND(404, "Country info ID not exist"),
+    CONTACT_INFO_NOT_FOUND(404, "Contact info ID not exist"),
     ORG_INFO_NOT_FOUND(404, "Organization info ID not exist"),
     SURVEY_NOT_FOUND(404, "Survey ID not exist"),
     ORGANIZATION_NOT_FOUND(404, "Organization ID not exist"),
@@ -22,10 +23,10 @@ public enum ErrorCode {
     SAVED_ORGANIZATION_NOT_FOUND(404, "Organization is not in DB"),
     SAVED_USER_NOT_FOUND(404, "User is not in DB"),
 
-
     //409 CONFLICT Duplicate Resource
-    ALREADY_SAVED_Currency_INFO(409, "Currency info is already saved"),
+    ALREADY_SAVED_CURRENCY_INFO(409, "Currency info is already saved"),
     ALREADY_SAVED_COUNTRY_INFO(409, "Country info is already saved"),
+    ALREADY_SAVED_CONTACT_INFO(409, "Contact info is already saved"),
     ALREADY_SAVED_SURVEY(409, "Survey is already saved"),
     ALREADY_SAVED_ORGANIZATION(409, "Organization is already saved"),
     ALREADY_SAVED_USER(409, "User is already saved"),
