@@ -2,12 +2,15 @@ package com.marcosimon.autosurvey.contactinfo;
 
 import com.marcosimon.autosurvey.models.NewContactInfoDTO;
 import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,27 +23,28 @@ public class ContactInfoController {
 
   @GetMapping
   public ResponseEntity<List<ContactInfo>> getAllContacts() {
-    return null;
+    return ResponseEntity.ok(contactInfoService.getAllContacts());
   }
 
   @GetMapping("{id}")
   public ResponseEntity<ContactInfo> getContact(@PathVariable @NotEmpty String id) {
-    return null;
+    return ResponseEntity.ok(contactInfoService.getContactById(id));
   }
 
   @PostMapping
-  public ResponseEntity<ContactInfo> createContact(@RequestBody NewContactInfoDTO newContactInfoDTO, @RequestBody NewMsfOrgInfoDTO newMsfOrgInfoDTO, HttpServletRequest req) {
-    return null;
+  public ResponseEntity<ContactInfo> createContact(@RequestBody @NotNull NewContactInfoDTO newContactInfoDTO, @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO, HttpServletRequest req) {
+    ContactInfo contactInfo = contactInfoService.addContactInfo(newMsfOrgInfoDTO.orgName(), newMsfOrgInfoDTO.countryInfo(), newContactInfoDTO);
+    URI location = URI.create((req.getRequestURI() + "/" + contactInfo.getContactInfoId()));
+    return ResponseEntity.created(location).body(contactInfo);
   }
 
   @PatchMapping("{id}")
   public ResponseEntity<ContactInfo> updateContact(@PathVariable @NotEmpty String id, @RequestBody NewContactInfoDTO newContactInfoDTO) {
-    return null;
+    ContactInfo contactInfoUpdated = contactInfoService.updateContactInfo(id, newContactInfoDTO);
+    return ResponseEntity.accepted().body(contactInfoUpdated);
   }
 
   @DeleteMapping("{id}")
-  public void deleteContact(@PathVariable @NotEmpty String id) {
-
-  }
+  public void deleteContact(@PathVariable @NotEmpty String id) { contactInfoService.deleteContactInfo(id); }
 
 }

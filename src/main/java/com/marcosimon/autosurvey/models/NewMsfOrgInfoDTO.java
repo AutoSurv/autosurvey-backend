@@ -1,5 +1,7 @@
 package com.marcosimon.autosurvey.models;
 
+import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+
 import java.util.Date;
 
 public record NewMsfOrgInfoDTO(
@@ -11,7 +13,7 @@ public record NewMsfOrgInfoDTO(
         Integer workingHours,
         Integer thirteenthSalary,
         String currencyInUse,
-        String countryInfoName
+        CountryInfo countryInfo
 
 ) {
 }

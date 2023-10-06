@@ -2,6 +2,7 @@ package com.marcosimon.autosurvey.currencyinfo;
 
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
 import com.marcosimon.autosurvey.countryinfo.CountryInfoService;
+import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
 import com.marcosimon.autosurvey.models.NewCurrencyInfoDTO;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfoService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.List;
 
@@ -32,16 +34,14 @@ public class CurrencyController {
   }
 
   @PostMapping
-  public ResponseEntity<CurrencyInfo> createCurrency(@RequestBody NewCurrencyInfoDTO newCurrencyInfoDTO, HttpServletRequest req) {
-    CountryInfo countryInfo = countryInfoService.getCountryInfoByNameAndDate(newCurrencyInfoDTO.countryName(), newCurrencyInfoDTO.date());
-    CurrencyInfo currencyInfo = new CurrencyInfo(countryInfo.getCountryInfoId(), newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate());
-
+  public ResponseEntity<CurrencyInfo> createCurrency(@RequestBody @NotNull NewCountryInfoDTO newCountryInfoDTO, @RequestBody @NotNull NewCurrencyInfoDTO newCurrencyInfoDTO, HttpServletRequest req) {
+    CurrencyInfo currencyInfo = currencyInfoService.addCurrencyInfo(newCountryInfoDTO.countryName(), newCountryInfoDTO.date(), newCurrencyInfoDTO);
     URI location = URI.create((req.getRequestURI() + "/" + currencyInfo.getCurrencyInfoId()));
     return ResponseEntity.created(location).body(currencyInfo);
   }
 
   @PatchMapping("{id}")
-  public ResponseEntity<CurrencyInfo> updateCurrency(@PathVariable @NotEmpty String id, @RequestBody NewCurrencyInfoDTO updateCurrency) {
+  public ResponseEntity<CurrencyInfo> updateCurrency(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewCurrencyInfoDTO updateCurrency) {
     CurrencyInfo currencyUpdated = currencyInfoService.updatedCurrencyInfo(id, updateCurrency);
     return ResponseEntity.accepted().body(currencyUpdated);
   }
