@@ -36,16 +36,14 @@ public class CountryInfoService {
     }
 
     @Transactional //You need to add country and currency together due to ID
-    public synchronized CountryInfo addCountryAndCurrencyInfo(NewCountryInfoDTO newCountryInfoDTO, NewCurrencyInfoDTO newCurrencyInfoDTO) {
+    public synchronized CountryInfo addCountryInfo(NewCountryInfoDTO newCountryInfoDTO) {
         Optional.of(countryInfoDbRepository
                 .findByNameAndDate(newCountryInfoDTO.countryName(), newCountryInfoDTO.date()))
                 .ifPresent( info -> {
                     throw new CustomException(ALREADY_SAVED_COUNTRY_INFO);
                 });
 
-        CountryInfo newCountryInfo = countryInfoDbRepository.save(new CountryInfo(newCountryInfoDTO.countryName(), newCountryInfoDTO.date(), newCountryInfoDTO.currencyRef()));
-        currencyInfoDbRepository.save(new CurrencyInfo(newCountryInfo.getCountryInfoId(), newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate()));
-        return newCountryInfo;
+        return countryInfoDbRepository.save(new CountryInfo(newCountryInfoDTO.countryName(), newCountryInfoDTO.date(), newCountryInfoDTO.currencyRef()));
     }
     @Transactional
     public synchronized CountryInfo updateCountryInfo(String id, NewCountryInfoDTO updateCountryInfo) {

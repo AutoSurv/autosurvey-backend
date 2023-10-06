@@ -33,8 +33,8 @@ public class CountryInfoController {
   }
 
   @PostMapping
-  public ResponseEntity<CountryInfo> createNewCountryInfoAndCurrency(@RequestBody NewCountryInfoDTO newCountryInfoDTO, @RequestBody NewCurrencyInfoDTO newCurrencyInfoDTO, HttpServletRequest req) {
-    CountryInfo createdCountryInfo = countryInfoService.addCountryAndCurrencyInfo(newCountryInfoDTO, newCurrencyInfoDTO);
+  public ResponseEntity<CountryInfo> createNewCountryInfo(@RequestBody NewCountryInfoDTO newCountryInfoDTO, HttpServletRequest req) {
+    CountryInfo createdCountryInfo = countryInfoService.addCountryInfo(newCountryInfoDTO);
 
     URI location = URI.create((req.getRequestURI() + "/" + createdCountryInfo.getCountryInfoId()));
     return ResponseEntity.created(location).body(createdCountryInfo);

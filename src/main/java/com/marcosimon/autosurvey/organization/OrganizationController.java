@@ -77,10 +77,10 @@ public class OrganizationController {
         Organization updatedOrg = new Organization(updatedOrgDto.orgId(), updatedOrgDto.orgName(), updatedOrgDto.surveysIds());
 
         if(!userInfoDto.status().equals("approved")) {
-             updatedOrg = service.addUser(id, userInfoDto.userId());
+            updatedOrg = service.addUser(id, userInfoDto.userId());
         }
         if(userInfoDto.status().equals("approved")) {
-             updatedOrg = service.deleteUser(id, userInfoDto.userId());
+            updatedOrg = service.deleteUser(id, userInfoDto.userId());
         }
 
 

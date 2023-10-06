@@ -61,14 +61,12 @@ public class MsfOrgInfo {
   @OneToMany(mappedBy = "functionSalaryInfoId")
   private List<FunctionSalaryInfo> functionSalaryInfoList;
 
-
-
-  public MsfOrgInfo(String orgFullName, String orgName, Integer workingHours, Integer thirteenthSalary, String currencyInUse) {
+  public MsfOrgInfo(String orgFullName, String orgName, Integer workingHours, Integer thirteenthSalary, String currencyInUse, CountryInfo countryInfo) {
     this.orgFullName = orgFullName;
     this.orgName = orgName;
     this.workingHours = workingHours;
     this.thirteenthSalary = thirteenthSalary;
     this.currencyInUse = currencyInUse;
+    this.countryInfo = countryInfo;
   }
-
 }

@@ -1,5 +1,7 @@
 package com.marcosimon.autosurvey.currencyinfo;
 
+import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewCurrencyInfoDTO;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
+import static com.marcosimon.autosurvey.constants.ErrorCode.COUNTRY_INFO_NOT_FOUND;
 import static com.marcosimon.autosurvey.constants.ErrorCode.CURRENCY_INFO_NOT_FOUND;
 
 @Service
@@ -16,6 +20,7 @@ import static com.marcosimon.autosurvey.constants.ErrorCode.CURRENCY_INFO_NOT_FO
 public class CurrencyInfoService {
 
     private final ICurrencyInfoDbRepository currencyInfoDbRepository;
+    private final ICountryInfoDbRepository countryInfoDbRepository;
 
     public List<CurrencyInfo> getAllCurrencyInfo() { return currencyInfoDbRepository.findAll(); }
 
@@ -23,6 +28,15 @@ public class CurrencyInfoService {
         return currencyInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(CURRENCY_INFO_NOT_FOUND));
+    }
+
+    @Transactional
+    public synchronized CurrencyInfo addCurrencyInfo(String countryName, String date, NewCurrencyInfoDTO newCurrencyInfoDTO) {
+        CountryInfo countryInfo = Optional.of(countryInfoDbRepository
+                        .findByNameAndDate(countryName, date))
+                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
+
+        return currencyInfoDbRepository.save(new CurrencyInfo(countryInfo.getCountryInfoId(), newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate()));
     }
 
     @Transactional

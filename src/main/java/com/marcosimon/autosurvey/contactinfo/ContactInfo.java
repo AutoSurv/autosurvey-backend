@@ -16,8 +16,8 @@ import java.io.Serializable;
 @Table(name = "contact_info")
 public class ContactInfo implements Serializable {
   @Id
-  @GeneratedValue(generator = "system-uuid")
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  //@GeneratedValue(generator = "system-uuid")
+  //@GenericGenerator(name = "system-uuid", strategy = "uuid")
   @Column(name = "contact_Info_Id")
   private String contactInfoId;
 
@@ -39,6 +39,14 @@ public class ContactInfo implements Serializable {
   private String contactJobTitle;
 
   public ContactInfo(String contactPerson, String contactPhone, String contactEmail, String contactJobTitle) {
+    this.contactPerson = contactPerson;
+    this.contactPhone = contactPhone;
+    this.contactEmail = contactEmail;
+    this.contactJobTitle = contactJobTitle;
+  }
+
+  public ContactInfo(String contactInfoId, String contactPerson, String contactPhone, String contactEmail, String contactJobTitle) {
+    this.contactInfoId = contactInfoId;
     this.contactPerson = contactPerson;
     this.contactPhone = contactPhone;
     this.contactEmail = contactEmail;
