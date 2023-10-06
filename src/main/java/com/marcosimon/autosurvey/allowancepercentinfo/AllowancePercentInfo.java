@@ -47,4 +47,13 @@ public class AllowancePercentInfo {
         this.otherAllowancePercent = otherAllowancePercent;
         this.totalAllowancePercent = totalAllowancePercent;
     }
+
+    public AllowancePercentInfo(String allowancePercentInfoId, Float colAllowancePercent, Float transportationAllowancePercent, Float housingAllowancePercent, Float otherAllowancePercent, Float totalAllowancePercent) {
+        this.allowancePercentInfoId = allowancePercentInfoId;
+        this.colAllowancePercent = colAllowancePercent;
+        this.transportationAllowancePercent = transportationAllowancePercent;
+        this.housingAllowancePercent = housingAllowancePercent;
+        this.otherAllowancePercent = otherAllowancePercent;
+        this.totalAllowancePercent = totalAllowancePercent;
+    }
 }

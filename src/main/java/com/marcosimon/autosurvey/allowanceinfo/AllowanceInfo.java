@@ -47,4 +47,13 @@ public class AllowanceInfo {
         this.otherAllowance = otherAllowance;
         this.totalAllowance = totalAllowance;
     }
+
+    public AllowanceInfo(String allowanceInfoId, Integer colAllowance, Integer transportationAllowance, Integer housingAllowance, Integer otherAllowance, Integer totalAllowance) {
+        this.allowanceInfoId = allowanceInfoId;
+        this.colAllowance = colAllowance;
+        this.transportationAllowance = transportationAllowance;
+        this.housingAllowance = housingAllowance;
+        this.otherAllowance = otherAllowance;
+        this.totalAllowance = totalAllowance;
+    }
 }

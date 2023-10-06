@@ -18,6 +18,7 @@ public enum ErrorCode {
     SURVEY_NOT_FOUND(404, "Survey ID not exist"),
     ORGANIZATION_NOT_FOUND(404, "Organization ID not exist"),
     USER_NOT_FOUND(404, "User ID not exist"),
+    ALLOWANCE_INFO_NOT_FOUND(404, "Allowance ID not exist"),
 
     SAVED_SURVEY_NOT_FOUND(404, "Survey is not in DB"),
     SAVED_ORGANIZATION_NOT_FOUND(404, "Organization is not in DB"),
@@ -30,6 +31,7 @@ public enum ErrorCode {
     ALREADY_SAVED_SURVEY(409, "Survey is already saved"),
     ALREADY_SAVED_ORGANIZATION(409, "Organization is already saved"),
     ALREADY_SAVED_USER(409, "User is already saved"),
+    ALREADY_SAVED_ALLOWANCE_INFO(409, "Allowance is already saved"),
 
     //500 INTERNAL SERVER ERROR
     INTERNAL_SERVER_ERROR(500, "Server Error. Contact Server Team");
