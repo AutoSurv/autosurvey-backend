@@ -1,6 +1,5 @@
 package com.marcosimon.autosurvey.functionsalaryinfo;
 
-import com.marcosimon.autosurvey.countryinfo.CountryInfo;
 import com.marcosimon.autosurvey.functioninfo.FunctionInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
@@ -21,11 +20,15 @@ public class FunctionSalaryInfo {
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @Column(name = "function_salary_info_id")
   private String functionSalaryInfoId;
+
   @Column(name = "function_custom_name")
   private String functionCustomName;
+
   @Column(name = "basic_salary")
   private Integer basicSalary;
+
   private Integer tgc;
+
   @Column(name = "monthly_allowance")
   private Integer monthlyAllowance;
 
@@ -42,5 +45,14 @@ public class FunctionSalaryInfo {
     this.basicSalary = basicSalary;
     this.tgc = tgc;
     this.monthlyAllowance = monthlyAllowance;
+  }
+
+  public FunctionSalaryInfo(String functionCustomName, Integer basicSalary, Integer tgc, Integer monthlyAllowance, MsfOrgInfo msfOrgInfo, FunctionInfo functionInfo) {
+    this.functionCustomName = functionCustomName;
+    this.basicSalary = basicSalary;
+    this.tgc = tgc;
+    this.monthlyAllowance = monthlyAllowance;
+    this.msfOrgInfo = msfOrgInfo;
+    this.functionInfo = functionInfo;
   }
 }

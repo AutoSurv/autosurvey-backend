@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.marcosimon.autosurvey.constants.ErrorCode.COUNTRY_INFO_NOT_FOUND;
-import static com.marcosimon.autosurvey.constants.ErrorCode.CURRENCY_INFO_NOT_FOUND;
+import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +34,12 @@ public class CurrencyInfoService {
         CountryInfo countryInfo = Optional.of(countryInfoDbRepository
                         .findByNameAndDate(countryName, date))
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
+
+        Optional.of(currencyInfoDbRepository
+                .findById(countryInfo.getCountryInfoId()))
+                .ifPresent(info -> {
+                    throw new CustomException(ALREADY_SAVED_CURRENCY_INFO);
+                });
 
         return currencyInfoDbRepository.save(new CurrencyInfo(countryInfo.getCountryInfoId(), newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate()));
     }

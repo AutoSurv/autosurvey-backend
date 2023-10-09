@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 
@@ -19,7 +20,7 @@ import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 public class ContactInfoService {
 
   private final IContactInfoDbRepository contactInfoDbRepository;
-  private final IMsfOrgInfoDbRepository MsfOrgInfoDbRepository;
+  private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
 
   public List<ContactInfo> getAllContacts() {
     return contactInfoDbRepository.findAll();
@@ -33,9 +34,15 @@ public class ContactInfoService {
   @Transactional
   public synchronized ContactInfo addContactInfo(String orgName, CountryInfo countryInfo, NewContactInfoDTO newContactInfoDTO) {
 
-    MsfOrgInfo msfOrgInfo = MsfOrgInfoDbRepository
+    MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
             .findByOrgNameAndCountryInfo(orgName, countryInfo)
             .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
+
+    Optional.of(contactInfoDbRepository
+            .findById(msfOrgInfo.getOrgId()))
+            .ifPresent(info -> {
+              throw new CustomException(ALREADY_SAVED_CONTACT_INFO);
+            });
 
     return contactInfoDbRepository
             .save(new ContactInfo(msfOrgInfo.getOrgId(),

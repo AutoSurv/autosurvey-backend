@@ -11,6 +11,10 @@ public enum ErrorCode {
     INVALID_PARAMETER(400, "check your parameter value"),
 
     //404 NOT_FOUND  Wrong Resource Access
+    FUNCTION_INFO_NOT_FOUND(404, "Function info ID not exist"),
+    FUNCTION_SALARY_INFO_NOT_FOUND(404, "Function Salary info ID not exist"),
+    ALLOWANCE_PERCENT_INFO_NOT_FOUND(404, "Allowance Percent info ID not exist"),
+    ALLOWANCE_INFO_NOT_FOUND(404, "Allowance info ID not exist"),
     CURRENCY_INFO_NOT_FOUND(404, "Currency info ID not exist"),
     COUNTRY_INFO_NOT_FOUND(404, "Country info ID not exist"),
     CONTACT_INFO_NOT_FOUND(404, "Contact info ID not exist"),
@@ -24,6 +28,10 @@ public enum ErrorCode {
     SAVED_USER_NOT_FOUND(404, "User is not in DB"),
 
     //409 CONFLICT Duplicate Resource
+    ALREADY_SAVED_FUNCTION_INFO(409, "Function info is already saved"),
+    ALREADY_SAVED_FUNCTION_SALARY_INFO(409, "Function Salary info is already saved"),
+    ALREADY_SAVED_ALLOWANCE_PERCENT_INFO(409, "Allowance Percent info is already saved"),
+    ALREADY_SAVED_ALLOWANCE_INFO(409, "Allowance info is already saved"),
     ALREADY_SAVED_CURRENCY_INFO(409, "Currency info is already saved"),
     ALREADY_SAVED_COUNTRY_INFO(409, "Country info is already saved"),
     ALREADY_SAVED_CONTACT_INFO(409, "Contact info is already saved"),

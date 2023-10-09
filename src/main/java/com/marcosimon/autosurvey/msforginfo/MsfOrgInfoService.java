@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.marcosimon.autosurvey.constants.ErrorCode.COUNTRY_INFO_NOT_FOUND;
-import static com.marcosimon.autosurvey.constants.ErrorCode.ORG_INFO_NOT_FOUND;
+import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +38,12 @@ public class MsfOrgInfoService {
     CountryInfo countryInfo = Optional.of(countryInfoDbRepository
                     .findByNameAndDate(newCountryInfoDTO.countryName(), newCountryInfoDTO.date()))
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
+
+    Optional.of(msfOrgInfoDbRepository
+            .findByOrgNameAndCountryInfo(newMsfOrgInfoDTO.orgName(), countryInfo))
+            .ifPresent( info -> {
+              throw new CustomException(ALREADY_SAVED_ORGANIZATION);
+            });
 
     return msfOrgInfoDbRepository.save(new MsfOrgInfo(newMsfOrgInfoDTO.orgFullName(),
             newMsfOrgInfoDTO.orgName(),
