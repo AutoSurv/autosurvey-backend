@@ -1,9 +1,9 @@
 package com.marcosimon.autosurvey.allowancepercentinfo;
 
-import com.marcosimon.autosurvey.constants.ErrorCode;
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewAllowancePercentageDTO;
+
 import com.marcosimon.autosurvey.msforginfo.IMsfOrgInfoDbRepository;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.RequiredArgsConstructor;
@@ -75,4 +75,5 @@ public class AllowancePercentInfoService {
         allowancePercentInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
         allowancePercentInfoDbRepository.deleteById(id);
     }
+
 }

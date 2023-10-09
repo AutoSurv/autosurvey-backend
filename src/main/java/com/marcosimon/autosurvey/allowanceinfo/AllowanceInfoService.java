@@ -21,6 +21,7 @@ public class AllowanceInfoService {
     private final IAllowanceInfoDbRepository allowanceInfoDbRepository;
     private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
 
+
     public List<AllowanceInfo> getAllAllowance() { return allowanceInfoDbRepository.findAll(); }
 
     public AllowanceInfo getAllowanceById(String id) {
@@ -79,5 +80,7 @@ public class AllowanceInfoService {
         allowanceInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(ALLOWANCE_INFO_NOT_FOUND));
         allowanceInfoDbRepository.deleteById(id);
     }
+
+
 
 }
