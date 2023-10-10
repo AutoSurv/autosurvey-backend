@@ -38,7 +38,7 @@ public class ContactInfoController {
   }
 
   @PatchMapping("{id}")
-  public ResponseEntity<ContactInfo> updateContact(@PathVariable @NotEmpty String id, @RequestBody NewContactInfoDTO newContactInfoDTO) {
+  public ResponseEntity<ContactInfo> updateContact(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewContactInfoDTO newContactInfoDTO) {
     ContactInfo contactInfoUpdated = contactInfoService.updateContactInfo(id, newContactInfoDTO);
     return ResponseEntity.accepted().body(contactInfoUpdated);
   }

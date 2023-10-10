@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.contactinfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -21,6 +22,7 @@ public class ContactInfo implements Serializable {
   @Column(name = "contact_Info_Id")
   private String contactInfoId;
 
+  @JsonIgnore
   @MapsId
   @OneToOne(mappedBy = "contact")
   @JoinColumn(name = "contact_Info_Id")
@@ -52,4 +54,5 @@ public class ContactInfo implements Serializable {
     this.contactEmail = contactEmail;
     this.contactJobTitle = contactJobTitle;
   }
+
 }

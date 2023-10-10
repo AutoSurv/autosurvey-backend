@@ -36,11 +36,10 @@ public class AllowancePercentInfoService {
                 .findByOrgNameAndCountryInfo(orgName, countryInfo)
                 .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
-        Optional.of(allowancePercentInfoDbRepository
-                .findById(msfOrgInfo.getOrgId()))
-                .ifPresent( info -> {
+        allowancePercentInfoDbRepository
+                .findById(msfOrgInfo.getOrgId()).ifPresent( info -> {
                     throw new CustomException(ALREADY_SAVED_ALLOWANCE_PERCENT_INFO);
-                });
+                } );
 
         return allowancePercentInfoDbRepository
                 .save(new AllowancePercentInfo(msfOrgInfo.getOrgId(), newAllowancePercentageDTO.COLA(), newAllowancePercentageDTO.transportation(), newAllowancePercentageDTO.housing(), newAllowancePercentageDTO.other(), newAllowancePercentageDTO.total()));

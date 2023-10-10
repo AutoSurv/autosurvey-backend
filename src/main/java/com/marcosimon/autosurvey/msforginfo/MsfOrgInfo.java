@@ -1,5 +1,7 @@
 package com.marcosimon.autosurvey.msforginfo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.allowanceinfo.AllowanceInfo;
 import com.marcosimon.autosurvey.allowancepercentinfo.AllowancePercentInfo;
 import com.marcosimon.autosurvey.contactinfo.ContactInfo;
@@ -7,11 +9,9 @@ import com.marcosimon.autosurvey.countryinfo.CountryInfo;
 import com.marcosimon.autosurvey.functionsalaryinfo.FunctionSalaryInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -39,14 +39,17 @@ public class MsfOrgInfo {
   @Column(name = "thirteenth_salary ")
   private Integer thirteenthSalary;
 
+  @JsonIgnore
   @OneToOne
   @PrimaryKeyJoinColumn
   private ContactInfo contact;
 
+  @JsonIgnore
   @OneToOne
   @PrimaryKeyJoinColumn
   private AllowanceInfo allowance;
 
+  @JsonIgnore
   @OneToOne
   @PrimaryKeyJoinColumn
   private AllowancePercentInfo allowancePercent;
@@ -54,10 +57,12 @@ public class MsfOrgInfo {
   @Column(name = "currency_in_use")
   private String currencyInUse;
 
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "country_info_id", nullable = false)
   private CountryInfo countryInfo;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "functionSalaryInfoId")
   private List<FunctionSalaryInfo> functionSalaryInfoList;
 

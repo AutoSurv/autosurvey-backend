@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.currencyinfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,8 +23,10 @@ public class CurrencyInfo {
 
     private String currency;
 
+    @Column(name = "exchange_rate")
     private Float exchangeRate;
 
+    @JsonIgnore
     @MapsId
     @OneToOne(mappedBy =  "currencyInfo")
     @JoinColumn(name = "currency_info_id")

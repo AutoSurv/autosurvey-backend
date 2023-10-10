@@ -1,10 +1,7 @@
 package com.marcosimon.autosurvey.currencyinfo;
 
-import com.marcosimon.autosurvey.countryinfo.CountryInfo;
-import com.marcosimon.autosurvey.countryinfo.CountryInfoService;
 import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
 import com.marcosimon.autosurvey.models.NewCurrencyInfoDTO;
-import com.marcosimon.autosurvey.msforginfo.MsfOrgInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +14,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/currencies")
+@RequestMapping("api/currencyinfos")
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
-public class CurrencyController {
+public class CurrencyInfoController {
+
   private final CurrencyInfoService currencyInfoService;
-  private final CountryInfoService countryInfoService;
 
   @GetMapping
   public ResponseEntity<List<CurrencyInfo>> getAllCurrencies() {

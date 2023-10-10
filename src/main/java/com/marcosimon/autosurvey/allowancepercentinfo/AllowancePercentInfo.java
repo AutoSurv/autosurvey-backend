@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.allowancepercentinfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,11 +16,12 @@ import javax.persistence.*;
 @Table(name = "allowance_percent_info")
 public class AllowancePercentInfo {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    //@GeneratedValue(generator = "system-uuid")
+    //@GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "allowance_percent_info_id")
     private String allowancePercentInfoId;
 
+    @JsonIgnore
     @MapsId
     @OneToOne(mappedBy = "allowancePercent")
     @JoinColumn(name = "allowance_percent_Info_Id")

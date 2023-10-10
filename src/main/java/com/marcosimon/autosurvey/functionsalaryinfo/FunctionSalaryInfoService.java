@@ -43,7 +43,7 @@ public class FunctionSalaryInfoService {
                 .orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
 
         functionSalaryInfoDbRepository
-                .findByFunctionCustomNameAndFunctionIdAndOrgID(newFunctionSalaryInfoDTO.functionCustomName(), functionInfo, msfOrgInfo)
+                .findByFunctionCustomNameAndFunctionAndOrg(newFunctionSalaryInfoDTO.functionCustomName(), functionInfo, msfOrgInfo)
                 .ifPresent( info -> {
             throw new CustomException(ALREADY_SAVED_FUNCTION_SALARY_INFO);
         });

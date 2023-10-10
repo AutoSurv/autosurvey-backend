@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 
@@ -31,15 +30,15 @@ public class CurrencyInfoService {
 
     @Transactional
     public synchronized CurrencyInfo addCurrencyInfo(String countryName, String date, NewCurrencyInfoDTO newCurrencyInfoDTO) {
-        CountryInfo countryInfo = Optional.of(countryInfoDbRepository
-                        .findByNameAndDate(countryName, date))
+        CountryInfo countryInfo = countryInfoDbRepository
+                .findByNameAndDate(countryName, date)
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
-        Optional.of(currencyInfoDbRepository
-                .findById(countryInfo.getCountryInfoId()))
-                .ifPresent(info -> {
-                    throw new CustomException(ALREADY_SAVED_CURRENCY_INFO);
-                });
+        currencyInfoDbRepository
+                .findById(countryInfo.getCountryInfoId())
+                        .ifPresent( info -> {
+                            throw new CustomException(ALREADY_SAVED_CURRENCY_INFO);
+                        });
 
         return currencyInfoDbRepository.save(new CurrencyInfo(countryInfo.getCountryInfoId(), newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate()));
     }

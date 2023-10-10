@@ -1,5 +1,7 @@
 package com.marcosimon.autosurvey.functioninfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcosimon.autosurvey.functionsalaryinfo.FunctionSalaryInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,9 +24,12 @@ public class FunctionInfo {
   private String functionInfoId;
 
   private Integer level;
+
   @Column(name = "function_name")
   private String functionName;
 
+  //@JsonManagedReference
+  @JsonIgnore
   @OneToMany(mappedBy = "functionSalaryInfoId")
   private List<FunctionSalaryInfo> functionSalaryInfoList;
 

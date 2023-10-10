@@ -38,9 +38,8 @@ public class ContactInfoService {
             .findByOrgNameAndCountryInfo(orgName, countryInfo)
             .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
-    Optional.of(contactInfoDbRepository
-            .findById(msfOrgInfo.getOrgId()))
-            .ifPresent(info -> {
+    contactInfoDbRepository
+            .findById(msfOrgInfo.getOrgId()).ifPresent( info -> {
               throw new CustomException(ALREADY_SAVED_CONTACT_INFO);
             });
 

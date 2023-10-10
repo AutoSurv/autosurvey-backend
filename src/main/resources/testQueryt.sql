@@ -19,12 +19,19 @@ join currency_info on country_info.country_info_id = currency_info.currency_info
 join org_info on org_info.country_info_id = country_info.country_info_id;
 
 /* */
-select *
-from org_info, function_salary_info, country_info , function_info
-where country_info.country_info_id = org_info.country_info_id
-and function_salary_info.org_id = org_info.org_id
-and function_info.function_info_id = function_salary_info.function_info_id
-order by org_info.org_id ;
+SELECT C.country_name, C.date, O.org_name, O.org_full_name, F.level, F.function_name, FS.function_custom_name,
+            C.currency_ref, O.currency_in_use, CUR.exchange_rate, O.working_hours, O.thirteenth_salary, FS.basic_salary,
+            FS.monthly_allowance, A.cost_of_living_allowance, A.transportation_allowance, A.housing_allowance, A.other_allowance,
+            A.total_allowance, AP.cost_of_living_allowance_percent, AP.transportation_allowance_percent, AP.housing_allowance_percent,
+            AP.other_allowance_percent, AP.total_allowance_percent, FS.tgc
+            FROM org_info O, function_salary_info FS, country_info C, function_info F, currency_info CUR, allowance_info A, allowance_percent_info AP
+            WHERE C.country_info_id = O.country_info_id
+            AND FS.org_id = O.org_id
+            AND F.function_info_id = FS.function_info_id
+            AND C.country_info_id = CUR.currency_info_id
+            AND O.org_id = A.allowance_info_id
+            AND O.org_id = AP.allowance_percent_info_id
+            ORDER BY O.org_id ;
 
 select *
 from org_info, country_info;

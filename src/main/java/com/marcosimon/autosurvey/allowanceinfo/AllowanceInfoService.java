@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 
@@ -20,7 +19,6 @@ public class AllowanceInfoService {
 
     private final IAllowanceInfoDbRepository allowanceInfoDbRepository;
     private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
-
 
     public List<AllowanceInfo> getAllAllowance() { return allowanceInfoDbRepository.findAll(); }
 
@@ -36,9 +34,8 @@ public class AllowanceInfoService {
                 .findByOrgNameAndCountryInfo(orgName, countryInfo)
                 .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
-        Optional.of(allowanceInfoDbRepository
-                .findById(msfOrgInfo.getOrgId()))
-                .ifPresent( info -> {
+        allowanceInfoDbRepository
+                .findById(msfOrgInfo.getOrgId()).ifPresent( info -> {
                     throw new CustomException(ALREADY_SAVED_ALLOWANCE_INFO);
                 });
 

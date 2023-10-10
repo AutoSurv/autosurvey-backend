@@ -14,5 +14,6 @@ public interface IFunctionSalaryInfoDbRepository extends JpaRepository<FunctionS
             "JOIN FunctionInfo AS FI ON F.functionInfo = ?2 " +
             "JOIN MsfOrgInfo AS O ON F.msfOrgInfo = ?3" +
             "WHERE F.functionCustomName = ?1")
-    Optional<FunctionSalaryInfo> findByFunctionCustomNameAndFunctionIdAndOrgID(String functionCustomName, FunctionInfo functionInfo, MsfOrgInfo msfOrgInfo);
+    Optional<FunctionSalaryInfo> findByFunctionCustomNameAndFunctionAndOrg(String functionCustomName, FunctionInfo functionInfo, MsfOrgInfo msfOrgInfo);
 }
+

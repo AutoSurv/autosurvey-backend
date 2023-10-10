@@ -1,10 +1,7 @@
 package com.marcosimon.autosurvey.countryinfo;
 
-import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
-import com.marcosimon.autosurvey.currencyinfo.ICurrencyInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
-import com.marcosimon.autosurvey.models.NewCurrencyInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +17,6 @@ import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 public class CountryInfoService {
 
     private final ICountryInfoDbRepository countryInfoDbRepository;
-    private final ICurrencyInfoDbRepository currencyInfoDbRepository;
 
     public List<CountryInfo> getAllCountryInfo() { return countryInfoDbRepository.findAll(); }
 
@@ -29,24 +25,20 @@ public class CountryInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     }
-//    public CountryInfo getCountryInfoByCountryName(String countryName) {
-//        return countryInfoDbRepository
-//                .findByCountryName(countryName)
-//                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
-//    }
 
     public CountryInfo getCountryInfoByNameAndDate(String countryName, String date) {
         return countryInfoDbRepository
-                .findByNameAndDate(countryName, date);
+                .findByNameAndDate(countryName, date)
+                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     }
 
-    @Transactional //You need to add country and currency together due to ID
+    @Transactional
     public synchronized CountryInfo addCountryInfo(NewCountryInfoDTO newCountryInfoDTO) {
-        Optional.of(countryInfoDbRepository
-                .findByNameAndDate(newCountryInfoDTO.countryName(), newCountryInfoDTO.date()))
-                .ifPresent( info -> {
-                    throw new CustomException(ALREADY_SAVED_COUNTRY_INFO);
-                });
+        countryInfoDbRepository
+                .findByNameAndDate(newCountryInfoDTO.countryName(), newCountryInfoDTO.date())
+                        .ifPresent( info -> {
+                            throw new CustomException(ALREADY_SAVED_COUNTRY_INFO);
+                        });
 
         return countryInfoDbRepository.save(new CountryInfo(newCountryInfoDTO.countryName(), newCountryInfoDTO.date(), newCountryInfoDTO.currencyRef()));
     }

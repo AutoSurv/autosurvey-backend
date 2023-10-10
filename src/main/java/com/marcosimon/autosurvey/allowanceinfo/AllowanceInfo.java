@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.allowanceinfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -20,6 +21,7 @@ public class AllowanceInfo {
     @Column(name = "allowance_info_id")
     private String allowanceInfoId;
 
+    @JsonIgnore
     @MapsId
     @OneToOne(mappedBy = "allowance")
     @JoinColumn(name = "allowance_info_id")

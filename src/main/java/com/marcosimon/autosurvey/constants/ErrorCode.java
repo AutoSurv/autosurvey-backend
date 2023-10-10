@@ -22,6 +22,7 @@ public enum ErrorCode {
     SURVEY_NOT_FOUND(404, "Survey ID not exist"),
     ORGANIZATION_NOT_FOUND(404, "Organization ID not exist"),
     USER_NOT_FOUND(404, "User ID not exist"),
+
     SAVED_SURVEY_NOT_FOUND(404, "Survey is not in DB"),
     SAVED_ORGANIZATION_NOT_FOUND(404, "Organization is not in DB"),
     SAVED_USER_NOT_FOUND(404, "User is not in DB"),

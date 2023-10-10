@@ -20,7 +20,6 @@ import java.util.List;
 public class CountryInfoController {
 
   private final CountryInfoService countryInfoService;
-  private final CurrencyInfoService currencyService;
 
   @GetMapping
   public ResponseEntity<List<CountryInfo>> getAllCountryInfo() {
@@ -33,9 +32,8 @@ public class CountryInfoController {
   }
 
   @PostMapping
-  public ResponseEntity<CountryInfo> createNewCountryInfo(@RequestBody NewCountryInfoDTO newCountryInfoDTO, HttpServletRequest req) {
+  public ResponseEntity<CountryInfo> createNewCountryInfo(@RequestBody @NotNull NewCountryInfoDTO newCountryInfoDTO, HttpServletRequest req) {
     CountryInfo createdCountryInfo = countryInfoService.addCountryInfo(newCountryInfoDTO);
-
     URI location = URI.create((req.getRequestURI() + "/" + createdCountryInfo.getCountryInfoId()));
     return ResponseEntity.created(location).body(createdCountryInfo);
   }
@@ -43,7 +41,6 @@ public class CountryInfoController {
   @PatchMapping("{id}")
   public ResponseEntity<CountryInfo> updateCountryInfo(@PathVariable @NotEmpty  String id, @RequestBody @NotNull NewCountryInfoDTO updateCountryInfo) {
     CountryInfo updatedCountryInfo = countryInfoService.updateCountryInfo(id, updateCountryInfo);
-
     return ResponseEntity.accepted().body(updatedCountryInfo);
   }
 

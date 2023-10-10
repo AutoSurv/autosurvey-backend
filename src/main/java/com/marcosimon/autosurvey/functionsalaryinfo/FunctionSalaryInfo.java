@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.functionsalaryinfo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.marcosimon.autosurvey.functioninfo.FunctionInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
@@ -32,6 +33,7 @@ public class FunctionSalaryInfo {
   @Column(name = "monthly_allowance")
   private Integer monthlyAllowance;
 
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "org_id", nullable = false)
   private MsfOrgInfo msfOrgInfo;
