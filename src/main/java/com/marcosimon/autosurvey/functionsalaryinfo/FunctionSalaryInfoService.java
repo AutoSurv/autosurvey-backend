@@ -62,7 +62,7 @@ public class FunctionSalaryInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
 
-        if (!Objects.equals(updateFunctionSalaryInfoDTO.functionCustomName(), "")) {
+        if (updateFunctionSalaryInfoDTO.functionCustomName() != null && !updateFunctionSalaryInfoDTO.functionCustomName().isEmpty()) {
             storedFunctionSalaryInfo.setFunctionCustomName(updateFunctionSalaryInfoDTO.functionCustomName());
         }
         if (updateFunctionSalaryInfoDTO.basicSalary() != null && updateFunctionSalaryInfoDTO.basicSalary() >= 0) {

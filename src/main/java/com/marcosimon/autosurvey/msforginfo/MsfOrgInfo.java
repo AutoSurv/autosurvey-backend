@@ -6,6 +6,7 @@ import com.marcosimon.autosurvey.allowanceinfo.AllowanceInfo;
 import com.marcosimon.autosurvey.allowancepercentinfo.AllowancePercentInfo;
 import com.marcosimon.autosurvey.contactinfo.ContactInfo;
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
 import com.marcosimon.autosurvey.functionsalaryinfo.FunctionSalaryInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,6 +40,9 @@ public class MsfOrgInfo {
   @Column(name = "thirteenth_salary ")
   private Integer thirteenthSalary;
 
+  @Column(name = "currency_in_use")
+  private String currencyInUse;
+
   @JsonIgnore
   @OneToOne
   @PrimaryKeyJoinColumn
@@ -54,8 +58,10 @@ public class MsfOrgInfo {
   @PrimaryKeyJoinColumn
   private AllowancePercentInfo allowancePercent;
 
-  @Column(name = "currency_in_use")
-  private String currencyInUse;
+  @JsonBackReference
+  @ManyToOne
+  @JoinColumn(name = "currency_info_id")
+  private CurrencyInfo currencyInfo;
 
   @JsonBackReference
   @ManyToOne

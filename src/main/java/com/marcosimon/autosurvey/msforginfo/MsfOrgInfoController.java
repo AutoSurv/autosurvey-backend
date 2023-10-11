@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/orginfo")
+@RequestMapping("api/orginfos")
 @CrossOrigin(origins = {"https://autosurvey.vercel.app", "http://localhost:3000"})
 public class MsfOrgInfoController {
 

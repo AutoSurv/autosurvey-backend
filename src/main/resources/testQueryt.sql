@@ -19,18 +19,19 @@ join currency_info on country_info.country_info_id = currency_info.currency_info
 join org_info on org_info.country_info_id = country_info.country_info_id;
 
 /* */
+
 SELECT C.country_name, C.date, O.org_name, O.org_full_name, F.level, F.function_name, FS.function_custom_name,
-            C.currency_ref, O.currency_in_use, CUR.exchange_rate, O.working_hours, O.thirteenth_salary, FS.basic_salary,
+            C.currency_ref, O.currency_in_use, CUR.currency, CUR.exchange_rate, O.working_hours, O.thirteenth_salary, FS.basic_salary,
             FS.monthly_allowance, A.cost_of_living_allowance, A.transportation_allowance, A.housing_allowance, A.other_allowance,
             A.total_allowance, AP.cost_of_living_allowance_percent, AP.transportation_allowance_percent, AP.housing_allowance_percent,
             AP.other_allowance_percent, AP.total_allowance_percent, FS.tgc
-            FROM org_info O, function_salary_info FS, country_info C, function_info F, currency_info CUR, allowance_info A, allowance_percent_info AP
-            WHERE C.country_info_id = O.country_info_id
-            AND FS.org_id = O.org_id
-            AND F.function_info_id = FS.function_info_id
-            AND C.country_info_id = CUR.currency_info_id
-            AND O.org_id = A.allowance_info_id
-            AND O.org_id = AP.allowance_percent_info_id
+            FROM country_info C
+            JOIN org_info O ON C.country_info_id = O.country_info_id
+            JOIN function_salary_info FS ON FS.org_id = O.org_id
+            JOIN function_info F ON F.function_info_id = FS.function_info_id
+            LEFT JOIN currency_info CUR ON (C.country_info_id = CUR.currency_info_id AND O.currency_info_id = CUR.currency_info_id)
+            JOIN allowance_info A ON O.org_id = A.allowance_info_id
+            JOIN allowance_percent_info AP ON O.org_id = AP.allowance_percent_info_id
             ORDER BY O.org_id ;
 
 select *
@@ -59,14 +60,14 @@ INSERT into currency_info
 values ('2', 'YEN', 1.5) ;
 
 /* 3.Insert data for org*/
-INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_in_use, thirteenth_salary, working_hours)
-values ('1', 'Medicine sans frontiers', 'msf', '1', 'ZAR', 13, 40);
-INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_in_use, thirteenth_salary, working_hours)
-values ('2', 'International SOS', 'International SOS', '1', 'USD', 12, 38);
-INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_in_use, thirteenth_salary, working_hours)
-values ('3', 'Medicine sans frontiers', 'msf', '2', 'YEN', 13, 40);
-INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_in_use, thirteenth_salary, working_hours)
-values ('4', 'Hello SOS', 'Hello SOS', '2', 'EUR', 11, 39);
+INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_info_id, currency_in_use, thirteenth_salary, working_hours)
+values ('1', 'Medicine sans frontiers', 'msf', '1', ,'ZAR', 13, 40);
+INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_info_id, currency_in_use, thirteenth_salary, working_hours)
+values ('2', 'International SOS', 'International SOS', '1', '1', 'USD', 12, 38);
+INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_info_id, currency_in_use, thirteenth_salary, working_hours)
+values ('3', 'Medicine sans frontiers', 'msf', '2', '2', 'YEN', 13, 40);
+INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_info_id, currency_in_use, thirteenth_salary, working_hours)
+values ('4', 'Hello SOS', 'Hello SOS', '2', null,'EUR', 11, 39);
 
 /* 4.Insert data for contact*/
 INSERT into contact_info (contact_info_id, contact_email, contact_job_title, contact_person, contact_phone)

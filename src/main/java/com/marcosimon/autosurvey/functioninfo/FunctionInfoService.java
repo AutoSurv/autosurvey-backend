@@ -47,7 +47,7 @@ public class FunctionInfoService {
         if (updateFunctionInfoDTO.level() != null && updateFunctionInfoDTO.level() > 0) {
             storedFunctionInfo.setLevel(updateFunctionInfoDTO.level());
         }
-        if (!Objects.equals(updateFunctionInfoDTO.function(), "")) {
+        if (updateFunctionInfoDTO.function() != null && !updateFunctionInfoDTO.function().isEmpty()) {
             storedFunctionInfo.setFunctionName(updateFunctionInfoDTO.function());
         }
 

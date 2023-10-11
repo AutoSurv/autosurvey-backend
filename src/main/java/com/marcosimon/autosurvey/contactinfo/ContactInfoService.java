@@ -57,16 +57,16 @@ public class ContactInfoService {
             .findById(id)
             .orElseThrow(() -> new CustomException(CONTACT_INFO_NOT_FOUND));
 
-    if (!Objects.equals(updateContactInfoDTO.contactPerson(), "")) {
+    if (updateContactInfoDTO.contactPerson() != null && !updateContactInfoDTO.contactPerson().isEmpty()) {
       storedContactInfo.setContactPerson(updateContactInfoDTO.contactPerson());
     }
-    if (!Objects.equals(updateContactInfoDTO.contactPhone(), "")) {
+    if (updateContactInfoDTO.contactPhone() != null && !updateContactInfoDTO.contactPhone().isEmpty()) {
       storedContactInfo.setContactPhone(updateContactInfoDTO.contactPhone());
     }
-    if (!Objects.equals(updateContactInfoDTO.contactEmail(), "")) {
+    if (updateContactInfoDTO.contactEmail() != null && !updateContactInfoDTO.contactEmail().isEmpty()) {
       storedContactInfo.setContactEmail(updateContactInfoDTO.contactEmail());
     }
-    if (!Objects.equals(updateContactInfoDTO.contactJobTile(), "")) {
+    if (updateContactInfoDTO.contactJobTile() != null && !updateContactInfoDTO.contactJobTile().isEmpty()) {
       storedContactInfo.setContactJobTitle(updateContactInfoDTO.contactJobTile());
     }
 

@@ -48,15 +48,15 @@ public class CountryInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
-        if (!Objects.equals(updateCountryInfo.countryName(), "")) {
+        if (updateCountryInfo.countryName() != null && !updateCountryInfo.countryName().isEmpty()) {
             storedCountryInfo.setCountryName(updateCountryInfo.countryName());
         }
 
-        if (!Objects.equals(updateCountryInfo.date(), "")) {
+        if (updateCountryInfo.date() != null && !updateCountryInfo.date().isEmpty()) {
             storedCountryInfo.setDate(updateCountryInfo.date());
         }
 
-        if (!Objects.equals(updateCountryInfo.currencyRef(), "")) {
+        if (updateCountryInfo.currencyRef() != null && !updateCountryInfo.currencyRef().isEmpty()) {
             storedCountryInfo.setCurrencyRef(updateCountryInfo.currencyRef());
         }
 

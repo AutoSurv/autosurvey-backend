@@ -16,18 +16,18 @@ public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Strin
 
 
     @Query(  value = "SELECT new com.marcosimon.autosurvey.models.FinalOrgInfoDTO( C.countryName, C.date, O.orgName, O.orgFullName, F.level, F.functionName," +
-            " FS.functionCustomName, C.currencyRef, O.currencyInUse, CUR.exchangeRate, O.workingHours, O.thirteenthSalary, FS.basicSalary," +
+            " FS.functionCustomName, C.currencyRef, O.currencyInUse, CUR.currency, CUR.exchangeRate, O.workingHours, O.thirteenthSalary, FS.basicSalary," +
             " FS.monthlyAllowance, A.colAllowance, A.transportationAllowance, A.housingAllowance, A.otherAllowance, A.totalAllowance," +
             " AP.colAllowancePercent, AP.transportationAllowancePercent, AP.housingAllowancePercent, AP.otherAllowancePercent," +
             " AP.totalAllowancePercent, FS.tgc) " +
-            "FROM MsfOrgInfo O, FunctionSalaryInfo FS, CountryInfo C, FunctionInfo F, CurrencyInfo CUR, AllowanceInfo A, AllowancePercentInfo AP " +
-            "WHERE C.countryInfoId = O.countryInfo.countryInfoId " +
-            "AND FS.msfOrgInfo.orgId = O.orgId " +
-            "AND F.functionInfoId = FS.functionInfo.functionInfoId " +
-            "AND C.countryInfoId = CUR.countryInfo.countryInfoId " +
-            "AND O.orgId = A.msfOrgInfo.orgId " +
-            "AND O.orgId = AP.msfOrgInfo.orgId " +
-            "ORDER BY O.orgId")
+            "FROM CountryInfo C " +
+            "JOIN MsfOrgInfo O ON C.countryInfoId = O.countryInfo.countryInfoId " +
+            "JOIN FunctionSalaryInfo FS ON FS.msfOrgInfo.orgId = O.orgId " +
+            "JOIN FunctionInfo F ON F.functionInfoId = FS.functionInfo.functionInfoId "+
+            "LEFT JOIN CurrencyInfo CUR ON (C.countryInfoId = CUR.countryInfo.countryInfoId AND O.currencyInfo.currencyInfoId = CUR.currencyInfoId) " +
+            "JOIN AllowanceInfo A ON O.orgId = A.msfOrgInfo.orgId " +
+            "JOIN AllowancePercentInfo AP ON O.orgId = AP.msfOrgInfo.orgId " +
+            "ORDER BY O.orgId ")
     List<FinalOrgInfoDTO> findAllFinalOrgInfo();
 
 }

@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.countryinfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
@@ -37,9 +38,9 @@ public class CountryInfo {
   @OneToMany(mappedBy = "countryInfo")
   private List<MsfOrgInfo> orgInfoList;
 
-  @OneToOne
-  @PrimaryKeyJoinColumn
-  private CurrencyInfo currencyInfo;
+  @JsonManagedReference
+  @OneToMany(mappedBy = "countryInfo")
+  private List<CurrencyInfo> currencyInfoList;
 
   public CountryInfo(String countryName, String date, String currencyRef) {
     this.countryName = countryName;

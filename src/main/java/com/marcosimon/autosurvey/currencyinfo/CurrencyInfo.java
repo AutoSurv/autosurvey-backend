@@ -1,11 +1,14 @@
 package com.marcosimon.autosurvey.currencyinfo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -27,9 +30,12 @@ public class CurrencyInfo {
     private Float exchangeRate;
 
     @JsonIgnore
-    @MapsId
-    @OneToOne(mappedBy =  "currencyInfo")
-    @JoinColumn(name = "currency_info_id")
+    @OneToMany(mappedBy = "currencyInfo")
+    private List<MsfOrgInfo> msfOrgInfo;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "country_info_id", nullable = false)
     private CountryInfo countryInfo;
 
     public CurrencyInfo(String currency, Float exchangeRate) {

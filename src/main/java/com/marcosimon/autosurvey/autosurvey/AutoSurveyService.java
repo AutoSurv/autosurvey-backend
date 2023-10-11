@@ -134,7 +134,7 @@ public class AutoSurveyService {
       throw new CustomException(SAVED_SURVEY_NOT_FOUND);
     }
 
-    if (!Objects.equals(newSurveyData.country(), "")) {
+    if (newSurveyData.country() != null && !newSurveyData.country().isEmpty()) {
       storedSurvey.setCountry(newSurveyData.country());
     }
 
@@ -174,23 +174,23 @@ public class AutoSurveyService {
       storedSurvey.setEducationFee(newSurveyData.educationFee());
     }
 
-    if (!Objects.equals(newSurveyData.educationType(), "")) {
+    if (newSurveyData.educationType() != null && !newSurveyData.educationType().isEmpty()) {
       storedSurvey.setEducationType(newSurveyData.educationType());
     }
 
-    if (!Objects.equals(newSurveyData.accommodationType(), "")) {
+    if (newSurveyData.accommodationType() !=null && !newSurveyData.accommodationType().isEmpty()) {
       storedSurvey.setAccommodationType(newSurveyData.accommodationType());
     }
 
-    if (!Objects.equals(newSurveyData.profession(), "")) {
+    if (newSurveyData.profession() != null && !newSurveyData.profession().isEmpty()) {
       storedSurvey.setProfession(newSurveyData.profession());
     }
 
-    if (!Objects.equals(newSurveyData.locationGiven(), "")) {
+    if (newSurveyData.locationGiven() != null && !newSurveyData.locationGiven().isEmpty()) {
       storedSurvey.setLocationGiven(newSurveyData.locationGiven());
     }
 
-    if (!Objects.equals(newSurveyData.locationClustered(), "")) {
+    if (newSurveyData.locationClustered() != null && !newSurveyData.locationClustered().isEmpty()) {
       storedSurvey.setLocationClustered(newSurveyData.locationClustered());
     }
 
@@ -214,7 +214,7 @@ public class AutoSurveyService {
       storedSurvey.setTotalIncome(newSurveyData.totalIncome());
     }
 
-    if (!Objects.equals(newSurveyData.comments(), "")) {
+    if (newSurveyData.comments() != null && !newSurveyData.comments().isEmpty()) {
       storedSurvey.setComments(newSurveyData.comments());
     }
 

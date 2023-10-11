@@ -10,6 +10,7 @@ public record FinalOrgInfoDTO(
         String functionCustomName,
         String currencyRef,
         String currencyInUse,
+        String currency,
         Float exchangeRate,
         Integer workingHours,
         Integer thirteenthSalary,

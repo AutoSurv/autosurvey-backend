@@ -70,7 +70,7 @@ public class MsfOrgInfoService {
             .findById(msfOrgInfo.getOrgId()).orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
 
     return new FinalOrgInfoDTO(country, date, orgName, msfOrgInfo.getOrgFullName(), functionInfo.getLevel(), functionInfo.getFunctionName(),
-            functionSalaryInfo.getFunctionCustomName(), countryInfo.getCurrencyRef(), msfOrgInfo.getCurrencyInUse(), currencyInfo.getExchangeRate(),
+            functionSalaryInfo.getFunctionCustomName(), countryInfo.getCurrencyRef(), msfOrgInfo.getCurrencyInUse(), currencyInfo.getCurrency(), currencyInfo.getExchangeRate(),
             msfOrgInfo.getWorkingHours(), msfOrgInfo.getThirteenthSalary(), functionSalaryInfo.getBasicSalary(), functionSalaryInfo.getMonthlyAllowance(),
             allowanceInfo.getColAllowance(), allowanceInfo.getTransportationAllowance(), allowanceInfo.getHousingAllowance(), allowanceInfo.getOtherAllowance(),
             allowanceInfo.getTotalAllowance(), allowancePercentInfo.getColAllowancePercent(), allowancePercentInfo.getTransportationAllowancePercent(),
@@ -118,19 +118,16 @@ public class MsfOrgInfoService {
             .findById(id)
             .orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
 
-    if (!Objects.equals(updateMsfOrgInfoDTO.orgFullName(), "")) {
+    if (updateMsfOrgInfoDTO.orgFullName() != null && !updateMsfOrgInfoDTO.orgFullName().isEmpty()) {
       storedOrgInfo.setOrgFullName(updateMsfOrgInfoDTO.orgFullName());
     }
-
-    if (!Objects.equals(updateMsfOrgInfoDTO.orgName(), "")) {
+    if (updateMsfOrgInfoDTO.orgName() != null && !updateMsfOrgInfoDTO.orgName().isEmpty()) {
       storedOrgInfo.setOrgName(updateMsfOrgInfoDTO.orgName());
     }
-
-    if (!Objects.equals(updateMsfOrgInfoDTO.workingHours(), "")) {
+    if (updateMsfOrgInfoDTO.workingHours() != null && updateMsfOrgInfoDTO.workingHours() >= 0) {
       storedOrgInfo.setWorkingHours(updateMsfOrgInfoDTO.workingHours());
     }
-
-    if (!Objects.equals(updateMsfOrgInfoDTO.thirteenthSalary(), "")) {
+    if (updateMsfOrgInfoDTO.thirteenthSalary() != null && updateMsfOrgInfoDTO.thirteenthSalary() >= 0) {
       storedOrgInfo.setThirteenthSalary(updateMsfOrgInfoDTO.thirteenthSalary());
     }
 

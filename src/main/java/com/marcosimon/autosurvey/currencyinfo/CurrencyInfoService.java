@@ -49,11 +49,11 @@ public class CurrencyInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(CURRENCY_INFO_NOT_FOUND));
 
-        if (!Objects.equals(updateCurrencyInfoDTO.currency(), "")) {
+        if (updateCurrencyInfoDTO.currency() != null && !updateCurrencyInfoDTO.currency().isEmpty()) {
             storedCurrencyInfo.setCurrency(updateCurrencyInfoDTO.currency());
         }
 
-        if (updateCurrencyInfoDTO.exchangeRate() >= 0) {
+        if (updateCurrencyInfoDTO.exchangeRate() != null && updateCurrencyInfoDTO.exchangeRate() >= 0) {
             storedCurrencyInfo.setExchangeRate(updateCurrencyInfoDTO.exchangeRate());
         }
 
