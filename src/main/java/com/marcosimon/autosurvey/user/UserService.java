@@ -72,8 +72,7 @@ public class UserService {
         UserModel user = userRepository.findUserModelByUsername(name).orElse(null);
         if (user != null) {
             user.setStatus(status);
-            UserModel updatedUser = userRepository.save(user);
-            return updatedUser;
+            return userRepository.save(user);
         }
         return null;
     }

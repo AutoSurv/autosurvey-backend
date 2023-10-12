@@ -1,8 +1,6 @@
 package com.marcosimon.autosurvey.countryinfo;
 
-import com.marcosimon.autosurvey.currencyinfo.CurrencyInfoService;
 import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
-import com.marcosimon.autosurvey.models.NewCurrencyInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

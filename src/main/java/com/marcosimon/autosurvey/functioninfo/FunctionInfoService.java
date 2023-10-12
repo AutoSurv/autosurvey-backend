@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 import static com.marcosimon.autosurvey.constants.ErrorCode.ALREADY_SAVED_FUNCTION_INFO;
 import static com.marcosimon.autosurvey.constants.ErrorCode.FUNCTION_INFO_NOT_FOUND;

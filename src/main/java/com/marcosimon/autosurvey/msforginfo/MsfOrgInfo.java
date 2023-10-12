@@ -44,17 +44,17 @@ public class MsfOrgInfo {
   private String currencyInUse;
 
   @JsonIgnore
-  @OneToOne
+  @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @PrimaryKeyJoinColumn
   private ContactInfo contact;
 
   @JsonIgnore
-  @OneToOne
+  @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @PrimaryKeyJoinColumn
   private AllowanceInfo allowance;
 
   @JsonIgnore
-  @OneToOne
+  @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @PrimaryKeyJoinColumn
   private AllowancePercentInfo allowancePercent;
 

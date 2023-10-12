@@ -1,6 +1,5 @@
 package com.marcosimon.autosurvey.countryinfo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
@@ -8,8 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.List;
 
 @Entity
@@ -35,11 +33,11 @@ public class CountryInfo {
   private String currencyRef;
 
   @JsonManagedReference
-  @OneToMany(mappedBy = "countryInfo")
+  @OneToMany(mappedBy = "countryInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<MsfOrgInfo> orgInfoList;
 
   @JsonManagedReference
-  @OneToMany(mappedBy = "countryInfo")
+  @OneToMany(mappedBy = "countryInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<CurrencyInfo> currencyInfoList;
 
   public CountryInfo(String countryName, String date, String currencyRef) {
