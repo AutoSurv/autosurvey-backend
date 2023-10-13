@@ -32,11 +32,11 @@ public class CountryInfo {
   @Column(name = "currency_ref")
   private String currencyRef;
 
-  @JsonManagedReference
+  //@JsonManagedReference
   @OneToMany(mappedBy = "countryInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<MsfOrgInfo> orgInfoList;
 
-  @JsonManagedReference
+  //@JsonManagedReference
   @OneToMany(mappedBy = "countryInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<CurrencyInfo> currencyInfoList;
 

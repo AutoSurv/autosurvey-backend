@@ -1,10 +1,14 @@
 package com.marcosimon.autosurvey.functionsalaryinfo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.functioninfo.FunctionInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -34,8 +38,10 @@ public class FunctionSalaryInfo {
   private Integer monthlyAllowance;
 
   @JsonBackReference
+  @JsonIgnore
   @ManyToOne
-  @JoinColumn(name = "org_id", nullable = false)
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  @JoinColumn(name = "org_id", nullable = true)
   private MsfOrgInfo msfOrgInfo;
 
   @ManyToOne

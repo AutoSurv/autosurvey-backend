@@ -10,6 +10,8 @@ import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
 import com.marcosimon.autosurvey.functionsalaryinfo.FunctionSalaryInfo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -65,11 +67,12 @@ public class MsfOrgInfo {
 
   @JsonBackReference
   @ManyToOne
+  @OnDelete(action= OnDeleteAction.CASCADE)
   @JoinColumn(name = "country_info_id", nullable = false)
   private CountryInfo countryInfo;
 
   @JsonIgnore
-  @OneToMany(mappedBy = "functionSalaryInfoId")
+  @OneToMany(mappedBy = "functionSalaryInfoId", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<FunctionSalaryInfo> functionSalaryInfoList;
 
   public MsfOrgInfo(String orgFullName, String orgName, Integer workingHours, Integer thirteenthSalary, String currencyInUse, CountryInfo countryInfo) {
