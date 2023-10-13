@@ -21,10 +21,9 @@ import javax.persistence.*;
 @Table(name = "function_salary_info")
 public class FunctionSalaryInfo {
   @Id
-  @GeneratedValue(generator = "system-uuid")
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "function_salary_info_id")
-  private String functionSalaryInfoId;
+  private Long functionSalaryInfoId;
 
   @Column(name = "function_custom_name")
   private String functionCustomName;

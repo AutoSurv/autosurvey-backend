@@ -27,24 +27,24 @@ public class AllowancePercentInfoController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AllowancePercentInfo> getAllowancePercent(@PathVariable @NotEmpty String id) {
+    public ResponseEntity<AllowancePercentInfo> getAllowancePercent(@PathVariable @NotEmpty Long id) {
         return ResponseEntity.ok(allowancePercentInfoService.getAllowancePercentById(id));
     }
 
     @PostMapping
-    public ResponseEntity<AllowancePercentInfo> createAllowancePercent(@RequestBody @NotNull NewAllowancePercentageDTO newAllowancePercentageDTO, @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO, HttpServletRequest req) {
-        AllowancePercentInfo allowancePercentInfo = allowancePercentInfoService.addAllowancePercentInfo(newMsfOrgInfoDTO.orgName(), newMsfOrgInfoDTO.countryInfo(), newAllowancePercentageDTO);
+    public ResponseEntity<AllowancePercentInfo> createAllowancePercent(@RequestBody @NotNull NewAllowancePercentageDTO newAllowancePercentageDTO, HttpServletRequest req) {
+        AllowancePercentInfo allowancePercentInfo = allowancePercentInfoService.addAllowancePercentInfo(newAllowancePercentageDTO);
         URI location = URI.create((req.getRequestURI() + "/" + allowancePercentInfo.getAllowancePercentInfoId()));
         return ResponseEntity.created(location).body(allowancePercentInfo);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<AllowancePercentInfo> updateAllowancePercent(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewAllowancePercentageDTO updateAllowancePercentageDTO) {
+    public ResponseEntity<AllowancePercentInfo> updateAllowancePercent(@PathVariable @NotEmpty Long id, @RequestBody @NotNull NewAllowancePercentageDTO updateAllowancePercentageDTO) {
         AllowancePercentInfo allowancePercentInfo = allowancePercentInfoService.updateAllowancePercentInfo(id, updateAllowancePercentageDTO);
         return ResponseEntity.accepted().body(allowancePercentInfo);
     }
 
     @DeleteMapping("{id}")
-    public void deleteAllowanceInfo(@PathVariable @NotEmpty String id) { allowancePercentInfoService.deleteAllowancePercentInfo(id); }
+    public void deleteAllowanceInfo(@PathVariable @NotEmpty Long id) { allowancePercentInfoService.deleteAllowancePercentInfo(id); }
 
 }

@@ -25,7 +25,7 @@ public class FunctionSalaryInfoController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<FunctionSalaryInfo> getFunctionSalaryInfo(@PathVariable @NotEmpty String id) {
+    public ResponseEntity<FunctionSalaryInfo> getFunctionSalaryInfo(@PathVariable @NotEmpty Long id) {
         return ResponseEntity.ok(salaryInfoService.getFunctionSalaryInfo(id));
     }
 
@@ -37,12 +37,12 @@ public class FunctionSalaryInfoController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<FunctionSalaryInfo> updateFunctionSalaryInfo(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewFunctionSalaryInfoDTO updateFunctionSalaryInfoDTO) {
+    public ResponseEntity<FunctionSalaryInfo> updateFunctionSalaryInfo(@PathVariable @NotEmpty Long id, @RequestBody @NotNull NewFunctionSalaryInfoDTO updateFunctionSalaryInfoDTO) {
         FunctionSalaryInfo functionSalaryInfo = salaryInfoService.updateFunctionSalaryInfo(id, updateFunctionSalaryInfoDTO);
         return ResponseEntity.accepted().body(functionSalaryInfo);
     }
 
     @DeleteMapping("{id}")
-    public void deleteFunctionSalaryInfo(@PathVariable @NotEmpty String id) { salaryInfoService.deleteFunctionSalaryInfo(id); }
+    public void deleteFunctionSalaryInfo(@PathVariable @NotEmpty Long id) { salaryInfoService.deleteFunctionSalaryInfo(id); }
 
 }

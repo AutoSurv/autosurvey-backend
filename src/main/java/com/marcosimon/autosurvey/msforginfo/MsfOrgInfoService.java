@@ -84,17 +84,16 @@ public class MsfOrgInfoService {
     return Streamable.of(msfOrgInfoDbRepository.findAll()).toList();
   }
 
-  public MsfOrgInfo getMsfOrgInfoById(String id) {
+  public MsfOrgInfo getMsfOrgInfoById(Long id) {
     return msfOrgInfoDbRepository
             .findById(id)
             .orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
   }
 
   @Transactional
-  public synchronized MsfOrgInfo addMsfOrgInfo( NewCountryInfoDTO newCountryInfoDTO,
-                                                NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
+  public synchronized MsfOrgInfo addMsfOrgInfo(NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
     CountryInfo countryInfo = countryInfoDbRepository
-                    .findByNameAndDate(newCountryInfoDTO.countryName(), newCountryInfoDTO.date())
+                    .findByNameAndDate(newMsfOrgInfoDTO.countryName(), newMsfOrgInfoDTO.date())
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
     msfOrgInfoDbRepository
@@ -112,7 +111,7 @@ public class MsfOrgInfoService {
   }
 
   @Transactional
-  public synchronized MsfOrgInfo updateMsfOrgInfo(String id, NewMsfOrgInfoDTO updateMsfOrgInfoDTO) {
+  public synchronized MsfOrgInfo updateMsfOrgInfo(Long id, NewMsfOrgInfoDTO updateMsfOrgInfoDTO) {
     MsfOrgInfo storedOrgInfo = msfOrgInfoDbRepository
             .findById(id)
             .orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
@@ -133,7 +132,7 @@ public class MsfOrgInfoService {
     return msfOrgInfoDbRepository.save(storedOrgInfo);
   }
 
-  public void deleteMsfOrgInfo(String id) {
+  public void deleteMsfOrgInfo(Long id) {
     msfOrgInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
     msfOrgInfoDbRepository.deleteById(id);
   }

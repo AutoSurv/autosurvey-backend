@@ -1,5 +1,6 @@
 package com.marcosimon.autosurvey.countryinfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
@@ -19,10 +20,9 @@ import java.util.List;
 @Table(name = "country_info")
 public class CountryInfo {
   @Id
-  @GeneratedValue(generator = "system-uuid")
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "country_info_id")
-  private String countryInfoId;
+  private Long countryInfoId;
 
   @Column(name = "country_name")
   private String countryName;
@@ -33,10 +33,12 @@ public class CountryInfo {
   private String currencyRef;
 
   //@JsonManagedReference
+  @JsonIgnore
   @OneToMany(mappedBy = "countryInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<MsfOrgInfo> orgInfoList;
 
   //@JsonManagedReference
+  @JsonIgnore
   @OneToMany(mappedBy = "countryInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<CurrencyInfo> currencyInfoList;
 

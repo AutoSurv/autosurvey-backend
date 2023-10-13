@@ -26,25 +26,25 @@ public class CurrencyInfoController {
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<CurrencyInfo> getCurrency(@PathVariable @NotEmpty String id) {
+  public ResponseEntity<CurrencyInfo> getCurrency(@PathVariable @NotEmpty Long id) {
     return ResponseEntity.ok(currencyInfoService.getCurrencyInfoById(id));
   }
 
   @PostMapping
-  public ResponseEntity<CurrencyInfo> createCurrency(@RequestBody @NotNull NewCountryInfoDTO newCountryInfoDTO, @RequestBody @NotNull NewCurrencyInfoDTO newCurrencyInfoDTO, HttpServletRequest req) {
-    CurrencyInfo currencyInfo = currencyInfoService.addCurrencyInfo(newCountryInfoDTO.countryName(), newCountryInfoDTO.date(), newCurrencyInfoDTO);
+  public ResponseEntity<CurrencyInfo> createCurrency(@RequestBody @NotNull NewCurrencyInfoDTO newCurrencyInfoDTO, HttpServletRequest req) {
+    CurrencyInfo currencyInfo = currencyInfoService.addCurrencyInfo(newCurrencyInfoDTO);
     URI location = URI.create((req.getRequestURI() + "/" + currencyInfo.getCurrencyInfoId()));
     return ResponseEntity.created(location).body(currencyInfo);
   }
 
   @PatchMapping("{id}")
-  public ResponseEntity<CurrencyInfo> updateCurrency(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewCurrencyInfoDTO updateCurrency) {
+  public ResponseEntity<CurrencyInfo> updateCurrency(@PathVariable @NotEmpty Long id, @RequestBody @NotNull NewCurrencyInfoDTO updateCurrency) {
     CurrencyInfo currencyUpdated = currencyInfoService.updatedCurrencyInfo(id, updateCurrency);
     return ResponseEntity.accepted().body(currencyUpdated);
   }
 
   @DeleteMapping("{id}")
-  public  void deleteCurrency(@PathVariable @NotEmpty String id) {
+  public  void deleteCurrency(@PathVariable @NotEmpty Long id) {
     currencyInfoService.deleteCurrencyInfo(id);
   }
 

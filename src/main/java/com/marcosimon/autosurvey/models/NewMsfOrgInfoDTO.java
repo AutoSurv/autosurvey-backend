@@ -7,13 +7,14 @@ import java.util.Date;
 public record NewMsfOrgInfoDTO(
 
         //MsfOrgInfoDTO orgInfo,
-        String orgId,
-        String orgName,
+        //Long orgId,
         String orgFullName,
+        String orgName,
         Integer workingHours,
         Integer thirteenthSalary,
         String currencyInUse,
-        CountryInfo countryInfo
+        String countryName,
+        String date
 
 ) {
 }

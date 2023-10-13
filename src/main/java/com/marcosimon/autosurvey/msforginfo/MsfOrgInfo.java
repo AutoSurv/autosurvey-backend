@@ -25,10 +25,9 @@ import java.util.List;
 @Table(name = "org_info")
 public class MsfOrgInfo {
   @Id
-  @GeneratedValue(generator = "system-uuid")
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "org_id")
-  private String orgId;
+  private Long orgId;
 
   @Column(name = "org_full_name")
   private String orgFullName;

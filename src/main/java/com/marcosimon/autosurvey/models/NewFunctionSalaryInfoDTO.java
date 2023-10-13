@@ -1,12 +1,12 @@
 package com.marcosimon.autosurvey.models;
 
 public record NewFunctionSalaryInfoDTO(
-        String functionSalaryId,
+        Long functionSalaryId,
         String functionCustomName,
         Integer basicSalary,
         Integer monthlyAllowance,
         Integer TGC,
-        String functionId,
-        String orgId
+        Long functionId,
+        Long orgId
 ) {
 }

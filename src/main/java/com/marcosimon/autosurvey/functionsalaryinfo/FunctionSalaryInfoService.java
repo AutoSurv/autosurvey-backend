@@ -25,14 +25,14 @@ public class FunctionSalaryInfoService {
 
     public List<FunctionSalaryInfo> getAllFunctionSalaryInfo() { return functionSalaryInfoDbRepository.findAll(); }
 
-    public FunctionSalaryInfo getFunctionSalaryInfo(String id) {
+    public FunctionSalaryInfo getFunctionSalaryInfo(Long id) {
         return functionSalaryInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
     }
 
     @Transactional
-    public synchronized FunctionSalaryInfo addFunctionSalaryInfo(String orgId, String functionId, NewFunctionSalaryInfoDTO newFunctionSalaryInfoDTO) {
+    public synchronized FunctionSalaryInfo addFunctionSalaryInfo(Long orgId, Long functionId, NewFunctionSalaryInfoDTO newFunctionSalaryInfoDTO) {
 
         MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
                 .findById(orgId)
@@ -57,7 +57,7 @@ public class FunctionSalaryInfoService {
     }
 
     @Transactional
-    public synchronized FunctionSalaryInfo updateFunctionSalaryInfo(String id, NewFunctionSalaryInfoDTO updateFunctionSalaryInfoDTO) {
+    public synchronized FunctionSalaryInfo updateFunctionSalaryInfo(Long id, NewFunctionSalaryInfoDTO updateFunctionSalaryInfoDTO) {
         FunctionSalaryInfo storedFunctionSalaryInfo = functionSalaryInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
@@ -79,7 +79,7 @@ public class FunctionSalaryInfoService {
 
     }
 
-    public void deleteFunctionSalaryInfo(String id) {
+    public void deleteFunctionSalaryInfo(Long id) {
         functionSalaryInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
         functionSalaryInfoDbRepository.deleteById(id);
     }

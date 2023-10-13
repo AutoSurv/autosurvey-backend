@@ -49,25 +49,25 @@ inner join contact_info as ci on ci.contact_info_id_org_id = oi.org_id;
 /* 1.Insert data for country*/
 
 INSERT into country_info (country_info_id, country_name, currency_ref, date)
-values ('1', 'South Africa', 'ZAR', '04-10-2023');
+values (1, 'South Africa', 'ZAR', '04-10-2023');
 INSERT into country_info (country_info_id, country_name, currency_ref, date)
-values ('2', 'testCounrtry', 'EUR', '25-11-2003') ;
+values (2, 'testCounrtry', 'EUR', '25-11-2003') ;
 
 /* 2.Insert data for currency*/
 INSERT into currency_info
-values ('1', 'USD', 15.126) ;
+values (1, 'USD', 15.126, 1) ;
 INSERT into currency_info
-values ('2', 'YEN', 1.5) ;
+values (2, 'YEN', 1.5, 2) ;
 
 /* 3.Insert data for org*/
 INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_info_id, currency_in_use, thirteenth_salary, working_hours)
-values ('1', 'Medicine sans frontiers', 'msf', '1', ,'ZAR', 13, 40);
+values (1, 'Medicine sans frontiers', 'msf', 1, null,'ZAR', 13, 40);
 INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_info_id, currency_in_use, thirteenth_salary, working_hours)
-values ('2', 'International SOS', 'International SOS', '1', '1', 'USD', 12, 38);
+values (2, 'International SOS', 'International SOS', 1, 1, 'USD', 12, 38);
 INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_info_id, currency_in_use, thirteenth_salary, working_hours)
-values ('3', 'Medicine sans frontiers', 'msf', '2', '2', 'YEN', 13, 40);
+values (3, 'Medicine sans frontiers', 'msf', 2, 2, 'YEN', 13, 40);
 INSERT into org_info (org_id, org_full_name, org_name, country_info_id, currency_info_id, currency_in_use, thirteenth_salary, working_hours)
-values ('4', 'Hello SOS', 'Hello SOS', '2', null,'EUR', 11, 39);
+values (4, 'Hello SOS', 'Hello SOS', 2, null,'EUR', 11, 39);
 
 /* 4.Insert data for contact*/
 INSERT into contact_info (contact_info_id, contact_email, contact_job_title, contact_person, contact_phone)

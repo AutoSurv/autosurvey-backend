@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 public record NewFunctionInfoDTO(
         //FunctionInfoDTO funcInfo,
-        String functionId,
+        Long functionId,
         Integer level,
         String function
 ) {

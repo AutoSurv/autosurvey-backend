@@ -16,10 +16,8 @@ import javax.persistence.*;
 @Table(name = "allowance_info")
 public class AllowanceInfo {
     @Id
-    //@GeneratedValue(generator = "system-uuid")
-    //@GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "allowance_info_id")
-    private String allowanceInfoId;
+    private Long allowanceInfoId;
 
     @JsonIgnore
     @MapsId
@@ -50,7 +48,7 @@ public class AllowanceInfo {
         this.totalAllowance = totalAllowance;
     }
 
-    public AllowanceInfo(String allowanceInfoId, Integer colAllowance, Integer transportationAllowance, Integer housingAllowance, Integer otherAllowance, Integer totalAllowance) {
+    public AllowanceInfo(Long allowanceInfoId, Integer colAllowance, Integer transportationAllowance, Integer housingAllowance, Integer otherAllowance, Integer totalAllowance) {
         this.allowanceInfoId = allowanceInfoId;
         this.colAllowance = colAllowance;
         this.transportationAllowance = transportationAllowance;

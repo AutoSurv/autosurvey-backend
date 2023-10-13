@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.contactinfo;
 
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewContactInfoDTO;
 import com.marcosimon.autosurvey.msforginfo.IMsfOrgInfoDbRepository;
@@ -19,21 +20,23 @@ public class ContactInfoService {
 
   private final IContactInfoDbRepository contactInfoDbRepository;
   private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
+  private final ICountryInfoDbRepository countryInfoDbRepository;
 
   public List<ContactInfo> getAllContacts() {
     return contactInfoDbRepository.findAll();
   }
 
-  public ContactInfo getContactById(String id) {
+  public ContactInfo getContactById(Long id) {
     return contactInfoDbRepository
             .findById(id)
             .orElseThrow(() -> new CustomException(CONTACT_INFO_NOT_FOUND));
   }
   @Transactional
-  public synchronized ContactInfo addContactInfo(String orgName, CountryInfo countryInfo, NewContactInfoDTO newContactInfoDTO) {
-
+  public synchronized ContactInfo addContactInfo(NewContactInfoDTO newContactInfoDTO) {
+    CountryInfo countryInfo = countryInfoDbRepository.findByNameAndDate(newContactInfoDTO.countryName(), newContactInfoDTO.date())
+            .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
-            .findByOrgNameAndCountryInfo(orgName, countryInfo)
+            .findByOrgNameAndCountryInfo(newContactInfoDTO.orgName(), countryInfo)
             .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
     contactInfoDbRepository
@@ -46,11 +49,11 @@ public class ContactInfoService {
                     newContactInfoDTO.contactPerson(),
                     newContactInfoDTO.contactPhone(),
                     newContactInfoDTO.contactEmail(),
-                    newContactInfoDTO.contactJobTile()));
+                    newContactInfoDTO.contactJobTitle()));
   }
 
   @Transactional
-  public synchronized ContactInfo updateContactInfo(String id, NewContactInfoDTO updateContactInfoDTO) {
+  public synchronized ContactInfo updateContactInfo(Long id, NewContactInfoDTO updateContactInfoDTO) {
     ContactInfo storedContactInfo = contactInfoDbRepository
             .findById(id)
             .orElseThrow(() -> new CustomException(CONTACT_INFO_NOT_FOUND));
@@ -58,21 +61,26 @@ public class ContactInfoService {
     if (updateContactInfoDTO.contactPerson() != null && !updateContactInfoDTO.contactPerson().isEmpty()) {
       storedContactInfo.setContactPerson(updateContactInfoDTO.contactPerson());
     }
+
     if (updateContactInfoDTO.contactPhone() != null && !updateContactInfoDTO.contactPhone().isEmpty()) {
       storedContactInfo.setContactPhone(updateContactInfoDTO.contactPhone());
     }
+
     if (updateContactInfoDTO.contactEmail() != null && !updateContactInfoDTO.contactEmail().isEmpty()) {
       storedContactInfo.setContactEmail(updateContactInfoDTO.contactEmail());
     }
-    if (updateContactInfoDTO.contactJobTile() != null && !updateContactInfoDTO.contactJobTile().isEmpty()) {
-      storedContactInfo.setContactJobTitle(updateContactInfoDTO.contactJobTile());
+
+    if (updateContactInfoDTO.contactJobTitle() != null && !updateContactInfoDTO.contactJobTitle().isEmpty()) {
+      System.out.println(storedContactInfo.getContactJobTitle());
+      storedContactInfo.setContactJobTitle(updateContactInfoDTO.contactJobTitle());
+      System.out.println(storedContactInfo.getContactJobTitle());
     }
 
     return contactInfoDbRepository.save(storedContactInfo);
 
   }
 
-  public void deleteContactInfo(String id) {
+  public void deleteContactInfo(Long id) {
     contactInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(CONTACT_INFO_NOT_FOUND));
     contactInfoDbRepository.deleteById(id);
   }

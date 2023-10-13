@@ -26,24 +26,24 @@ public class ContactInfoController {
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<ContactInfo> getContact(@PathVariable @NotEmpty String id) {
+  public ResponseEntity<ContactInfo> getContact(@PathVariable @NotEmpty Long id) {
     return ResponseEntity.ok(contactInfoService.getContactById(id));
   }
 
   @PostMapping
-  public ResponseEntity<ContactInfo> createContact(@RequestBody @NotNull NewContactInfoDTO newContactInfoDTO, @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO, HttpServletRequest req) {
-    ContactInfo contactInfo = contactInfoService.addContactInfo(newMsfOrgInfoDTO.orgName(), newMsfOrgInfoDTO.countryInfo(), newContactInfoDTO);
+  public ResponseEntity<ContactInfo> createContact(@RequestBody @NotNull NewContactInfoDTO newContactInfoDTO, HttpServletRequest req) {
+    ContactInfo contactInfo = contactInfoService.addContactInfo(newContactInfoDTO);
     URI location = URI.create((req.getRequestURI() + "/" + contactInfo.getContactInfoId()));
     return ResponseEntity.created(location).body(contactInfo);
   }
 
   @PatchMapping("{id}")
-  public ResponseEntity<ContactInfo> updateContact(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewContactInfoDTO newContactInfoDTO) {
+  public ResponseEntity<ContactInfo> updateContact(@PathVariable @NotEmpty Long id, @RequestBody @NotNull NewContactInfoDTO newContactInfoDTO) {
     ContactInfo contactInfoUpdated = contactInfoService.updateContactInfo(id, newContactInfoDTO);
     return ResponseEntity.accepted().body(contactInfoUpdated);
   }
 
   @DeleteMapping("{id}")
-  public void deleteContact(@PathVariable @NotEmpty String id) { contactInfoService.deleteContactInfo(id); }
+  public void deleteContact(@PathVariable @NotEmpty Long id) { contactInfoService.deleteContactInfo(id); }
 
 }

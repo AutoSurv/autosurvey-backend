@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,10 +18,9 @@ import java.util.List;
 @Table(name = "currency_info")
 public class CurrencyInfo {
     @Id
-    //@GeneratedValue(generator = "system-uuid")
-    //@GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "currency_info_id")
-    private String currencyInfoId;
+    private Long currencyInfoId;
 
     private String currency;
 
@@ -38,14 +36,9 @@ public class CurrencyInfo {
     @JoinColumn(name = "country_info_id", nullable = false)
     private CountryInfo countryInfo;
 
-    public CurrencyInfo(String currency, Float exchangeRate) {
+    public CurrencyInfo(String currency, Float exchangeRate, CountryInfo countryInfo) {
         this.currency = currency;
         this.exchangeRate = exchangeRate;
-    }
-
-    public CurrencyInfo(String currencyInfoId, String currency, Float exchangeRate) {
-        this.currencyInfoId = currencyInfoId;
-        this.currency = currency;
-        this.exchangeRate = exchangeRate;
+        this.countryInfo = countryInfo;
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, String> {
+public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Long> {
     @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.orgName = ?1 and O.countryInfo = ?2")
     Optional<MsfOrgInfo> findByOrgNameAndCountryInfo(String orgName, CountryInfo countryInfo);
     @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.countryInfo.countryInfoId = :countryId")

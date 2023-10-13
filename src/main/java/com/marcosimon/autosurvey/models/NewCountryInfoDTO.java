@@ -4,7 +4,7 @@ import java.util.Date;
 
 public record NewCountryInfoDTO(
         //CountryInfoDTO countryInfo,
-        String countryId,
+        Long countryId,
         String countryName,
         String date,
         String currencyRef

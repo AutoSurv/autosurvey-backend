@@ -17,10 +17,9 @@ import java.util.List;
 @Table(name = "function_info")
 public class FunctionInfo {
   @Id
-  @GeneratedValue(generator = "system-uuid")
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "function_info_id")
-  private String functionInfoId;
+  private Long functionInfoId;
 
   private Integer level;
 

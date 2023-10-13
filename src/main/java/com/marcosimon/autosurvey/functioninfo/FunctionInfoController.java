@@ -25,7 +25,7 @@ public class FunctionInfoController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<FunctionInfo> getFunctionInfo(@PathVariable @NotEmpty String id) {
+    public ResponseEntity<FunctionInfo> getFunctionInfo(@PathVariable @NotEmpty Long id) {
         return ResponseEntity.ok(functionInfoService.getFunctionInfo(id));
     }
 
@@ -37,12 +37,12 @@ public class FunctionInfoController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<FunctionInfo> updateFunctionInfo(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewFunctionInfoDTO newFunctionInfoDTO) {
+    public ResponseEntity<FunctionInfo> updateFunctionInfo(@PathVariable @NotEmpty Long id, @RequestBody @NotNull NewFunctionInfoDTO newFunctionInfoDTO) {
         FunctionInfo functionInfo = functionInfoService.updateFunctionInfo(id, newFunctionInfoDTO);
         return ResponseEntity.accepted().body(functionInfo);
     }
 
     @DeleteMapping("{id}")
-    public void deleteFunction(@PathVariable @NotEmpty String id) { functionInfoService.deleteFunctionInfo(id); }
+    public void deleteFunction(@PathVariable @NotEmpty Long id) { functionInfoService.deleteFunctionInfo(id); }
 
 }

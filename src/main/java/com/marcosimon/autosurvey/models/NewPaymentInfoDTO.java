@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 public record NewPaymentInfoDTO(
         //PaymentInfoDTO payInfo,
-        String paymentId,
+        Long paymentId,
         Double basicSalary,
         Double TGC,
         Double monthlyAllowance

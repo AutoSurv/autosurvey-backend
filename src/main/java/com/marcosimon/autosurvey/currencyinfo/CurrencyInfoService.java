@@ -21,29 +21,23 @@ public class CurrencyInfoService {
 
     public List<CurrencyInfo> getAllCurrencyInfo() { return currencyInfoDbRepository.findAll(); }
 
-    public CurrencyInfo getCurrencyInfoById(String id) {
+    public CurrencyInfo getCurrencyInfoById(Long id) {
         return currencyInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(CURRENCY_INFO_NOT_FOUND));
     }
 
     @Transactional
-    public synchronized CurrencyInfo addCurrencyInfo(String countryName, String date, NewCurrencyInfoDTO newCurrencyInfoDTO) {
+    public synchronized CurrencyInfo addCurrencyInfo(NewCurrencyInfoDTO newCurrencyInfoDTO) {
         CountryInfo countryInfo = countryInfoDbRepository
-                .findByNameAndDate(countryName, date)
+                .findByNameAndDate(newCurrencyInfoDTO.countryName(), newCurrencyInfoDTO.date())
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
-        currencyInfoDbRepository
-                .findById(countryInfo.getCountryInfoId())
-                        .ifPresent( info -> {
-                            throw new CustomException(ALREADY_SAVED_CURRENCY_INFO);
-                        });
-
-        return currencyInfoDbRepository.save(new CurrencyInfo(countryInfo.getCountryInfoId(), newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate()));
+        return currencyInfoDbRepository.save(new CurrencyInfo(newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate(), countryInfo));
     }
 
     @Transactional
-    public synchronized CurrencyInfo updatedCurrencyInfo(String id, NewCurrencyInfoDTO updateCurrencyInfoDTO) {
+    public synchronized CurrencyInfo updatedCurrencyInfo(Long id, NewCurrencyInfoDTO updateCurrencyInfoDTO) {
         CurrencyInfo storedCurrencyInfo = currencyInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(CURRENCY_INFO_NOT_FOUND));
@@ -59,7 +53,7 @@ public class CurrencyInfoService {
         return currencyInfoDbRepository.save(storedCurrencyInfo);
     }
 
-    public void deleteCurrencyInfo(String id) {
+    public void deleteCurrencyInfo(Long id) {
         currencyInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(CURRENCY_INFO_NOT_FOUND));
         currencyInfoDbRepository.deleteById(id);
     }

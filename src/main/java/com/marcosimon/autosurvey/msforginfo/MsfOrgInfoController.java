@@ -39,26 +39,25 @@ public class MsfOrgInfoController {
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<MsfOrgInfo> getMsfOrgInfo(@PathVariable @NotEmpty String id) {
+  public ResponseEntity<MsfOrgInfo> getMsfOrgInfo(@PathVariable @NotEmpty Long id) {
     return ResponseEntity.ok(msfOrgInfoService.getMsfOrgInfoById(id));
   }
 
   @PostMapping
-  public ResponseEntity<MsfOrgInfo> createMsfOrgInfo( @RequestBody @NotNull NewCountryInfoDTO newCountryInfoDTO,
-                                                      @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO, HttpServletRequest req) {
-    MsfOrgInfo msfOrgInfo = msfOrgInfoService.addMsfOrgInfo(newCountryInfoDTO, newMsfOrgInfoDTO);
+  public ResponseEntity<MsfOrgInfo> createMsfOrgInfo( @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO, HttpServletRequest req) {
+    MsfOrgInfo msfOrgInfo = msfOrgInfoService.addMsfOrgInfo(newMsfOrgInfoDTO);
     URI location = URI.create((req.getRequestURI() + "/" + msfOrgInfo.getOrgId()));
     return ResponseEntity.created(location).body(msfOrgInfo);
 
   }
 
   @PatchMapping("{id}")
-  public ResponseEntity<MsfOrgInfo> updateMsfOrgInfo(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
+  public ResponseEntity<MsfOrgInfo> updateMsfOrgInfo(@PathVariable @NotEmpty Long id, @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
     return ResponseEntity.ok(msfOrgInfoService.updateMsfOrgInfo(id, newMsfOrgInfoDTO));
   }
 
   @DeleteMapping("{id}")
-  public void deleteMsfOrgInfo(@PathVariable @NotEmpty String id) {
+  public void deleteMsfOrgInfo(@PathVariable @NotEmpty Long id) {
     msfOrgInfoService.deleteMsfOrgInfo(id);
   }
 

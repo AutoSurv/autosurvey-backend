@@ -19,7 +19,7 @@ public class FunctionInfoService {
 
     public List<FunctionInfo> getAllFunctionInfo() { return functionInfoRepository.findAll(); }
 
-    public FunctionInfo getFunctionInfo(String id) {
+    public FunctionInfo getFunctionInfo(Long id) {
         return functionInfoRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
@@ -38,7 +38,7 @@ public class FunctionInfoService {
     }
 
     @Transactional
-    public synchronized FunctionInfo updateFunctionInfo(String id, NewFunctionInfoDTO updateFunctionInfoDTO) {
+    public synchronized FunctionInfo updateFunctionInfo(Long id, NewFunctionInfoDTO updateFunctionInfoDTO) {
         FunctionInfo storedFunctionInfo = functionInfoRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
@@ -53,7 +53,7 @@ public class FunctionInfoService {
         return functionInfoRepository.save(storedFunctionInfo);
     }
 
-    public void deleteFunctionInfo(String id) {
+    public void deleteFunctionInfo(Long id) {
         functionInfoRepository.findById(id).orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
         functionInfoRepository.deleteById(id);
     }

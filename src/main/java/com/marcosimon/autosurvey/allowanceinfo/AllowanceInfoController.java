@@ -29,24 +29,24 @@ public class AllowanceInfoController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AllowanceInfo> getAllowance(@PathVariable @NotEmpty String id) {
+    public ResponseEntity<AllowanceInfo> getAllowance(@PathVariable @NotEmpty Long id) {
         return ResponseEntity.ok(allowanceInfoService.getAllowanceById(id));
     }
 
     @PostMapping
-    public ResponseEntity<AllowanceInfo> createAllowance(@RequestBody @NotNull NewAllowanceValueDTO newAllowanceValueDTO, @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO, HttpServletRequest req) {
-        AllowanceInfo allowanceInfo = allowanceInfoService.addAllowanceInfo(newMsfOrgInfoDTO.orgName(), newMsfOrgInfoDTO.countryInfo(), newAllowanceValueDTO);
+    public ResponseEntity<AllowanceInfo> createAllowance(@RequestBody @NotNull NewAllowanceValueDTO newAllowanceValueDTO, HttpServletRequest req) {
+        AllowanceInfo allowanceInfo = allowanceInfoService.addAllowanceInfo(newAllowanceValueDTO);
         URI location = URI.create((req.getRequestURI() + "/" + allowanceInfo.getAllowanceInfoId()));
         return ResponseEntity.created(location).body(allowanceInfo);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<AllowanceInfo> updateAllowance(@PathVariable @NotEmpty String id, @RequestBody @NotNull NewAllowanceValueDTO newAllowanceValueDTO) {
+    public ResponseEntity<AllowanceInfo> updateAllowance(@PathVariable @NotEmpty Long id, @RequestBody @NotNull NewAllowanceValueDTO newAllowanceValueDTO) {
         AllowanceInfo allowanceInfo = allowanceInfoService.updateAllowanceInfo(id, newAllowanceValueDTO);
         return ResponseEntity.accepted().body(allowanceInfo);
     }
 
     @DeleteMapping("{id}")
-    public void deleteAllowance(@PathVariable @NotEmpty String id) { allowanceInfoService.deleteAllowanceInfo(id); }
+    public void deleteAllowance(@PathVariable @NotEmpty Long id) { allowanceInfoService.deleteAllowanceInfo(id); }
 
 }

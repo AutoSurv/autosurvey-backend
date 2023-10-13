@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.allowanceinfo;
 
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewAllowanceValueDTO;
 import com.marcosimon.autosurvey.msforginfo.IMsfOrgInfoDbRepository;
@@ -19,19 +20,22 @@ public class AllowanceInfoService {
 
     private final IAllowanceInfoDbRepository allowanceInfoDbRepository;
     private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
+    private final ICountryInfoDbRepository countryInfoDbRepository;
 
     public List<AllowanceInfo> getAllAllowance() { return allowanceInfoDbRepository.findAll(); }
 
-    public AllowanceInfo getAllowanceById(String id) {
+    public AllowanceInfo getAllowanceById(Long id) {
         return allowanceInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(ALLOWANCE_INFO_NOT_FOUND));
     }
 
     @Transactional
-    public synchronized AllowanceInfo addAllowanceInfo(String orgName, CountryInfo countryInfo, NewAllowanceValueDTO newAllowanceValueDTO) {
+    public synchronized AllowanceInfo addAllowanceInfo(NewAllowanceValueDTO newAllowanceValueDTO) {
+        CountryInfo countryInfo = countryInfoDbRepository.findByNameAndDate(newAllowanceValueDTO.countryName(), newAllowanceValueDTO.date())
+                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
         MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
-                .findByOrgNameAndCountryInfo(orgName, countryInfo)
+                .findByOrgNameAndCountryInfo(newAllowanceValueDTO.orgName(), countryInfo)
                 .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
         allowanceInfoDbRepository
@@ -49,7 +53,7 @@ public class AllowanceInfoService {
     }
 
     @Transactional
-    public synchronized AllowanceInfo updateAllowanceInfo(String id, NewAllowanceValueDTO updateAllowanceValueDTO) {
+    public synchronized AllowanceInfo updateAllowanceInfo(Long id, NewAllowanceValueDTO updateAllowanceValueDTO) {
         AllowanceInfo storedAllowanceInfo = allowanceInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(ALLOWANCE_INFO_NOT_FOUND));
@@ -73,7 +77,7 @@ public class AllowanceInfoService {
         return allowanceInfoDbRepository.save(storedAllowanceInfo);
     }
 
-    public void deleteAllowanceInfo(String id) {
+    public void deleteAllowanceInfo(Long id) {
         allowanceInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(ALLOWANCE_INFO_NOT_FOUND));
         allowanceInfoDbRepository.deleteById(id);
     }

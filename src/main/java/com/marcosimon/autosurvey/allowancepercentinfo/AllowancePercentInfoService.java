@@ -1,6 +1,7 @@
 package com.marcosimon.autosurvey.allowancepercentinfo;
 
 import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewAllowancePercentageDTO;
 
@@ -21,19 +22,22 @@ public class AllowancePercentInfoService {
 
     private final IAllowancePercentInfoDbRepository allowancePercentInfoDbRepository;
     private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
+    private final ICountryInfoDbRepository countryInfoDbRepository;
 
     public List<AllowancePercentInfo> getAllAllowancePercent() { return allowancePercentInfoDbRepository.findAll(); }
 
-    public AllowancePercentInfo getAllowancePercentById(String id) {
+    public AllowancePercentInfo getAllowancePercentById(Long id) {
         return allowancePercentInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
     }
 
     @Transactional
-    public synchronized AllowancePercentInfo addAllowancePercentInfo(String orgName, CountryInfo countryInfo, NewAllowancePercentageDTO newAllowancePercentageDTO) {
+    public synchronized AllowancePercentInfo addAllowancePercentInfo(NewAllowancePercentageDTO newAllowancePercentageDTO) {
+        CountryInfo countryInfo = countryInfoDbRepository.findByNameAndDate(newAllowancePercentageDTO.countryName(), newAllowancePercentageDTO.date())
+                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
         MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
-                .findByOrgNameAndCountryInfo(orgName, countryInfo)
+                .findByOrgNameAndCountryInfo(newAllowancePercentageDTO.orgName(), countryInfo)
                 .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
         allowancePercentInfoDbRepository
@@ -46,7 +50,7 @@ public class AllowancePercentInfoService {
     }
 
     @Transactional
-    public synchronized AllowancePercentInfo updateAllowancePercentInfo(String id, NewAllowancePercentageDTO updateAllowancePercentageDTO) {
+    public synchronized AllowancePercentInfo updateAllowancePercentInfo(Long id, NewAllowancePercentageDTO updateAllowancePercentageDTO) {
         AllowancePercentInfo storedAllowancePercentInfo = allowancePercentInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
@@ -70,7 +74,7 @@ public class AllowancePercentInfoService {
         return allowancePercentInfoDbRepository.save(storedAllowancePercentInfo);
     }
 
-    public void deleteAllowancePercentInfo(String id) {
+    public void deleteAllowancePercentInfo(Long id) {
         allowancePercentInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
         allowancePercentInfoDbRepository.deleteById(id);
     }

@@ -29,7 +29,7 @@ public class CountryInfoService {
 
     public List<CountryInfo> getAllCountryInfo() { return countryInfoDbRepository.findAll(); }
 
-    public CountryInfo getCountryInfoById(String id) {
+    public CountryInfo getCountryInfoById(Long id) {
         return countryInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
@@ -52,7 +52,7 @@ public class CountryInfoService {
         return countryInfoDbRepository.save(new CountryInfo(newCountryInfoDTO.countryName(), newCountryInfoDTO.date(), newCountryInfoDTO.currencyRef()));
     }
     @Transactional
-    public synchronized CountryInfo updateCountryInfo(String id, NewCountryInfoDTO updateCountryInfo) {
+    public synchronized CountryInfo updateCountryInfo(Long id, NewCountryInfoDTO updateCountryInfo) {
         CountryInfo storedCountryInfo = countryInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
@@ -73,10 +73,10 @@ public class CountryInfoService {
 
     }
 
-    public void deleteCountryInfo(String id) {
+    public void deleteCountryInfo(Long id) {
         countryInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
-        System.out.println(msfOrgInfoDbRepository.findAllByCountryInfoId(id).size());
-        msfOrgInfoDbRepository.findAllByCountryInfoId(id).forEach(o -> {
+        System.out.println(msfOrgInfoDbRepository.findAllByCountryInfoId(id.toString()).size());
+        msfOrgInfoDbRepository.findAllByCountryInfoId(id.toString()).forEach(o -> {
             contactInfoDbRepository.findById(o.getOrgId()).ifPresent(contactInfoDbRepository::delete);
             allowanceInfoDbRepository.findById(o.getOrgId()).ifPresent(allowanceInfoDbRepository::delete);
             allowancePercentInfoDbRepository.findById(o.getOrgId()).ifPresent(allowancePercentInfoDbRepository::delete);

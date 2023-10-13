@@ -25,7 +25,7 @@ public class CountryInfoController {
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<CountryInfo> getCountryInfoById(@PathVariable @NotEmpty String id) {
+  public ResponseEntity<CountryInfo> getCountryInfoById(@PathVariable @NotEmpty Long id) {
     return ResponseEntity.ok(countryInfoService.getCountryInfoById(id));
   }
 
@@ -37,13 +37,13 @@ public class CountryInfoController {
   }
 
   @PatchMapping("{id}")
-  public ResponseEntity<CountryInfo> updateCountryInfo(@PathVariable @NotEmpty  String id, @RequestBody @NotNull NewCountryInfoDTO updateCountryInfo) {
+  public ResponseEntity<CountryInfo> updateCountryInfo(@PathVariable @NotEmpty Long id, @RequestBody @NotNull NewCountryInfoDTO updateCountryInfo) {
     CountryInfo updatedCountryInfo = countryInfoService.updateCountryInfo(id, updateCountryInfo);
     return ResponseEntity.accepted().body(updatedCountryInfo);
   }
 
   @DeleteMapping("{id}")
-  public void deleteCountry (@PathVariable @NotEmpty String id) {
+  public void deleteCountry (@PathVariable @NotEmpty Long id) {
     countryInfoService.deleteCountryInfo(id);
   }
 

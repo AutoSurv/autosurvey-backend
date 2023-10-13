@@ -5,7 +5,10 @@ public record NewContactInfoDTO(
         String contactPerson,
         String contactPhone,
         String contactEmail,
-        String contactJobTile
+        String contactJobTitle,
+        String orgName,
+        String countryName,
+        String date
 
 ) {
 }
