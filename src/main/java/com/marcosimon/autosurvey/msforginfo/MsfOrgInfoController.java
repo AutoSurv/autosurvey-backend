@@ -20,12 +20,8 @@ public class MsfOrgInfoController {
   private final MsfOrgInfoService msfOrgInfoService;
 
   @GetMapping("one/final")
-  public ResponseEntity<FinalOrgInfoDTO> getFinalOrgInfo( @RequestBody @NotNull NewCountryInfoDTO newCountryInfoDTO,
-                                                          @RequestBody @NotNull NewMsfOrgInfoDTO newMsfOrgInfoDTO,
-                                                          @RequestBody @NotNull NewFunctionInfoDTO newFunctionInfoDTO,
-                                                          @RequestBody @NotNull NewFunctionSalaryInfoDTO newFunctionSalaryInfoDTO) {
-    return ResponseEntity.ok(msfOrgInfoService.getFinalOrgInfo(newCountryInfoDTO.countryName(),
-            newCountryInfoDTO.date(), newMsfOrgInfoDTO.orgName(), newFunctionInfoDTO, newFunctionSalaryInfoDTO.functionCustomName() ));
+  public ResponseEntity<FinalOrgInfoDTO> getFinalOrgInfo( @RequestBody @NotNull NewFinalOrgInfoDTO newFunctionInfoDTO) {
+    return ResponseEntity.ok(msfOrgInfoService.getFinalOrgInfo(newFunctionInfoDTO));
   }
 
   @GetMapping("final")

@@ -6,8 +6,6 @@ import java.util.Date;
 
 public record NewMsfOrgInfoDTO(
 
-        //MsfOrgInfoDTO orgInfo,
-        //Long orgId,
         String orgFullName,
         String orgName,
         Integer workingHours,

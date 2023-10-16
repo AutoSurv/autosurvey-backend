@@ -15,10 +15,7 @@ import com.marcosimon.autosurvey.functioninfo.FunctionInfo;
 import com.marcosimon.autosurvey.functioninfo.IFunctionInfoRepository;
 import com.marcosimon.autosurvey.functionsalaryinfo.FunctionSalaryInfo;
 import com.marcosimon.autosurvey.functionsalaryinfo.IFunctionSalaryInfoDbRepository;
-import com.marcosimon.autosurvey.models.FinalOrgInfoDTO;
-import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
-import com.marcosimon.autosurvey.models.NewFunctionInfoDTO;
-import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
+import com.marcosimon.autosurvey.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
@@ -41,25 +38,25 @@ public class MsfOrgInfoService {
   private final IAllowanceInfoDbRepository allowanceInfoDbRepository;
   private final IAllowancePercentInfoDbRepository allowancePercentInfoDbRepository;
 
-  public FinalOrgInfoDTO getFinalOrgInfo(String country, String date, String orgName, NewFunctionInfoDTO newFunctionInfo, String functionCustomName) {
+  public FinalOrgInfoDTO getFinalOrgInfo(NewFinalOrgInfoDTO newFinalOrgInfoDTO) {
     CountryInfo countryInfo = countryInfoDbRepository
-            .findByNameAndDate(country, date)
+            .findByNameAndDate(newFinalOrgInfoDTO.countryName(), newFinalOrgInfoDTO.date())
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
     CurrencyInfo currencyInfo = currencyInfoDbRepository
             .findById(countryInfo.getCountryInfoId()).orElseThrow(() -> new CustomException(CURRENCY_INFO_NOT_FOUND));
 
     MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
-            .findByOrgNameAndCountryInfo(orgName, countryInfo).orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
+            .findByOrgNameAndCountryInfo(newFinalOrgInfoDTO.orgName(), countryInfo).orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
 
     ContactInfo contactInfo = contactInfoDbRepository
             .findById(msfOrgInfo.getOrgId()).orElseThrow(() -> new CustomException(CONTACT_INFO_NOT_FOUND));
 
     FunctionInfo functionInfo = functionInfoDbRepository
-            .findByLevelAndFunctionName(newFunctionInfo.level(), newFunctionInfo.function()).orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
+            .findByLevelAndFunctionName(newFinalOrgInfoDTO.level(), newFinalOrgInfoDTO.functionName()).orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
 
     FunctionSalaryInfo functionSalaryInfo = functionSalaryInfoDbRepository
-            .findByFunctionCustomNameAndFunctionAndOrg(functionCustomName, functionInfo, msfOrgInfo)
+            .findByFunctionCustomNameAndFunctionAndOrg(newFinalOrgInfoDTO.functionCustomName(), functionInfo, msfOrgInfo)
             .orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
 
     AllowanceInfo allowanceInfo = allowanceInfoDbRepository
@@ -68,7 +65,7 @@ public class MsfOrgInfoService {
     AllowancePercentInfo allowancePercentInfo = allowancePercentInfoDbRepository
             .findById(msfOrgInfo.getOrgId()).orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
 
-    return new FinalOrgInfoDTO(country, date, orgName, msfOrgInfo.getOrgFullName(), functionInfo.getLevel(), functionInfo.getFunctionName(),
+    return new FinalOrgInfoDTO(countryInfo.getCountryName(), countryInfo.getDate(), msfOrgInfo.getOrgName(), msfOrgInfo.getOrgFullName(), functionInfo.getLevel(), functionInfo.getFunctionName(),
             functionSalaryInfo.getFunctionCustomName(), countryInfo.getCurrencyRef(), msfOrgInfo.getCurrencyInUse(), currencyInfo.getCurrency(), currencyInfo.getExchangeRate(),
             msfOrgInfo.getWorkingHours(), msfOrgInfo.getThirteenthSalary(), functionSalaryInfo.getBasicSalary(), functionSalaryInfo.getMonthlyAllowance(),
             allowanceInfo.getColAllowance(), allowanceInfo.getTransportationAllowance(), allowanceInfo.getHousingAllowance(), allowanceInfo.getOtherAllowance(),

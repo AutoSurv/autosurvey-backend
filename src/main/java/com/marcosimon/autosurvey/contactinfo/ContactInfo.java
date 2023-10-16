@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @Table(name = "contact_info")
-public class ContactInfo implements Serializable {
+public class ContactInfo {
   @Id
   @Column(name = "contact_Info_Id")
   private Long contactInfoId;

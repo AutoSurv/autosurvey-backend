@@ -34,13 +34,14 @@ public class FunctionSalaryInfo {
   @Column(name = "monthly_allowance")
   private Integer monthlyAllowance;
 
-  @JsonBackReference
+  //@JsonBackReference
   @JsonIgnore
   @ManyToOne
   @OnDelete(action = OnDeleteAction.CASCADE)
   @JoinColumn(name = "org_id", nullable = true)
   private MsfOrgInfo msfOrgInfo;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "function_info_id", nullable = false)
   private FunctionInfo functionInfo;

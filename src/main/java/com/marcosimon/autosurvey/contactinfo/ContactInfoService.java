@@ -44,12 +44,17 @@ public class ContactInfoService {
               throw new CustomException(ALREADY_SAVED_CONTACT_INFO);
             });
 
-    return contactInfoDbRepository
-            .save(new ContactInfo(msfOrgInfo.getOrgId(),
-                    newContactInfoDTO.contactPerson(),
-                    newContactInfoDTO.contactPhone(),
-                    newContactInfoDTO.contactEmail(),
-                    newContactInfoDTO.contactJobTitle()));
+    ContactInfo contactInfo = new ContactInfo();
+    contactInfo.setMsfOrgInfo(msfOrgInfo);
+    contactInfo.setContactPerson(newContactInfoDTO.contactPerson());
+    contactInfo.setContactPhone(newContactInfoDTO.contactPhone());
+    contactInfo.setContactEmail(newContactInfoDTO.contactEmail());
+    contactInfo.setContactJobTitle(newContactInfoDTO.contactJobTitle());
+
+    msfOrgInfo.setContact(contactInfo);
+    msfOrgInfoDbRepository.save(msfOrgInfo);
+
+    return contactInfoDbRepository.save(contactInfo);
   }
 
   @Transactional

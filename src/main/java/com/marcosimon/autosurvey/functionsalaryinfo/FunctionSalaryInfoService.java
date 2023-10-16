@@ -1,5 +1,7 @@
 package com.marcosimon.autosurvey.functionsalaryinfo;
 
+import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.functioninfo.FunctionInfo;
 import com.marcosimon.autosurvey.functioninfo.IFunctionInfoRepository;
@@ -19,6 +21,7 @@ import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 public class FunctionSalaryInfoService {
 
     private final IFunctionSalaryInfoDbRepository functionSalaryInfoDbRepository;
+    private final ICountryInfoDbRepository countryInfoDbRepository;
     private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
     private final IFunctionInfoRepository functionInfoRepository;
 
@@ -31,14 +34,16 @@ public class FunctionSalaryInfoService {
     }
 
     @Transactional
-    public synchronized FunctionSalaryInfo addFunctionSalaryInfo(Long orgId, Long functionId, NewFunctionSalaryInfoDTO newFunctionSalaryInfoDTO) {
-
+    public synchronized FunctionSalaryInfo addFunctionSalaryInfo(NewFunctionSalaryInfoDTO newFunctionSalaryInfoDTO) {
+        CountryInfo countryInfo = countryInfoDbRepository
+                .findByNameAndDate(newFunctionSalaryInfoDTO.countryName(), newFunctionSalaryInfoDTO.date())
+                .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
         MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
-                .findById(orgId)
+                .findByOrgNameAndCountryInfo(newFunctionSalaryInfoDTO.orgName(), countryInfo)
                 .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
         FunctionInfo functionInfo = functionInfoRepository
-                .findById(functionId)
+                .findByLevelAndFunctionName(newFunctionSalaryInfoDTO.level(), newFunctionSalaryInfoDTO.functionName())
                 .orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
 
         functionSalaryInfoDbRepository

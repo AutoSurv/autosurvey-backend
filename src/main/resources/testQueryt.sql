@@ -27,12 +27,12 @@ SELECT C.country_name, C.date, O.org_name, O.org_full_name, F.level, F.function_
             AP.other_allowance_percent, AP.total_allowance_percent, FS.tgc
             FROM country_info C
             JOIN org_info O ON C.country_info_id = O.country_info_id
-            JOIN function_salary_info FS ON FS.org_id = O.org_id
-            JOIN function_info F ON F.function_info_id = FS.function_info_id
-            LEFT JOIN currency_info CUR ON (C.country_info_id = CUR.currency_info_id AND O.currency_info_id = CUR.currency_info_id)
-            JOIN allowance_info A ON O.org_id = A.allowance_info_id
-            JOIN allowance_percent_info AP ON O.org_id = AP.allowance_percent_info_id
-            ORDER BY O.org_id ;
+			LEFT JOIN currency_info CUR ON (C.country_info_id = CUR.currency_info_id AND O.currency_info_id = CUR.currency_info_id)
+            LEFT JOIN function_salary_info FS ON FS.org_id = O.org_id
+			LEFT JOIN function_info F ON F.function_info_id = FS.function_info_id
+			LEFT JOIN allowance_info A ON O.org_id = A.allowance_info_id
+            LEFT JOIN allowance_percent_info AP ON O.org_id = AP.allowance_percent_info_id
+            ORDER BY O.org_id, F.level ;
 
 select *
 from org_info, country_info;

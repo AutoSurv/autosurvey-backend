@@ -45,8 +45,6 @@ public class AllowancePercentInfoService {
                 } );
 
         AllowancePercentInfo allowancePercentInfo = new AllowancePercentInfo();
-
-        allowancePercentInfo.setAllowancePercentInfoId(msfOrgInfo.getOrgId());
         allowancePercentInfo.setMsfOrgInfo(msfOrgInfo);
         allowancePercentInfo.setColAllowancePercent(newAllowancePercentageDTO.colAllowance());
         allowancePercentInfo.setHousingAllowancePercent(newAllowancePercentageDTO.housing());
@@ -54,7 +52,10 @@ public class AllowancePercentInfoService {
         allowancePercentInfo.setOtherAllowancePercent(newAllowancePercentageDTO.other());
         allowancePercentInfo.setTotalAllowancePercent(newAllowancePercentageDTO.total());
 
-        return allowancePercentInfo;
+        msfOrgInfo.setAllowancePercent(allowancePercentInfo);
+        msfOrgInfoDbRepository.save(msfOrgInfo);
+
+        return allowancePercentInfoDbRepository.save(allowancePercentInfo);
     }
 
     @Transactional

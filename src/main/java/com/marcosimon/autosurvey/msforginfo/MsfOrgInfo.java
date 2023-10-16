@@ -81,15 +81,4 @@ public class MsfOrgInfo {
     this.currencyInUse = currencyInUse;
     this.countryInfo = countryInfo;
   }
-
-  public void setAllowance(AllowanceInfo allowance) {
-    if (allowance == null) {
-      if (this.allowance != null) {
-        this.allowance.setMsfOrgInfo(null);
-      }
-    } else {
-      allowance.setMsfOrgInfo(this);
-    }
-    this.allowance = allowance;
-  }
 }

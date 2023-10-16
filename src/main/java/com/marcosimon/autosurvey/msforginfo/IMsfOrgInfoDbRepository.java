@@ -20,19 +20,19 @@ public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Long>
     @Modifying
     @Query(value = "DELETE FROM MsfOrgInfo AS O WHERE O.countryInfo.countryInfoId = :countryId")
     void deleteAllByCountryId(@Param("countryId")String countryId);
-    @Query(  value = "SELECT new com.marcosimon.autosurvey.models.FinalOrgInfoDTO( C.countryName, C.date, O.orgName, O.orgFullName, F.level, F.functionName," +
-            " FS.functionCustomName, C.currencyRef, O.currencyInUse, CUR.currency, CUR.exchangeRate, O.workingHours, O.thirteenthSalary, FS.basicSalary," +
-            " FS.monthlyAllowance, A.colAllowance, A.transportationAllowance, A.housingAllowance, A.otherAllowance, A.totalAllowance," +
-            " AP.colAllowancePercent, AP.transportationAllowancePercent, AP.housingAllowancePercent, AP.otherAllowancePercent," +
-            " AP.totalAllowancePercent, FS.tgc) " +
+    @Query(  value = "SELECT new com.marcosimon.autosurvey.models.FinalOrgInfoDTO( C.countryName, C.date, O.orgName, O.orgFullName, F.level, F.functionName, " +
+            "FS.functionCustomName, C.currencyRef, O.currencyInUse, CUR.currency, CUR.exchangeRate, O.workingHours, O.thirteenthSalary, FS.basicSalary, " +
+            "FS.monthlyAllowance, A.colAllowance, A.transportationAllowance, A.housingAllowance, A.otherAllowance, A.totalAllowance, " +
+            "AP.colAllowancePercent, AP.transportationAllowancePercent, AP.housingAllowancePercent, AP.otherAllowancePercent, " +
+            "AP.totalAllowancePercent, FS.tgc) " +
             "FROM CountryInfo C " +
             "JOIN MsfOrgInfo O ON C.countryInfoId = O.countryInfo.countryInfoId " +
-            "JOIN FunctionSalaryInfo FS ON FS.msfOrgInfo.orgId = O.orgId " +
-            "JOIN FunctionInfo F ON F.functionInfoId = FS.functionInfo.functionInfoId "+
             "LEFT JOIN CurrencyInfo CUR ON (C.countryInfoId = CUR.countryInfo.countryInfoId AND O.currencyInfo.currencyInfoId = CUR.currencyInfoId) " +
-            "JOIN AllowanceInfo A ON O.orgId = A.msfOrgInfo.orgId " +
-            "JOIN AllowancePercentInfo AP ON O.orgId = AP.msfOrgInfo.orgId " +
-            "ORDER BY O.orgId ")
+            "LEFT JOIN FunctionSalaryInfo FS ON FS.msfOrgInfo.orgId = O.orgId " +
+            "LEFT JOIN FunctionInfo F ON F.functionInfoId = FS.functionInfo.functionInfoId "+
+            "LEFT JOIN AllowanceInfo A ON O.orgId = A.msfOrgInfo.orgId " +
+            "LEFT JOIN AllowancePercentInfo AP ON O.orgId = AP.msfOrgInfo.orgId " +
+            "ORDER BY O.orgId, F.level ")
     List<FinalOrgInfoDTO> findAllFinalOrgInfo();
 
 

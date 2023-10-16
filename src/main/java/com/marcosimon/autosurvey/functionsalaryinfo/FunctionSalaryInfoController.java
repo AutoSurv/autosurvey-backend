@@ -31,7 +31,7 @@ public class FunctionSalaryInfoController {
 
     @PostMapping
     public ResponseEntity<FunctionSalaryInfo> createFunctionSalaryInfo(@RequestBody @NotNull NewFunctionSalaryInfoDTO newFunctionSalaryInfoDTO, HttpServletRequest req) {
-        FunctionSalaryInfo functionSalaryInfo = salaryInfoService.addFunctionSalaryInfo(newFunctionSalaryInfoDTO.orgId(), newFunctionSalaryInfoDTO.functionId(), newFunctionSalaryInfoDTO);
+        FunctionSalaryInfo functionSalaryInfo = salaryInfoService.addFunctionSalaryInfo(newFunctionSalaryInfoDTO);
         URI location = URI.create((req.getRequestURI() + "/" + functionSalaryInfo.getFunctionSalaryInfoId()));
         return ResponseEntity.created(location).body(functionSalaryInfo);
     }

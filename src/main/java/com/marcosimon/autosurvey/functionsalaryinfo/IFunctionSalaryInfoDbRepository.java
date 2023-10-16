@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface IFunctionSalaryInfoDbRepository extends JpaRepository<FunctionSalaryInfo, Long> {
     @Query(value = "SELECT F FROM FunctionSalaryInfo AS F " +
             "JOIN FunctionInfo AS FI ON F.functionInfo = ?2 " +
-            "JOIN MsfOrgInfo AS O ON F.msfOrgInfo = ?3" +
+            "JOIN MsfOrgInfo AS O ON F.msfOrgInfo = ?3 " +
             "WHERE F.functionCustomName = ?1")
     Optional<FunctionSalaryInfo> findByFunctionCustomNameAndFunctionAndOrg(String functionCustomName, FunctionInfo functionInfo, MsfOrgInfo msfOrgInfo);
     @Query(value = "SELECT F FROM FunctionSalaryInfo AS F WHERE F.msfOrgInfo = :org")
