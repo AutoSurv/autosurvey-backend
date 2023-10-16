@@ -1,6 +1,5 @@
 package com.marcosimon.autosurvey.currencyinfo;
 
-import com.marcosimon.autosurvey.models.NewCountryInfoDTO;
 import com.marcosimon.autosurvey.models.NewCurrencyInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

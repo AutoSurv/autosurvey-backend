@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 public record NewAllowancePercentageDTO(
         //AllowancePercentageDTO allPerc,
-        Float COLA,
+        Float colAllowance,
         Float transportation,
         Float housing,
         Float other,

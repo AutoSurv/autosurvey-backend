@@ -1,7 +1,6 @@
 package com.marcosimon.autosurvey.contactinfo;
 
 import com.marcosimon.autosurvey.models.NewContactInfoDTO;
-import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

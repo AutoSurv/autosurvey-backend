@@ -3,7 +3,6 @@ package com.marcosimon.autosurvey.allowancepercentinfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 

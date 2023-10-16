@@ -1,8 +1,6 @@
 package com.marcosimon.autosurvey.allowanceinfo;
 
 import com.marcosimon.autosurvey.models.NewAllowanceValueDTO;
-import com.marcosimon.autosurvey.models.NewMsfOrgInfoDTO;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;

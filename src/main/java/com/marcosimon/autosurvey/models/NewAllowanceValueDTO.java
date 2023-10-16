@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 public record NewAllowanceValueDTO(
         //AllowanceValueDTO allValue
-        Integer COLA,
+        Integer colAllowance,
         Integer transportation,
         Integer housing,
         Integer other,

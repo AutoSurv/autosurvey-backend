@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 
@@ -45,8 +44,17 @@ public class AllowancePercentInfoService {
                     throw new CustomException(ALREADY_SAVED_ALLOWANCE_PERCENT_INFO);
                 } );
 
-        return allowancePercentInfoDbRepository
-                .save(new AllowancePercentInfo(msfOrgInfo.getOrgId(), newAllowancePercentageDTO.COLA(), newAllowancePercentageDTO.transportation(), newAllowancePercentageDTO.housing(), newAllowancePercentageDTO.other(), newAllowancePercentageDTO.total()));
+        AllowancePercentInfo allowancePercentInfo = new AllowancePercentInfo();
+
+        allowancePercentInfo.setAllowancePercentInfoId(msfOrgInfo.getOrgId());
+        allowancePercentInfo.setMsfOrgInfo(msfOrgInfo);
+        allowancePercentInfo.setColAllowancePercent(newAllowancePercentageDTO.colAllowance());
+        allowancePercentInfo.setHousingAllowancePercent(newAllowancePercentageDTO.housing());
+        allowancePercentInfo.setTransportationAllowancePercent(newAllowancePercentageDTO.transportation());
+        allowancePercentInfo.setOtherAllowancePercent(newAllowancePercentageDTO.other());
+        allowancePercentInfo.setTotalAllowancePercent(newAllowancePercentageDTO.total());
+
+        return allowancePercentInfo;
     }
 
     @Transactional
@@ -55,8 +63,8 @@ public class AllowancePercentInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
 
-        if (updateAllowancePercentageDTO.COLA() != null && updateAllowancePercentageDTO.COLA() >= 0) {
-            storedAllowancePercentInfo.setColAllowancePercent(updateAllowancePercentageDTO.COLA());
+        if (updateAllowancePercentageDTO.colAllowance() != null && updateAllowancePercentageDTO.colAllowance() >= 0) {
+            storedAllowancePercentInfo.setColAllowancePercent(updateAllowancePercentageDTO.colAllowance());
         }
         if (updateAllowancePercentageDTO.transportation() != null && updateAllowancePercentageDTO.transportation() >= 0) {
             storedAllowancePercentInfo.setTransportationAllowancePercent(updateAllowancePercentageDTO.transportation());

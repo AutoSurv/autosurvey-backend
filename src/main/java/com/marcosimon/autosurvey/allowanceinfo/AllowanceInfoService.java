@@ -43,13 +43,18 @@ public class AllowanceInfoService {
                     throw new CustomException(ALREADY_SAVED_ALLOWANCE_INFO);
                 });
 
-        return allowanceInfoDbRepository
-                .save(new AllowanceInfo(msfOrgInfo.getOrgId(),
-                        newAllowanceValueDTO.COLA(),
-                        newAllowanceValueDTO.transportation(),
-                        newAllowanceValueDTO.housing(),
-                        newAllowanceValueDTO.other(),
-                        newAllowanceValueDTO.total()));
+        AllowanceInfo allowanceInfo = new AllowanceInfo();
+        allowanceInfo.setMsfOrgInfo(msfOrgInfo);
+        allowanceInfo.setColAllowance(newAllowanceValueDTO.colAllowance());
+        allowanceInfo.setTransportationAllowance(newAllowanceValueDTO.transportation());
+        allowanceInfo.setHousingAllowance(newAllowanceValueDTO.housing());
+        allowanceInfo.setOtherAllowance(newAllowanceValueDTO.other());
+        allowanceInfo.setTotalAllowance(newAllowanceValueDTO.total());
+
+        msfOrgInfo.setAllowance(allowanceInfo);
+        msfOrgInfoDbRepository.save(msfOrgInfo);
+
+        return allowanceInfoDbRepository.save(allowanceInfo);
     }
 
     @Transactional
@@ -58,8 +63,8 @@ public class AllowanceInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(ALLOWANCE_INFO_NOT_FOUND));
 
-        if (updateAllowanceValueDTO.COLA() != null && updateAllowanceValueDTO.COLA() >= 0) {
-            storedAllowanceInfo.setColAllowance(updateAllowanceValueDTO.COLA());
+        if (updateAllowanceValueDTO.colAllowance() != null && updateAllowanceValueDTO.colAllowance() >= 0) {
+            storedAllowanceInfo.setColAllowance(updateAllowanceValueDTO.colAllowance());
         }
         if (updateAllowanceValueDTO.transportation() != null && updateAllowanceValueDTO.transportation() >= 0) {
             storedAllowanceInfo.setTransportationAllowance(updateAllowanceValueDTO.transportation());
