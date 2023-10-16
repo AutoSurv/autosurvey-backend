@@ -17,9 +17,9 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:postgresql://localhost:5432/org_info #${PSQL_DB}
-    username: postgres #${PSQL_USER}
-    password: postgres #${PSQL_PASSWORD}
+    url: ${PSQL_DB}
+    username: ${PSQL_USER}
+    password: ${PSQL_PASSWORD}
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
