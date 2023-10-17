@@ -33,7 +33,7 @@ public class ContactInfoService {
   }
   @Transactional
   public synchronized ContactInfo addContactInfo(NewContactInfoDTO newContactInfoDTO) {
-    CountryInfo countryInfo = countryInfoDbRepository.findByNameAndDate(newContactInfoDTO.countryName(), newContactInfoDTO.date())
+    CountryInfo countryInfo = countryInfoDbRepository.findByNameAndYear(newContactInfoDTO.countryName(), newContactInfoDTO.year())
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
             .findByOrgNameAndCountryInfo(newContactInfoDTO.orgName(), countryInfo)

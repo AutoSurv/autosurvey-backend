@@ -1,8 +1,12 @@
 package com.marcosimon.autosurvey.models;
 
 public record NewFunctionInfoDTO(
-        //FunctionInfoDTO funcInfo,
-        Integer level,
-        String function
+        String id,
+        String msfEntity,
+        String msfProfessionalGroup,
+        String msfLevel,
+        String irffgLevel,
+        String msfJobFamilyDep,
+        String msfFunction
 ) {
 }

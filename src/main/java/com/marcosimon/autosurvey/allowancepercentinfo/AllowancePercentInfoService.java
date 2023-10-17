@@ -33,7 +33,7 @@ public class AllowancePercentInfoService {
 
     @Transactional
     public synchronized AllowancePercentInfo addAllowancePercentInfo(NewAllowancePercentageDTO newAllowancePercentageDTO) {
-        CountryInfo countryInfo = countryInfoDbRepository.findByNameAndDate(newAllowancePercentageDTO.countryName(), newAllowancePercentageDTO.date())
+        CountryInfo countryInfo = countryInfoDbRepository.findByNameAndYear(newAllowancePercentageDTO.countryName(), newAllowancePercentageDTO.year())
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
         MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
                 .findByOrgNameAndCountryInfo(newAllowancePercentageDTO.orgName(), countryInfo)

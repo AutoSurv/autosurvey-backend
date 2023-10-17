@@ -2,9 +2,8 @@ package com.marcosimon.autosurvey.models;
 
 public record NewFinalOrgInfoDTO(
         String countryName,
-        String date,
+        String year,
         String orgName,
-        Integer level,
-        String functionName,
-        String functionCustomName) {
+        String functionId,
+        String orgFunctionId) {
 }

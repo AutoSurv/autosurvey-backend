@@ -30,10 +30,10 @@ public class CurrencyInfoService {
     @Transactional
     public synchronized CurrencyInfo addCurrencyInfo(NewCurrencyInfoDTO newCurrencyInfoDTO) {
         CountryInfo countryInfo = countryInfoDbRepository
-                .findByNameAndDate(newCurrencyInfoDTO.countryName(), newCurrencyInfoDTO.date())
+                .findByNameAndYear(newCurrencyInfoDTO.countryName(), newCurrencyInfoDTO.year())
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
-        return currencyInfoDbRepository.save(new CurrencyInfo(newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate(), countryInfo));
+        return currencyInfoDbRepository.save(new CurrencyInfo(newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate(), newCurrencyInfoDTO.date(), countryInfo));
     }
 
     @Transactional
@@ -48,6 +48,10 @@ public class CurrencyInfoService {
 
         if (updateCurrencyInfoDTO.exchangeRate() != null && updateCurrencyInfoDTO.exchangeRate() >= 0) {
             storedCurrencyInfo.setExchangeRate(updateCurrencyInfoDTO.exchangeRate());
+        }
+
+        if (updateCurrencyInfoDTO.date() != null && !updateCurrencyInfoDTO.date().isEmpty()) {
+            storedCurrencyInfo.setDateExchangeRate(updateCurrencyInfoDTO.date());
         }
 
         return currencyInfoDbRepository.save(storedCurrencyInfo);

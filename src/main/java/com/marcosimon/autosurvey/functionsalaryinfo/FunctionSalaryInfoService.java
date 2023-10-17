@@ -36,26 +36,27 @@ public class FunctionSalaryInfoService {
     @Transactional
     public synchronized FunctionSalaryInfo addFunctionSalaryInfo(NewFunctionSalaryInfoDTO newFunctionSalaryInfoDTO) {
         CountryInfo countryInfo = countryInfoDbRepository
-                .findByNameAndDate(newFunctionSalaryInfoDTO.countryName(), newFunctionSalaryInfoDTO.date())
+                .findByNameAndYear(newFunctionSalaryInfoDTO.countryName(), newFunctionSalaryInfoDTO.year())
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
         MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
                 .findByOrgNameAndCountryInfo(newFunctionSalaryInfoDTO.orgName(), countryInfo)
                 .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
         FunctionInfo functionInfo = functionInfoRepository
-                .findByLevelAndFunctionName(newFunctionSalaryInfoDTO.level(), newFunctionSalaryInfoDTO.functionName())
+                .findById(newFunctionSalaryInfoDTO.functionId())
                 .orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
 
         functionSalaryInfoDbRepository
-                .findByFunctionCustomNameAndFunctionAndOrg(newFunctionSalaryInfoDTO.functionCustomName(), functionInfo, msfOrgInfo)
+                .findByOrgFunctionIdAndFunctionAndOrg(newFunctionSalaryInfoDTO.orgFunctionId(), functionInfo, msfOrgInfo)
                 .ifPresent( info -> {
             throw new CustomException(ALREADY_SAVED_FUNCTION_SALARY_INFO);
         });
 
-        return functionSalaryInfoDbRepository.save(new FunctionSalaryInfo(newFunctionSalaryInfoDTO.functionCustomName(),
+        return functionSalaryInfoDbRepository.save(new FunctionSalaryInfo(newFunctionSalaryInfoDTO.orgFunctionId(),
+                newFunctionSalaryInfoDTO.orgFunction(),
                 newFunctionSalaryInfoDTO.basicSalary(),
                 newFunctionSalaryInfoDTO.TGC(),
-                newFunctionSalaryInfoDTO.monthlyAllowance(),
+                newFunctionSalaryInfoDTO.allowancePerFunction(),
                 msfOrgInfo, functionInfo));
 
     }
@@ -66,14 +67,17 @@ public class FunctionSalaryInfoService {
                 .findById(id)
                 .orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
 
-        if (updateFunctionSalaryInfoDTO.functionCustomName() != null && !updateFunctionSalaryInfoDTO.functionCustomName().isEmpty()) {
-            storedFunctionSalaryInfo.setFunctionCustomName(updateFunctionSalaryInfoDTO.functionCustomName());
+        if (updateFunctionSalaryInfoDTO.orgFunctionId() != null && !updateFunctionSalaryInfoDTO.orgFunctionId().isEmpty()) {
+            storedFunctionSalaryInfo.setOrgFunctionId(updateFunctionSalaryInfoDTO.orgFunctionId());
+        }
+        if (updateFunctionSalaryInfoDTO.orgFunction() != null && !updateFunctionSalaryInfoDTO.orgFunction().isEmpty()) {
+            storedFunctionSalaryInfo.setOrgFunction(updateFunctionSalaryInfoDTO.orgFunction());
         }
         if (updateFunctionSalaryInfoDTO.basicSalary() != null && updateFunctionSalaryInfoDTO.basicSalary() >= 0) {
             storedFunctionSalaryInfo.setBasicSalary(updateFunctionSalaryInfoDTO.basicSalary());
         }
-        if (updateFunctionSalaryInfoDTO.monthlyAllowance() != null && updateFunctionSalaryInfoDTO.monthlyAllowance() >= 0) {
-            storedFunctionSalaryInfo.setMonthlyAllowance(updateFunctionSalaryInfoDTO.monthlyAllowance());
+        if (updateFunctionSalaryInfoDTO.allowancePerFunction() != null && updateFunctionSalaryInfoDTO.allowancePerFunction() >= 0) {
+            storedFunctionSalaryInfo.setAllowancePerFunction(updateFunctionSalaryInfoDTO.allowancePerFunction());
         }
         if (updateFunctionSalaryInfoDTO.TGC() != null && updateFunctionSalaryInfoDTO.TGC() >= 0) {
             storedFunctionSalaryInfo.setTgc(updateFunctionSalaryInfoDTO.TGC());

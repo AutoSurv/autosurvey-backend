@@ -23,16 +23,19 @@ public class FunctionSalaryInfo {
   @Column(name = "function_salary_info_id")
   private Long functionSalaryInfoId;
 
-  @Column(name = "function_custom_name")
-  private String functionCustomName;
+  @Column(name = "org_function_id")
+  private String orgFunctionId;
+
+  @Column(name = "org_function")
+  private String orgFunction;
 
   @Column(name = "basic_salary")
   private Integer basicSalary;
 
   private Integer tgc;
 
-  @Column(name = "monthly_allowance")
-  private Integer monthlyAllowance;
+  @Column(name = "allowance_per_function")
+  private Integer allowancePerFunction;
 
   //@JsonBackReference
   @JsonIgnore
@@ -46,18 +49,12 @@ public class FunctionSalaryInfo {
   @JoinColumn(name = "function_info_id", nullable = false)
   private FunctionInfo functionInfo;
 
-  public FunctionSalaryInfo(String functionCustomName, Integer basicSalary, Integer tgc, Integer monthlyAllowance) {
-    this.functionCustomName = functionCustomName;
+  public FunctionSalaryInfo(String orgFunctionId, String orgFunction, Integer basicSalary, Integer tgc, Integer allowancePerFunction, MsfOrgInfo msfOrgInfo, FunctionInfo functionInfo) {
+    this.orgFunctionId = orgFunctionId;
+    this.orgFunction = orgFunction;
     this.basicSalary = basicSalary;
     this.tgc = tgc;
-    this.monthlyAllowance = monthlyAllowance;
-  }
-
-  public FunctionSalaryInfo(String functionCustomName, Integer basicSalary, Integer tgc, Integer monthlyAllowance, MsfOrgInfo msfOrgInfo, FunctionInfo functionInfo) {
-    this.functionCustomName = functionCustomName;
-    this.basicSalary = basicSalary;
-    this.tgc = tgc;
-    this.monthlyAllowance = monthlyAllowance;
+    this.allowancePerFunction = allowancePerFunction;
     this.msfOrgInfo = msfOrgInfo;
     this.functionInfo = functionInfo;
   }

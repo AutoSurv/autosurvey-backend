@@ -8,7 +8,7 @@ public record NewContactInfoDTO(
         String contactJobTitle,
         String orgName,
         String countryName,
-        String date
+        String year
 
 ) {
 }

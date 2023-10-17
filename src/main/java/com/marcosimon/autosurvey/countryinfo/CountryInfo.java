@@ -25,7 +25,9 @@ public class CountryInfo {
   @Column(name = "country_name")
   private String countryName;
 
-  private String date;
+  private String isoCode;
+
+  private String year;
 
   @Column(name = "currency_ref")
   private String currencyRef;
@@ -40,9 +42,10 @@ public class CountryInfo {
   @OneToMany(mappedBy = "countryInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<CurrencyInfo> currencyInfoList;
 
-  public CountryInfo(String countryName, String date, String currencyRef) {
+  public CountryInfo(String countryName, String isoCode, String year, String currencyRef) {
     this.countryName = countryName;
-    this.date = date;
+    this.isoCode = isoCode;
+    this.year = year;
     this.currencyRef = currencyRef;
   }
 }

@@ -35,21 +35,21 @@ public class CountryInfoService {
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     }
 
-    public CountryInfo getCountryInfoByNameAndDate(String countryName, String date) {
+    public CountryInfo getCountryInfoByNameAndDate(String countryName, String year) {
         return countryInfoDbRepository
-                .findByNameAndDate(countryName, date)
+                .findByNameAndYear(countryName, year)
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     }
 
     @Transactional
     public synchronized CountryInfo addCountryInfo(NewCountryInfoDTO newCountryInfoDTO) {
         countryInfoDbRepository
-                .findByNameAndDate(newCountryInfoDTO.countryName(), newCountryInfoDTO.date())
+                .findByNameAndYear(newCountryInfoDTO.countryName(), newCountryInfoDTO.year())
                         .ifPresent( info -> {
                             throw new CustomException(ALREADY_SAVED_COUNTRY_INFO);
                         });
 
-        return countryInfoDbRepository.save(new CountryInfo(newCountryInfoDTO.countryName(), newCountryInfoDTO.date(), newCountryInfoDTO.currencyRef()));
+        return countryInfoDbRepository.save(new CountryInfo(newCountryInfoDTO.countryName(), newCountryInfoDTO.isoCode(), newCountryInfoDTO.year(), newCountryInfoDTO.currencyRef()));
     }
     @Transactional
     public synchronized CountryInfo updateCountryInfo(Long id, NewCountryInfoDTO updateCountryInfo) {
@@ -61,8 +61,12 @@ public class CountryInfoService {
             storedCountryInfo.setCountryName(updateCountryInfo.countryName());
         }
 
-        if (updateCountryInfo.date() != null && !updateCountryInfo.date().isEmpty()) {
-            storedCountryInfo.setDate(updateCountryInfo.date());
+        if (updateCountryInfo.isoCode() != null && !updateCountryInfo.isoCode().isEmpty()) {
+            storedCountryInfo.setIsoCode(updateCountryInfo.isoCode());
+        }
+
+        if (updateCountryInfo.year() != null && !updateCountryInfo.year().isEmpty()) {
+            storedCountryInfo.setYear(updateCountryInfo.year());
         }
 
         if (updateCountryInfo.currencyRef() != null && !updateCountryInfo.currencyRef().isEmpty()) {
@@ -75,8 +79,7 @@ public class CountryInfoService {
 
     public void deleteCountryInfo(Long id) {
         countryInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
-        System.out.println(msfOrgInfoDbRepository.findAllByCountryInfoId(id.toString()).size());
-        msfOrgInfoDbRepository.findAllByCountryInfoId(id.toString()).forEach(o -> {
+        msfOrgInfoDbRepository.findAllByCountryInfoId(id).forEach(o -> {
             contactInfoDbRepository.findById(o.getOrgId()).ifPresent(contactInfoDbRepository::delete);
             allowanceInfoDbRepository.findById(o.getOrgId()).ifPresent(allowanceInfoDbRepository::delete);
             allowancePercentInfoDbRepository.findById(o.getOrgId()).ifPresent(allowancePercentInfoDbRepository::delete);

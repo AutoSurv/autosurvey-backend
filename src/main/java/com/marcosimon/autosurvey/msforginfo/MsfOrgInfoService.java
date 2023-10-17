@@ -40,7 +40,7 @@ public class MsfOrgInfoService {
 
   public FinalOrgInfoDTO getFinalOrgInfo(NewFinalOrgInfoDTO newFinalOrgInfoDTO) {
     CountryInfo countryInfo = countryInfoDbRepository
-            .findByNameAndDate(newFinalOrgInfoDTO.countryName(), newFinalOrgInfoDTO.date())
+            .findByNameAndYear(newFinalOrgInfoDTO.countryName(), newFinalOrgInfoDTO.year())
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
     CurrencyInfo currencyInfo = currencyInfoDbRepository
@@ -53,10 +53,10 @@ public class MsfOrgInfoService {
             .findById(msfOrgInfo.getOrgId()).orElseThrow(() -> new CustomException(CONTACT_INFO_NOT_FOUND));
 
     FunctionInfo functionInfo = functionInfoDbRepository
-            .findByLevelAndFunctionName(newFinalOrgInfoDTO.level(), newFinalOrgInfoDTO.functionName()).orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
+            .findById(newFinalOrgInfoDTO.functionId()).orElseThrow(() -> new CustomException(FUNCTION_INFO_NOT_FOUND));
 
     FunctionSalaryInfo functionSalaryInfo = functionSalaryInfoDbRepository
-            .findByFunctionCustomNameAndFunctionAndOrg(newFinalOrgInfoDTO.functionCustomName(), functionInfo, msfOrgInfo)
+            .findByOrgFunctionIdAndFunctionAndOrg(newFinalOrgInfoDTO.orgFunctionId(), functionInfo, msfOrgInfo)
             .orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
 
     AllowanceInfo allowanceInfo = allowanceInfoDbRepository
@@ -65,9 +65,9 @@ public class MsfOrgInfoService {
     AllowancePercentInfo allowancePercentInfo = allowancePercentInfoDbRepository
             .findById(msfOrgInfo.getOrgId()).orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
 
-    return new FinalOrgInfoDTO(countryInfo.getCountryName(), countryInfo.getDate(), msfOrgInfo.getOrgName(), msfOrgInfo.getOrgFullName(), functionInfo.getLevel(), functionInfo.getFunctionName(),
-            functionSalaryInfo.getFunctionCustomName(), countryInfo.getCurrencyRef(), msfOrgInfo.getCurrencyInUse(), currencyInfo.getCurrency(), currencyInfo.getExchangeRate(),
-            msfOrgInfo.getWorkingHours(), msfOrgInfo.getThirteenthSalary(), functionSalaryInfo.getBasicSalary(), functionSalaryInfo.getMonthlyAllowance(),
+    return new FinalOrgInfoDTO(countryInfo.getCountryName(), countryInfo.getYear(), msfOrgInfo.getOrgName(), msfOrgInfo.getOrgFullName(), functionInfo.getMsfLevel(), functionInfo.getIrffgLevel(),
+            functionInfo.getFunctionInfoId(), functionInfo.getMsfFunction(),functionSalaryInfo.getOrgFunctionId(), functionSalaryInfo.getOrgFunction(), countryInfo.getCurrencyRef(), msfOrgInfo.getCurrencyInUse(), currencyInfo.getCurrency(), currencyInfo.getExchangeRate(),
+            msfOrgInfo.getWorkingHours(), msfOrgInfo.getThirteenthSalary(), functionSalaryInfo.getBasicSalary(), functionSalaryInfo.getAllowancePerFunction(),
             allowanceInfo.getColAllowance(), allowanceInfo.getTransportationAllowance(), allowanceInfo.getHousingAllowance(), allowanceInfo.getOtherAllowance(),
             allowanceInfo.getTotalAllowance(), allowancePercentInfo.getColAllowancePercent(), allowancePercentInfo.getTransportationAllowancePercent(),
             allowancePercentInfo.getHousingAllowancePercent(), allowancePercentInfo.getOtherAllowancePercent(), allowancePercentInfo.getTotalAllowancePercent(),
@@ -90,7 +90,7 @@ public class MsfOrgInfoService {
   @Transactional
   public synchronized MsfOrgInfo addMsfOrgInfo(NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
     CountryInfo countryInfo = countryInfoDbRepository
-                    .findByNameAndDate(newMsfOrgInfoDTO.countryName(), newMsfOrgInfoDTO.date())
+                    .findByNameAndYear(newMsfOrgInfoDTO.countryName(), newMsfOrgInfoDTO.year())
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
     msfOrgInfoDbRepository
@@ -101,6 +101,8 @@ public class MsfOrgInfoService {
 
     return msfOrgInfoDbRepository.save(new MsfOrgInfo(newMsfOrgInfoDTO.orgFullName(),
             newMsfOrgInfoDTO.orgName(),
+            newMsfOrgInfoDTO.orgType(),
+            newMsfOrgInfoDTO.dataCollectionDate(),
             newMsfOrgInfoDTO.workingHours(),
             newMsfOrgInfoDTO.thirteenthSalary(),
             newMsfOrgInfoDTO.currencyInUse(),
@@ -118,6 +120,12 @@ public class MsfOrgInfoService {
     }
     if (updateMsfOrgInfoDTO.orgName() != null && !updateMsfOrgInfoDTO.orgName().isEmpty()) {
       storedOrgInfo.setOrgName(updateMsfOrgInfoDTO.orgName());
+    }
+    if (updateMsfOrgInfoDTO.orgType() != null && !updateMsfOrgInfoDTO.orgType().isEmpty()) {
+      storedOrgInfo.setOrgType(updateMsfOrgInfoDTO.orgType());
+    }
+    if (updateMsfOrgInfoDTO.dataCollectionDate() != null && !updateMsfOrgInfoDTO.dataCollectionDate().isEmpty()) {
+      storedOrgInfo.setDataCollectionDate(updateMsfOrgInfoDTO.dataCollectionDate());
     }
     if (updateMsfOrgInfoDTO.workingHours() != null && updateMsfOrgInfoDTO.workingHours() >= 0) {
       storedOrgInfo.setWorkingHours(updateMsfOrgInfoDTO.workingHours());

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IFunctionInfoRepository extends JpaRepository<FunctionInfo, Long> {
+public interface IFunctionInfoRepository extends JpaRepository<FunctionInfo, String> {
 
-    Optional<FunctionInfo> findByLevelAndFunctionName(Integer level, String functionName);
+    //Optional<FunctionInfo> findByLevelAndFunctionName(Integer level, String functionName);
 
 }

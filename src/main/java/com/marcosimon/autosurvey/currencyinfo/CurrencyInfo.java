@@ -27,6 +27,9 @@ public class CurrencyInfo {
     @Column(name = "exchange_rate")
     private Float exchangeRate;
 
+    @Column(name = "date_exchange_rate")
+    private String dateExchangeRate;
+
     @JsonIgnore
     @OneToMany(mappedBy = "currencyInfo")
     private List<MsfOrgInfo> msfOrgInfo;
@@ -36,9 +39,10 @@ public class CurrencyInfo {
     @JoinColumn(name = "country_info_id", nullable = false)
     private CountryInfo countryInfo;
 
-    public CurrencyInfo(String currency, Float exchangeRate, CountryInfo countryInfo) {
+    public CurrencyInfo(String currency, Float exchangeRate, String dateExchangeRate, CountryInfo countryInfo) {
         this.currency = currency;
         this.exchangeRate = exchangeRate;
+        this.dateExchangeRate = dateExchangeRate;
         this.countryInfo = countryInfo;
     }
 }

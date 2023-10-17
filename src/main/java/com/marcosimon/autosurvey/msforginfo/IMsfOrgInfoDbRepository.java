@@ -16,11 +16,11 @@ public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Long>
     @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.orgName = ?1 and O.countryInfo = ?2")
     Optional<MsfOrgInfo> findByOrgNameAndCountryInfo(String orgName, CountryInfo countryInfo);
     @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.countryInfo.countryInfoId = :countryId")
-    List<MsfOrgInfo> findAllByCountryInfoId(@Param("countryId")String countryId);
+    List<MsfOrgInfo> findAllByCountryInfoId(@Param("countryId")Long countryId);
     @Modifying
     @Query(value = "DELETE FROM MsfOrgInfo AS O WHERE O.countryInfo.countryInfoId = :countryId")
-    void deleteAllByCountryId(@Param("countryId")String countryId);
-    @Query(  value = "SELECT new com.marcosimon.autosurvey.models.FinalOrgInfoDTO( C.countryName, C.date, O.orgName, O.orgFullName, F.level, F.functionName, " +
+    void deleteAllByCountryId(@Param("countryId")Long countryId);
+    @Query(  value = "SELECT new com.marcosimon.autosurvey.models.FinalOrgInfoDTO( C.countryName, C.year, O.orgName, O.orgFullName, F.level, F.functionName, " +
             "FS.functionCustomName, C.currencyRef, O.currencyInUse, CUR.currency, CUR.exchangeRate, O.workingHours, O.thirteenthSalary, FS.basicSalary, " +
             "FS.monthlyAllowance, A.colAllowance, A.transportationAllowance, A.housingAllowance, A.otherAllowance, A.totalAllowance, " +
             "AP.colAllowancePercent, AP.transportationAllowancePercent, AP.housingAllowancePercent, AP.otherAllowancePercent, " +

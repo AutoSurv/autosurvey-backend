@@ -20,7 +20,7 @@ join org_info on org_info.country_info_id = country_info.country_info_id;
 
 /* */
 
-SELECT C.country_name, C.date, O.org_name, O.org_full_name, F.level, F.function_name, FS.function_custom_name,
+SELECT C.country_name, C.year, O.org_name, O.org_full_name, F.level, F.function_name, FS.function_custom_name,
             C.currency_ref, O.currency_in_use, CUR.currency, CUR.exchange_rate, O.working_hours, O.thirteenth_salary, FS.basic_salary,
             FS.monthly_allowance, A.cost_of_living_allowance, A.transportation_allowance, A.housing_allowance, A.other_allowance,
             A.total_allowance, AP.cost_of_living_allowance_percent, AP.transportation_allowance_percent, AP.housing_allowance_percent,

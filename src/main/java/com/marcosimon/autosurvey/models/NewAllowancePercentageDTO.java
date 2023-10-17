@@ -1,7 +1,6 @@
 package com.marcosimon.autosurvey.models;
 
 public record NewAllowancePercentageDTO(
-        //AllowancePercentageDTO allPerc,
         Float colAllowance,
         Float transportation,
         Float housing,
@@ -9,6 +8,6 @@ public record NewAllowancePercentageDTO(
         Float total,
         String orgName,
         String countryName,
-        String date
+        String year
 ) {
 }

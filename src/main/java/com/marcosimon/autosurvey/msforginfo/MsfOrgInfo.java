@@ -34,6 +34,12 @@ public class MsfOrgInfo {
   @Column(name = "org_name")
   private String orgName;
 
+  @Column(name = "org_type")
+  private String orgType;
+
+  @Column(name = "data_collection_date")
+  private String dataCollectionDate;
+
   @Column(name = "working_hours")
   private Integer workingHours;
 
@@ -73,9 +79,11 @@ public class MsfOrgInfo {
   @OneToMany(mappedBy = "functionSalaryInfoId", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<FunctionSalaryInfo> functionSalaryInfoList;
 
-  public MsfOrgInfo(String orgFullName, String orgName, Integer workingHours, Integer thirteenthSalary, String currencyInUse, CountryInfo countryInfo) {
+  public MsfOrgInfo(String orgFullName, String orgName, String orgType, String dataCollectionDate, Integer workingHours, Integer thirteenthSalary, String currencyInUse, CountryInfo countryInfo) {
     this.orgFullName = orgFullName;
     this.orgName = orgName;
+    this.orgType = orgType;
+    this.dataCollectionDate = dataCollectionDate;
     this.workingHours = workingHours;
     this.thirteenthSalary = thirteenthSalary;
     this.currencyInUse = currencyInUse;

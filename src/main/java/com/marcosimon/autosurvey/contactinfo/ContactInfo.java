@@ -5,7 +5,6 @@ import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
