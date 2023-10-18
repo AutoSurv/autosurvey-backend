@@ -20,9 +20,10 @@ public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Long>
     @Modifying
     @Query(value = "DELETE FROM MsfOrgInfo AS O WHERE O.countryInfo.countryInfoId = :countryId")
     void deleteAllByCountryId(@Param("countryId")Long countryId);
-    @Query(  value = "SELECT new com.marcosimon.autosurvey.models.FinalOrgInfoDTO( C.countryName, C.year, O.orgName, O.orgFullName, F.level, F.functionName, " +
-            "FS.functionCustomName, C.currencyRef, O.currencyInUse, CUR.currency, CUR.exchangeRate, O.workingHours, O.thirteenthSalary, FS.basicSalary, " +
-            "FS.monthlyAllowance, A.colAllowance, A.transportationAllowance, A.housingAllowance, A.otherAllowance, A.totalAllowance, " +
+    @Query(  value = "SELECT new com.marcosimon.autosurvey.models.FinalOrgInfoDTO( C.countryName, C.year, O.orgName, O.orgFullName, F.msfLevel, " +
+            " F.irffgLevel, F.functionInfoId, F.msfFunction, " +
+            "FS.orgFunctionId, FS.orgFunction, C.currencyRef, O.currencyInUse, CUR.currency, CUR.exchangeRate, O.workingHours, O.thirteenthSalary, FS.basicSalary, " +
+            "FS.allowancePerFunction, A.colAllowance, A.transportationAllowance, A.housingAllowance, A.otherAllowance, A.totalAllowance, " +
             "AP.colAllowancePercent, AP.transportationAllowancePercent, AP.housingAllowancePercent, AP.otherAllowancePercent, " +
             "AP.totalAllowancePercent, FS.tgc) " +
             "FROM CountryInfo C " +
@@ -32,7 +33,7 @@ public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Long>
             "LEFT JOIN FunctionInfo F ON F.functionInfoId = FS.functionInfo.functionInfoId "+
             "LEFT JOIN AllowanceInfo A ON O.orgId = A.msfOrgInfo.orgId " +
             "LEFT JOIN AllowancePercentInfo AP ON O.orgId = AP.msfOrgInfo.orgId " +
-            "ORDER BY O.orgId, F.level ")
+            "ORDER BY O.orgId, F.msfLevel ")
     List<FinalOrgInfoDTO> findAllFinalOrgInfo();
 
 

@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface ICountryInfoDbRepository extends JpaRepository<CountryInfo, Long> {
-    @Query(value = "SELECT C FROM CountryInfo AS C WHERE C.countryName = :name and C.date = :year")
-    Optional<CountryInfo> findByNameAndYear(@Param("name") String name, @Param("date") String year);
+    @Query(value = "SELECT C FROM CountryInfo AS C WHERE C.countryName = :name and C.year = :year")
+    Optional<CountryInfo> findByNameAndYear(@Param("name") String name, @Param("year") String year);
 
 
 }
