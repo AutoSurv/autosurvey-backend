@@ -49,6 +49,17 @@ public class AllowancePercentInfoService {
         allowancePercentInfo.setColAllowancePercent(newAllowancePercentageDTO.colAllowance());
         allowancePercentInfo.setHousingAllowancePercent(newAllowancePercentageDTO.housing());
         allowancePercentInfo.setTransportationAllowancePercent(newAllowancePercentageDTO.transportation());
+        allowancePercentInfo.setCommunicationAllowancePercent(newAllowancePercentageDTO.communication());
+        allowancePercentInfo.setFoodAllowancePercent(newAllowancePercentageDTO.food());
+        allowancePercentInfo.setHolidayAllowancePercent(newAllowancePercentageDTO.holiday());
+        allowancePercentInfo.setReligiousAllowancePercent(newAllowancePercentageDTO.religious());
+        allowancePercentInfo.setEndOfYearAllowancePercent(newAllowancePercentageDTO.endOfYear());
+        allowancePercentInfo.setMedicalAllowancePercent(newAllowancePercentageDTO.medical());
+        allowancePercentInfo.setFamilyAllowancePercent(newAllowancePercentageDTO.family());
+        allowancePercentInfo.setEducationAllowancePercent(newAllowancePercentageDTO.education());
+        allowancePercentInfo.setHardshipAllowancePercent(newAllowancePercentageDTO.hardship());
+        allowancePercentInfo.setDangerAllowancePercent(newAllowancePercentageDTO.danger());
+        allowancePercentInfo.setLocationAllowancePercent(newAllowancePercentageDTO.location());
         allowancePercentInfo.setOtherAllowancePercent(newAllowancePercentageDTO.other());
         allowancePercentInfo.setTotalAllowancePercent(newAllowancePercentageDTO.total());
 
@@ -72,6 +83,39 @@ public class AllowancePercentInfoService {
         }
         if (updateAllowancePercentageDTO.housing() != null && updateAllowancePercentageDTO.housing() >= 0) {
             storedAllowancePercentInfo.setHousingAllowancePercent(updateAllowancePercentageDTO.housing());
+        }
+        if (updateAllowancePercentageDTO.communication() != null && updateAllowancePercentageDTO.communication() >= 0) {
+            storedAllowancePercentInfo.setCommunicationAllowancePercent(updateAllowancePercentageDTO.communication());
+        }
+        if (updateAllowancePercentageDTO.food() != null && updateAllowancePercentageDTO.food() >= 0) {
+            storedAllowancePercentInfo.setFoodAllowancePercent(updateAllowancePercentageDTO.food());
+        }
+        if (updateAllowancePercentageDTO.holiday() != null && updateAllowancePercentageDTO.holiday() >= 0) {
+            storedAllowancePercentInfo.setHolidayAllowancePercent(updateAllowancePercentageDTO.holiday());
+        }
+        if (updateAllowancePercentageDTO.religious() != null && updateAllowancePercentageDTO.religious() >= 0) {
+            storedAllowancePercentInfo.setReligiousAllowancePercent(updateAllowancePercentageDTO.religious());
+        }
+        if (updateAllowancePercentageDTO.endOfYear() != null && updateAllowancePercentageDTO.endOfYear() >= 0) {
+            storedAllowancePercentInfo.setEndOfYearAllowancePercent(updateAllowancePercentageDTO.endOfYear());
+        }
+        if (updateAllowancePercentageDTO.medical() != null && updateAllowancePercentageDTO.medical() >= 0) {
+            storedAllowancePercentInfo.setMedicalAllowancePercent(updateAllowancePercentageDTO.medical());
+        }
+        if (updateAllowancePercentageDTO.family() != null && updateAllowancePercentageDTO.family() >= 0) {
+            storedAllowancePercentInfo.setFamilyAllowancePercent(updateAllowancePercentageDTO.family());
+        }
+        if (updateAllowancePercentageDTO.education() != null && updateAllowancePercentageDTO.education() >= 0) {
+            storedAllowancePercentInfo.setEducationAllowancePercent(updateAllowancePercentageDTO.education());
+        }
+        if (updateAllowancePercentageDTO.hardship() != null && updateAllowancePercentageDTO.hardship() >= 0) {
+            storedAllowancePercentInfo.setHardshipAllowancePercent(updateAllowancePercentageDTO.hardship());
+        }
+        if (updateAllowancePercentageDTO.danger() != null && updateAllowancePercentageDTO.danger() >= 0) {
+            storedAllowancePercentInfo.setDangerAllowancePercent(updateAllowancePercentageDTO.danger());
+        }
+        if (updateAllowancePercentageDTO.location() != null && updateAllowancePercentageDTO.location() >= 0) {
+            storedAllowancePercentInfo.setLocationAllowancePercent(updateAllowancePercentageDTO.location());
         }
         if (updateAllowancePercentageDTO.other() != null && updateAllowancePercentageDTO.other() >= 0) {
             storedAllowancePercentInfo.setOtherAllowancePercent(updateAllowancePercentageDTO.other());

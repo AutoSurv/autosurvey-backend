@@ -48,6 +48,17 @@ public class AllowanceInfoService {
         allowanceInfo.setColAllowance(newAllowanceValueDTO.colAllowance());
         allowanceInfo.setTransportationAllowance(newAllowanceValueDTO.transportation());
         allowanceInfo.setHousingAllowance(newAllowanceValueDTO.housing());
+        allowanceInfo.setCommunicationAllowance(newAllowanceValueDTO.communication());
+        allowanceInfo.setFoodAllowance(newAllowanceValueDTO.food());
+        allowanceInfo.setHolidayAllowance(newAllowanceValueDTO.holiday());
+        allowanceInfo.setReligiousAllowance(newAllowanceValueDTO.religious());
+        allowanceInfo.setEndOfYearAllowance(newAllowanceValueDTO.endOfYear());
+        allowanceInfo.setMedicalAllowance(newAllowanceValueDTO.medical());
+        allowanceInfo.setFamilyAllowance(newAllowanceValueDTO.family());
+        allowanceInfo.setEducationAllowance(newAllowanceValueDTO.education());
+        allowanceInfo.setHardshipAllowance(newAllowanceValueDTO.hardship());
+        allowanceInfo.setDangerAllowance(newAllowanceValueDTO.danger());
+        allowanceInfo.setLocationAllowance(newAllowanceValueDTO.location());
         allowanceInfo.setOtherAllowance(newAllowanceValueDTO.other());
         allowanceInfo.setTotalAllowance(newAllowanceValueDTO.total());
 
@@ -71,6 +82,39 @@ public class AllowanceInfoService {
         }
         if (updateAllowanceValueDTO.housing() != null && updateAllowanceValueDTO.housing() >= 0) {
             storedAllowanceInfo.setHousingAllowance(updateAllowanceValueDTO.housing());
+        }
+        if (updateAllowanceValueDTO.communication() != null && updateAllowanceValueDTO.communication() >= 0) {
+            storedAllowanceInfo.setCommunicationAllowance(updateAllowanceValueDTO.communication());
+        }
+        if (updateAllowanceValueDTO.food() != null && updateAllowanceValueDTO.food() >= 0) {
+            storedAllowanceInfo.setFoodAllowance(updateAllowanceValueDTO.food());
+        }
+        if (updateAllowanceValueDTO.holiday() != null && updateAllowanceValueDTO.holiday() >= 0) {
+            storedAllowanceInfo.setHolidayAllowance(updateAllowanceValueDTO.holiday());
+        }
+        if (updateAllowanceValueDTO.religious() != null && updateAllowanceValueDTO.religious() >= 0) {
+            storedAllowanceInfo.setReligiousAllowance(updateAllowanceValueDTO.religious());
+        }
+        if (updateAllowanceValueDTO.endOfYear() != null && updateAllowanceValueDTO.endOfYear() >= 0) {
+            storedAllowanceInfo.setEndOfYearAllowance(updateAllowanceValueDTO.endOfYear());
+        }
+        if (updateAllowanceValueDTO.medical() != null && updateAllowanceValueDTO.medical() >= 0) {
+            storedAllowanceInfo.setMedicalAllowance(updateAllowanceValueDTO.medical());
+        }
+        if (updateAllowanceValueDTO.family() != null && updateAllowanceValueDTO.family() >= 0) {
+            storedAllowanceInfo.setFamilyAllowance(updateAllowanceValueDTO.family());
+        }
+        if (updateAllowanceValueDTO.education() != null && updateAllowanceValueDTO.education() >= 0) {
+            storedAllowanceInfo.setEducationAllowance(updateAllowanceValueDTO.education());
+        }
+        if (updateAllowanceValueDTO.hardship() != null && updateAllowanceValueDTO.hardship() >= 0) {
+            storedAllowanceInfo.setHardshipAllowance(updateAllowanceValueDTO.hardship());
+        }
+        if (updateAllowanceValueDTO.danger() != null && updateAllowanceValueDTO.danger() >= 0) {
+            storedAllowanceInfo.setDangerAllowance(updateAllowanceValueDTO.danger());
+        }
+        if (updateAllowanceValueDTO.location() != null && updateAllowanceValueDTO.location() >= 0) {
+            storedAllowanceInfo.setLocationAllowance(updateAllowanceValueDTO.location());
         }
         if (updateAllowanceValueDTO.other() != null && updateAllowanceValueDTO.other() >= 0) {
             storedAllowanceInfo.setOtherAllowance(updateAllowanceValueDTO.other());

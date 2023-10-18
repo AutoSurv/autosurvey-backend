@@ -2,6 +2,7 @@ package com.marcosimon.autosurvey.msforginfo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.marcosimon.autosurvey.allowanceInKindInfo.AllowanceInKindInfo;
 import com.marcosimon.autosurvey.allowanceinfo.AllowanceInfo;
 import com.marcosimon.autosurvey.allowancepercentinfo.AllowancePercentInfo;
 import com.marcosimon.autosurvey.contactinfo.ContactInfo;
@@ -63,6 +64,11 @@ public class MsfOrgInfo {
   @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @PrimaryKeyJoinColumn
   private AllowancePercentInfo allowancePercent;
+
+  @JsonIgnore
+  @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @PrimaryKeyJoinColumn
+  private AllowanceInKindInfo allowanceInKind;
 
   @JsonBackReference
   @ManyToOne

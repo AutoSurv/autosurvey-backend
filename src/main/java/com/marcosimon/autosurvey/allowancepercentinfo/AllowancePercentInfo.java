@@ -24,14 +24,47 @@ public class AllowancePercentInfo {
     @JoinColumn(name = "allowance_percent_Info_Id")
     private MsfOrgInfo msfOrgInfo;
 
-    @Column(name ="cost_of_living_allowance_percent")
-    private Float colAllowancePercent;
-
     @Column(name ="transportation_allowance_percent")
     private Float transportationAllowancePercent;
 
     @Column(name ="housing_allowance_percent")
     private Float housingAllowancePercent;
+
+    @Column(name ="cost_of_living_allowance_percent")
+    private Float colAllowancePercent;
+
+    @Column(name ="communication_allowance_percent")
+    private Float communicationAllowancePercent;
+
+    @Column(name ="food_allowance_percent")
+    private Float foodAllowancePercent;
+
+    @Column(name ="holiday_allowance_percent")
+    private Float holidayAllowancePercent;
+
+    @Column(name ="religious_allowance_percent")
+    private Float religiousAllowancePercent;
+
+    @Column(name ="end_of_year_allowance_percent")
+    private Float endOfYearAllowancePercent;
+
+    @Column(name ="medical_allowance_percent")
+    private Float medicalAllowancePercent;
+
+    @Column(name ="family_allowance_percent")
+    private Float familyAllowancePercent;
+
+    @Column(name ="education_allowance_percent")
+    private Float educationAllowancePercent;
+
+    @Column(name ="hardship_allowance_percent")
+    private Float hardshipAllowancePercent;
+
+    @Column(name ="danger_allowance_percent")
+    private Float dangerAllowancePercent;
+
+    @Column(name ="location_allowance_percent")
+    private Float locationAllowancePercent;
 
     @Column(name ="other_allowance_percent")
     private Float otherAllowancePercent;
@@ -39,20 +72,4 @@ public class AllowancePercentInfo {
     @Column(name ="total_allowance_percent")
     private Float totalAllowancePercent;
 
-    public AllowancePercentInfo(Float colAllowancePercent, Float transportationAllowancePercent, Float housingAllowancePercent, Float otherAllowancePercent, Float totalAllowancePercent) {
-        this.colAllowancePercent = colAllowancePercent;
-        this.transportationAllowancePercent = transportationAllowancePercent;
-        this.housingAllowancePercent = housingAllowancePercent;
-        this.otherAllowancePercent = otherAllowancePercent;
-        this.totalAllowancePercent = totalAllowancePercent;
-    }
-
-    public AllowancePercentInfo(Long allowancePercentInfoId, Float colAllowancePercent, Float transportationAllowancePercent, Float housingAllowancePercent, Float otherAllowancePercent, Float totalAllowancePercent) {
-        this.allowancePercentInfoId = allowancePercentInfoId;
-        this.colAllowancePercent = colAllowancePercent;
-        this.transportationAllowancePercent = transportationAllowancePercent;
-        this.housingAllowancePercent = housingAllowancePercent;
-        this.otherAllowancePercent = otherAllowancePercent;
-        this.totalAllowancePercent = totalAllowancePercent;
-    }
 }

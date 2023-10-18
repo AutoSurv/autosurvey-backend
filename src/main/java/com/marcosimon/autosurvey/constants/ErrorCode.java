@@ -13,6 +13,7 @@ public enum ErrorCode {
     //404 NOT_FOUND  Wrong Resource Access
     FUNCTION_INFO_NOT_FOUND(404, "Function info ID not exist"),
     FUNCTION_SALARY_INFO_NOT_FOUND(404, "Function Salary info ID not exist"),
+    ALLOWANCE_INKIND_INFO_NOT_FOUND(404, "Allowance In kind info ID not exist"),
     ALLOWANCE_PERCENT_INFO_NOT_FOUND(404, "Allowance Percent info ID not exist"),
     ALLOWANCE_INFO_NOT_FOUND(404, "Allowance info ID not exist"),
     CURRENCY_INFO_NOT_FOUND(404, "Currency info ID not exist"),
@@ -30,6 +31,7 @@ public enum ErrorCode {
     //409 CONFLICT Duplicate Resource
     ALREADY_SAVED_FUNCTION_INFO(409, "Function info is already saved"),
     ALREADY_SAVED_FUNCTION_SALARY_INFO(409, "Function Salary info is already saved"),
+    ALREADY_SAVED_ALLOWANCE_INKIND_INFO(409, "Allowance In Kind info is already saved"),
     ALREADY_SAVED_ALLOWANCE_PERCENT_INFO(409, "Allowance Percent info is already saved"),
     ALREADY_SAVED_ALLOWANCE_INFO(409, "Allowance info is already saved"),
     ALREADY_SAVED_CURRENCY_INFO(409, "Currency info is already saved"),
