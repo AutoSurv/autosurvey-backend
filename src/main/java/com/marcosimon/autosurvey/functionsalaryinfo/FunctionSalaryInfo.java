@@ -46,7 +46,7 @@ public class FunctionSalaryInfo {
 
   @JsonIgnore
   @ManyToOne
-  @JoinColumn(name = "function_info_id", nullable = false)
+  @JoinColumn(name = "function_info_id")
   private FunctionInfo functionInfo;
 
   public FunctionSalaryInfo(String orgFunctionId, String orgFunction, Integer basicSalary, Integer tgc, Integer allowancePerFunction, MsfOrgInfo msfOrgInfo, FunctionInfo functionInfo) {

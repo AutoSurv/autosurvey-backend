@@ -25,6 +25,7 @@ public class CountryInfo {
   @Column(name = "country_name")
   private String countryName;
 
+  @Column(name = "iso_code")
   private String isoCode;
 
   private String year;

@@ -20,9 +20,10 @@ join org_info on org_info.country_info_id = country_info.country_info_id;
 
 /* */
 
-SELECT C.country_name, C.year, O.org_name, O.org_full_name, F.level, F.function_name, FS.function_custom_name,
-            C.currency_ref, O.currency_in_use, CUR.currency, CUR.exchange_rate, O.working_hours, O.thirteenth_salary, FS.basic_salary,
-            FS.monthly_allowance, A.cost_of_living_allowance, A.transportation_allowance, A.housing_allowance, A.other_allowance,
+SELECT C.country_name, C.year, O.org_name, O.org_full_name, F.msf_level, F.irffg_level, F.function_info_id, F.msf_function,
+            FS.org_function_id, FS.org_function, C.currency_ref, O.currency_in_use, CUR.currency, CUR.exchange_rate, O.working_hours, O.thirteenth_salary,
+            FS.basic_salary,
+            FS.allowance_per_function, A.cost_of_living_allowance, A.transportation_allowance, A.housing_allowance, A.other_allowance,
             A.total_allowance, AP.cost_of_living_allowance_percent, AP.transportation_allowance_percent, AP.housing_allowance_percent,
             AP.other_allowance_percent, AP.total_allowance_percent, FS.tgc
             FROM country_info C
@@ -32,7 +33,7 @@ SELECT C.country_name, C.year, O.org_name, O.org_full_name, F.level, F.function_
 			LEFT JOIN function_info F ON F.function_info_id = FS.function_info_id
 			LEFT JOIN allowance_info A ON O.org_id = A.allowance_info_id
             LEFT JOIN allowance_percent_info AP ON O.org_id = AP.allowance_percent_info_id
-            ORDER BY O.org_id, F.level ;
+            ORDER BY O.org_id, F.msf_level ;
 
 select *
 from org_info, country_info;

@@ -31,7 +31,7 @@ public class FunctionInfo {
   @Column(name = "irffg_level")
   private String irffgLevel;
 
-  @Column(name = "msf_JobFamily_Dep")
+  @Column(name = "msf_job_family_dep")
   private String msfJobFamilyDep;
 
   @Column(name = "msf_function")
