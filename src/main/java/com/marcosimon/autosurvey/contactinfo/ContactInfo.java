@@ -15,13 +15,13 @@ import javax.persistence.*;
 @Table(name = "contact_info")
 public class ContactInfo {
   @Id
-  @Column(name = "contact_Info_Id")
+  @Column(name = "contact_info_id")
   private Long contactInfoId;
 
   @JsonIgnore
   @MapsId
   @OneToOne(mappedBy = "contact")
-  @JoinColumn(name = "contact_Info_Id")
+  @JoinColumn(name = "contact_info_id")
   private MsfOrgInfo msfOrgInfo;
 
   @Column(name = "contact_person")
