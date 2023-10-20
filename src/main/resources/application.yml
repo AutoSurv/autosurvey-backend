@@ -3,30 +3,20 @@ server:
   port: 8080
 debug: true
 spring:
-#  sql:
-#    init:
-#      platform: mongodb
-#      mode: always
-#  config:
-#   import: env.properties
   sql:
     init:
-      platform: postgresql
       mode: always
-  output:
-    ansi:
-      enabled: always
+
   datasource:
-    url: ${PSQL_DB}
-    username: ${PSQL_USER}
-    password: ${PSQL_PASSWORD}
-    hikari:
-      connectionTimeout: 20000
-      maximumPoolSize: 5
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://${SQL_DATABASE}.database.windows.net;DatabaseName=${SQL_DATABASE};
+    username: ${SQL_USER}
+    password: ${SQL_PASSWORD}
+
   jpa:
     show-sql: true
     defer-datasource-initialization: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.SQLServerDialect
     hibernate:
       ddl-auto: update # none, create ...
   data:
