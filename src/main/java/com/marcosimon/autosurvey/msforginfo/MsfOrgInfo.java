@@ -290,6 +290,153 @@ public class MsfOrgInfo {
   @Column(name = "Daily_Workers_Num")
   private Float dailyWorkersNum;
 
+  @Column(name = "Working_hours_per_contract")
+  private Float workingHoursPerContract;
+
+  @Column(name = "Different_WH_per_Staff_Group")
+  private Boolean differentWorkingHoursPerStaffGroup;
+
+  @Column(name = "WH_Medical")
+  private Float workingHoursMedical;
+
+  @Column(name = "WH_Driver")
+  private Float workingHoursDriver;
+
+  @Column(name = "WH_Guard")
+  private Float workingHoursGuard;
+
+  @Column(name = "WH_Other")
+  private Float workingHoursOther;
+
+  @Column(name = "WH_Comments")
+  private String workingHoursComments;
+
+  @Column(name = "Installments")
+  private Integer installments;
+
+  @Column(name = "Installments_BS_Only")
+  private String installmentBSOnly;
+
+  @Column(name = "Installments_Comments")
+  private String installmentComments;
+
+  @Column(name = "Mobility_Policy")
+  private Boolean mobilityPolicy;
+
+  @Column(name = "Mobility_Policy_Currency")
+  private String mobilityPolicyCurrency;
+
+  @Column(name = "Mobility_Accomm_Wks")
+  private Integer mobilityAccommodationWeeks;
+
+  @Column(name = "Mobility_Accomm_Reimb")
+  private Float mobilityAccommodationReimbursed;
+
+  @Column(name = "Mobility_Transport_Direct")
+  private String mobilityTransportDirect;
+
+  @Column(name = "Mobility_Allowance")
+  private Float mobilityAllowance;
+
+  @Column(name = "Mobility_Lump_Sum")
+  private Float mobilityLumpSum;
+
+  @Column(name = "Mobility_Addl_Leave_Days")
+  private Integer mobilityAdditionalLeaveDays;
+
+  @Column(name = "Mobility_Home_Trips")
+  private Integer mobilityHomeTrips;
+
+  @Column(name = "Mobility_Other")
+  private String mobilityOther;
+
+  @Column(name = "Travel_Perdiem_Allowance")
+  private Boolean travelPerdiemAllowance;
+
+  @Column(name = "Travel_Transport_Type")
+  private String travelTransportType;
+
+  @Column(name = "Travel_Accomm_Type")
+  private String travelAccommodationType;
+
+  @Column(name = "Travel_Meals_Type")
+  private String travelMealsType;
+
+  @Column(name = "Travel_PerDiem_Currency")
+  private String travelPerdiemCurrency;
+
+  @Column(name = "Travel_Location_1")
+  private String travelLocation1;
+
+  @Column(name = "Travel_Overnight_Breakfast_1")
+  private Float  travelOvernightBreakfast1;
+
+  @Column(name = "Travel_Overnight_Lunch_1")
+  private Float  travelOvernightLunch1;
+
+  @Column(name = "Travel_Overnight_Dinner_1")
+  private Float  travelOvernightDinner1;
+
+  @Column(name = "Travel_Overnight_Incidentals_1")
+  private Float  travelOvernightIncidentals1;
+
+  @Column(name = "Travel_Overnight_Transport_1")
+  private Float  travelOvernightTransport1;
+
+  @Column(name = "Travel_Overnight_Hotel_1")
+  private Float  travelOvernightHotel1;
+
+  @Column(name = "Travel_Overnight_Total_1")
+  private Float  travelOvernightTotal1;
+
+  @Column(name = "Travel_Location_1")
+  private String travelLocation2;
+
+  @Column(name = "Travel_Overnight_Breakfast_2")
+  private Float  travelOvernightBreakfast2;
+
+  @Column(name = "Travel_Overnight_Lunch_2")
+  private Float  travelOvernightLunch2;
+
+  @Column(name = "Travel_Overnight_Dinner_2")
+  private Float  travelOvernightDinner2;
+
+  @Column(name = "Travel_Overnight_Incidentals_2")
+  private Float  travelOvernightIncidentals2;
+
+  @Column(name = "Travel_Overnight_Transport_2")
+  private Float  travelOvernightTransport2;
+
+  @Column(name = "Travel_Overnight_Hotel_2")
+  private Float  travelOvernightHotel2;
+
+  @Column(name = "Travel_Overnight_Total_2")
+  private Float  travelOvernightTotal2;
+
+  @Column(name = "Travel_Location_3")
+  private String travelLocation3;
+
+  @Column(name = "Travel_Overnight_Breakfast_3")
+  private Float  travelOvernightBreakfast3;
+
+  @Column(name = "Travel_Overnight_Lunch_3")
+  private Float  travelOvernightLunch3;
+
+  @Column(name = "Travel_Overnight_Dinner_3")
+  private Float  travelOvernightDinner3;
+
+  @Column(name = "Travel_Overnight_Incidentals_3")
+  private Float  travelOvernightIncidentals3;
+
+  @Column(name = "Travel_Overnight_Transport_3")
+  private Float  travelOvernightTransport3;
+
+  @Column(name = "Travel_Overnight_Hotel_3")
+  private Float  travelOvernightHotel3;
+
+  @Column(name = "Travel_Overnight_Total_3")
+  private Float  travelOvernightTotal3;
+
 
 
   @JsonIgnore
