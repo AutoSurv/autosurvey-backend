@@ -1,7 +1,7 @@
 package com.marcosimon.autosurvey.currencyinfo;
 
-import com.marcosimon.autosurvey.countryinfo.CountryInfo;
-import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
+import com.marcosimon.autosurvey.benchmarkinfo.BenchmarkInfo;
+import com.marcosimon.autosurvey.benchmarkinfo.IBenchmarkInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewCurrencyInfoDTO;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 public class CurrencyInfoService {
 
     private final ICurrencyInfoDbRepository currencyInfoDbRepository;
-    private final ICountryInfoDbRepository countryInfoDbRepository;
+    private final IBenchmarkInfoDbRepository countryInfoDbRepository;
 
     public List<CurrencyInfo> getAllCurrencyInfo() { return currencyInfoDbRepository.findAll(); }
 
@@ -29,11 +29,11 @@ public class CurrencyInfoService {
 
     @Transactional
     public synchronized CurrencyInfo addCurrencyInfo(NewCurrencyInfoDTO newCurrencyInfoDTO) {
-        CountryInfo countryInfo = countryInfoDbRepository
+        BenchmarkInfo benchmarkInfo = countryInfoDbRepository
                 .findByNameAndYear(newCurrencyInfoDTO.countryName(), newCurrencyInfoDTO.year())
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
-        return currencyInfoDbRepository.save(new CurrencyInfo(newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate(), newCurrencyInfoDTO.date(), countryInfo));
+        return currencyInfoDbRepository.save(new CurrencyInfo(newCurrencyInfoDTO.currency(), newCurrencyInfoDTO.exchangeRate(), newCurrencyInfoDTO.date(), benchmarkInfo));
     }
 
     @Transactional

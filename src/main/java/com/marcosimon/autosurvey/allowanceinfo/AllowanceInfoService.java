@@ -1,7 +1,7 @@
 package com.marcosimon.autosurvey.allowanceinfo;
 
-import com.marcosimon.autosurvey.countryinfo.CountryInfo;
-import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
+import com.marcosimon.autosurvey.benchmarkinfo.BenchmarkInfo;
+import com.marcosimon.autosurvey.benchmarkinfo.IBenchmarkInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewAllowanceValueDTO;
 import com.marcosimon.autosurvey.msforginfo.IMsfOrgInfoDbRepository;
@@ -20,7 +20,7 @@ public class AllowanceInfoService {
 
     private final IAllowanceInfoDbRepository allowanceInfoDbRepository;
     private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
-    private final ICountryInfoDbRepository countryInfoDbRepository;
+    private final IBenchmarkInfoDbRepository countryInfoDbRepository;
 
     public List<AllowanceInfo> getAllAllowance() { return allowanceInfoDbRepository.findAll(); }
 
@@ -32,10 +32,10 @@ public class AllowanceInfoService {
 
     @Transactional
     public synchronized AllowanceInfo addAllowanceInfo(NewAllowanceValueDTO newAllowanceValueDTO) {
-        CountryInfo countryInfo = countryInfoDbRepository.findByNameAndYear(newAllowanceValueDTO.countryName(), newAllowanceValueDTO.year())
+        BenchmarkInfo benchmarkInfo = countryInfoDbRepository.findByNameAndYear(newAllowanceValueDTO.countryName(), newAllowanceValueDTO.year())
                 .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
         MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
-                .findByOrgNameAndCountryInfo(newAllowanceValueDTO.orgName(), countryInfo)
+                .findByOrgNameAndCountryInfo(newAllowanceValueDTO.orgName(), benchmarkInfo)
                 .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
         allowanceInfoDbRepository

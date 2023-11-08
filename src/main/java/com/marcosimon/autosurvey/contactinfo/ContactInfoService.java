@@ -1,7 +1,7 @@
 package com.marcosimon.autosurvey.contactinfo;
 
-import com.marcosimon.autosurvey.countryinfo.CountryInfo;
-import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
+import com.marcosimon.autosurvey.benchmarkinfo.BenchmarkInfo;
+import com.marcosimon.autosurvey.benchmarkinfo.IBenchmarkInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.models.NewContactInfoDTO;
 import com.marcosimon.autosurvey.msforginfo.IMsfOrgInfoDbRepository;
@@ -20,7 +20,7 @@ public class ContactInfoService {
 
   private final IContactInfoDbRepository contactInfoDbRepository;
   private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
-  private final ICountryInfoDbRepository countryInfoDbRepository;
+  private final IBenchmarkInfoDbRepository countryInfoDbRepository;
 
   public List<ContactInfo> getAllContacts() {
     return contactInfoDbRepository.findAll();
@@ -33,10 +33,10 @@ public class ContactInfoService {
   }
   @Transactional
   public synchronized ContactInfo addContactInfo(NewContactInfoDTO newContactInfoDTO) {
-    CountryInfo countryInfo = countryInfoDbRepository.findByNameAndYear(newContactInfoDTO.countryName(), newContactInfoDTO.year())
+    BenchmarkInfo benchmarkInfo = countryInfoDbRepository.findByNameAndYear(newContactInfoDTO.countryName(), newContactInfoDTO.year())
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
     MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
-            .findByOrgNameAndCountryInfo(newContactInfoDTO.orgName(), countryInfo)
+            .findByOrgNameAndCountryInfo(newContactInfoDTO.orgName(), benchmarkInfo)
             .orElseThrow(() -> new CustomException(ORGANIZATION_NOT_FOUND));
 
     contactInfoDbRepository

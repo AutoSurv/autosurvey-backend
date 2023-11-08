@@ -6,8 +6,8 @@ import com.marcosimon.autosurvey.allowancepercentinfo.AllowancePercentInfo;
 import com.marcosimon.autosurvey.allowancepercentinfo.IAllowancePercentInfoDbRepository;
 import com.marcosimon.autosurvey.contactinfo.ContactInfo;
 import com.marcosimon.autosurvey.contactinfo.IContactInfoDbRepository;
-import com.marcosimon.autosurvey.countryinfo.CountryInfo;
-import com.marcosimon.autosurvey.countryinfo.ICountryInfoDbRepository;
+import com.marcosimon.autosurvey.benchmarkinfo.BenchmarkInfo;
+import com.marcosimon.autosurvey.benchmarkinfo.IBenchmarkInfoDbRepository;
 import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
 import com.marcosimon.autosurvey.currencyinfo.ICurrencyInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
@@ -30,7 +30,7 @@ import static com.marcosimon.autosurvey.constants.ErrorCode.*;
 public class MsfOrgInfoService {
 
   private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
-  private final ICountryInfoDbRepository countryInfoDbRepository;
+  private final IBenchmarkInfoDbRepository countryInfoDbRepository;
   private final ICurrencyInfoDbRepository currencyInfoDbRepository;
   private final IContactInfoDbRepository contactInfoDbRepository;
   private final IFunctionInfoRepository functionInfoDbRepository;
@@ -39,15 +39,15 @@ public class MsfOrgInfoService {
   private final IAllowancePercentInfoDbRepository allowancePercentInfoDbRepository;
 
   public FinalOrgInfoDTO getFinalOrgInfo(NewFinalOrgInfoDTO newFinalOrgInfoDTO) {
-    CountryInfo countryInfo = countryInfoDbRepository
+    BenchmarkInfo benchmarkInfo = countryInfoDbRepository
             .findByNameAndYear(newFinalOrgInfoDTO.countryName(), newFinalOrgInfoDTO.year())
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
     CurrencyInfo currencyInfo = currencyInfoDbRepository
-            .findById(countryInfo.getCountryInfoId()).orElseThrow(() -> new CustomException(CURRENCY_INFO_NOT_FOUND));
+            .findById(benchmarkInfo.getCountryInfoId()).orElseThrow(() -> new CustomException(CURRENCY_INFO_NOT_FOUND));
 
     MsfOrgInfo msfOrgInfo = msfOrgInfoDbRepository
-            .findByOrgNameAndCountryInfo(newFinalOrgInfoDTO.orgName(), countryInfo).orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
+            .findByOrgNameAndCountryInfo(newFinalOrgInfoDTO.orgName(), benchmarkInfo).orElseThrow(() -> new CustomException(ORG_INFO_NOT_FOUND));
 
     ContactInfo contactInfo = contactInfoDbRepository
             .findById(msfOrgInfo.getOrgId()).orElseThrow(() -> new CustomException(CONTACT_INFO_NOT_FOUND));
@@ -65,8 +65,8 @@ public class MsfOrgInfoService {
     AllowancePercentInfo allowancePercentInfo = allowancePercentInfoDbRepository
             .findById(msfOrgInfo.getOrgId()).orElseThrow(() -> new CustomException(ALLOWANCE_PERCENT_INFO_NOT_FOUND));
 
-    return new FinalOrgInfoDTO(countryInfo.getCountryName(), countryInfo.getYear(), msfOrgInfo.getOrgName(), msfOrgInfo.getOrgFullName(), functionInfo.getMsfLevel(), functionInfo.getIrffgLevel(),
-            functionInfo.getFunctionInfoId(), functionInfo.getMsfFunction(),functionSalaryInfo.getOrgFunctionId(), functionSalaryInfo.getOrgFunction(), countryInfo.getCurrencyRef(), msfOrgInfo.getCurrencyInUse(), currencyInfo.getCurrency(), currencyInfo.getExchangeRate(),
+    return new FinalOrgInfoDTO(benchmarkInfo.getCountryName(), benchmarkInfo.getYear(), msfOrgInfo.getOrgName(), msfOrgInfo.getOrgFullName(), functionInfo.getMsfLevel(), functionInfo.getIrffgLevel(),
+            functionInfo.getFunctionInfoId(), functionInfo.getMsfFunction(),functionSalaryInfo.getOrgFunctionId(), functionSalaryInfo.getOrgFunction(), benchmarkInfo.getCurrencyRef(), msfOrgInfo.getCurrencyInUse(), currencyInfo.getCurrency(), currencyInfo.getExchangeRate(),
             msfOrgInfo.getWorkingHours(), msfOrgInfo.getThirteenthSalary(), functionSalaryInfo.getBasicSalary(), functionSalaryInfo.getAllowancePerFunction(),
             allowanceInfo.getColAllowance(), allowanceInfo.getTransportationAllowance(), allowanceInfo.getHousingAllowance(), allowanceInfo.getOtherAllowance(),
             allowanceInfo.getTotalAllowance(), allowancePercentInfo.getColAllowancePercent(), allowancePercentInfo.getTransportationAllowancePercent(),
@@ -89,12 +89,12 @@ public class MsfOrgInfoService {
 
   @Transactional
   public synchronized MsfOrgInfo addMsfOrgInfo(NewMsfOrgInfoDTO newMsfOrgInfoDTO) {
-    CountryInfo countryInfo = countryInfoDbRepository
+    BenchmarkInfo benchmarkInfo = countryInfoDbRepository
                     .findByNameAndYear(newMsfOrgInfoDTO.countryName(), newMsfOrgInfoDTO.year())
             .orElseThrow(() -> new CustomException(COUNTRY_INFO_NOT_FOUND));
 
     msfOrgInfoDbRepository
-            .findByOrgNameAndCountryInfo(newMsfOrgInfoDTO.orgName(), countryInfo)
+            .findByOrgNameAndCountryInfo(newMsfOrgInfoDTO.orgName(), benchmarkInfo)
             .ifPresent( info -> {
               throw new CustomException(ALREADY_SAVED_ORGANIZATION);
             });
@@ -106,7 +106,7 @@ public class MsfOrgInfoService {
             newMsfOrgInfoDTO.workingHours(),
             newMsfOrgInfoDTO.thirteenthSalary(),
             newMsfOrgInfoDTO.currencyInUse(),
-            countryInfo));
+            benchmarkInfo));
   }
 
   @Transactional

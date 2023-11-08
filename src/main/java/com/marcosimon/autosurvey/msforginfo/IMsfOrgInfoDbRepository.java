@@ -1,6 +1,6 @@
 package com.marcosimon.autosurvey.msforginfo;
 
-import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.benchmarkinfo.BenchmarkInfo;
 import com.marcosimon.autosurvey.models.FinalOrgInfoDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,9 +14,9 @@ import java.util.Optional;
 @Repository
 public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Long> {
     @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.orgName = ?1 and O.countryInfo = ?2")
-    Optional<MsfOrgInfo> findByOrgNameAndCountryInfo(String orgName, CountryInfo countryInfo);
-    @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.countryInfo.countryInfoId = :countryId")
-    List<MsfOrgInfo> findAllByCountryInfoId(@Param("countryId")Long countryId);
+    Optional<MsfOrgInfo> findByOrgNameAndCountryInfo(String orgName, BenchmarkInfo benchmarkInfo);
+    @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.benchmarkInfo.benchmarkInfoId = :benchmarkId")
+    List<MsfOrgInfo> findAllByBenchmarkInfoId(@Param("benchmarkId")String benchmarkId);
     @Modifying
     @Query(value = "DELETE FROM MsfOrgInfo AS O WHERE O.countryInfo.countryInfoId = :countryId")
     void deleteAllByCountryId(@Param("countryId")Long countryId);

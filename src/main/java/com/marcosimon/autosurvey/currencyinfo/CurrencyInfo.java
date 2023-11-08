@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.currencyinfo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.marcosimon.autosurvey.countryinfo.CountryInfo;
+import com.marcosimon.autosurvey.benchmarkinfo.BenchmarkInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
 
@@ -37,12 +37,12 @@ public class CurrencyInfo {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "country_info_id", nullable = false)
-    private CountryInfo countryInfo;
+    private BenchmarkInfo benchmarkInfo;
 
-    public CurrencyInfo(String currency, Float exchangeRate, String dateExchangeRate, CountryInfo countryInfo) {
+    public CurrencyInfo(String currency, Float exchangeRate, String dateExchangeRate, BenchmarkInfo benchmarkInfo) {
         this.currency = currency;
         this.exchangeRate = exchangeRate;
         this.dateExchangeRate = dateExchangeRate;
-        this.countryInfo = countryInfo;
+        this.benchmarkInfo = benchmarkInfo;
     }
 }
