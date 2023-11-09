@@ -671,32 +671,239 @@ public class MsfOrgInfo {
   @Column(name = "Other_Bonus_Other")
   private Float  otherBonusOther;
 
+  @Column(name = "Salary_Revision_Cycle")
+  private String  salaryRevisionCycle;
 
+  @Column(name = "Salary_Rev_Infl_COL")
+  private Boolean  salaryRevisionCol;
 
-  @JsonIgnore
-  @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-  @PrimaryKeyJoinColumn
-  private ContactInfo contact;
+  @Column(name = "Salary_Rev_Int_Benchmark")
+  private Boolean  salaryRevisionInternalBenchmark;
+
+  @Column(name = "Salary_Rev_Birches")
+  private Boolean  salaryRevisionBirches;
+
+  @Column(name = "Salary_Rev_Mercer")
+  private Boolean  salaryRevisionMercer;
+
+  @Column(name = "Salary_Rev_MSF_Benchmark")
+  private Boolean  salaryRevisionMsfBenchmark;
+
+  @Column(name = "Salary_Rev_Ext_Survey_Other")
+  private Boolean  salaryRevisionExternalOther;
+
+  @Column(name = "Salary_Rev_Donor_Funding")
+  private Boolean  salaryRevisionDonorFunding;
+
+  @Column(name = "Salary_Rev_Reg_Cycle_Review")
+  private Boolean  salaryRevisionRegularCycleReview;
+
+  @Column(name = "Salary_Rev_HQ_Policy")
+  private Boolean  salaryRevisionHQPolicy;
+
+  @Column(name = "Salary_Rev_CBA")
+  private Boolean  salaryRevisionCBA;
+
+  @Column(name = "Salary_Rev_Other")
+  private String  salaryRevisionOther;
+
+  @Column(name = "Last_Revision_Month")
+  private Integer  lastSalaryRevisionMonth;
+
+  @Column(name = "Last_Revision_Year")
+  private Integer  lastSalaryRevisionYear;
+
+  @Column(name = "Last_Revision_Increase_Avg")
+  private Float  lastSalaryRevisionIncreaseAvg;
+
+  @Column(name = "Last_Revision_Increase_Lower")
+  private Float  lastSalaryRevisionIncreaseLower;
+
+  @Column(name = "Last_Revision_Increase_Upper")
+  private Float  lastSalaryRevisionIncreaseUpper;
+
+  @Column(name = "Next_Revision_Month")
+  private Integer  nextRevisionMonth;
+
+  @Column(name = "Next_Revision_Year")
+  private Integer  nextRevisionYear;
+
+  @Column(name = "Monitor_COL")
+  private Boolean  monitorCol;
+
+  @Column(name = "Monitor_COL_Frequency")
+  private String  monitorColFrequency;
+
+  @Column(name = "Reg_COL_Adjustments")
+  private Boolean  regularColAdjustment;
+
+  @Column(name = "COL_Adjustments_XR")
+  private Boolean  regularColAdjustmentXR;
+
+  @Column(name = "COL_Adjustments_Inflation")
+  private Boolean  regularColAdjustmentInflation;
+
+  @Column(name = "COL_Adjustments_CPI")
+  private Boolean  regularColAdjustmentCPI;
+
+  @Column(name = "COL_Adjustments_Food_Baskets")
+  private Boolean  regularColAdjustmentFoodBaskets;
+
+  @Column(name = "COL_Source_Bur_Stats")
+  private Boolean  regularColSourceBureauStats;
+
+  @Column(name = "COL_Source_Central_Bank")
+  private Boolean  regularColSourceCentralBank;
+
+  @Column(name = "COL_Source_IMF")
+  private Boolean  regularColSourceIMF;
+
+  @Column(name = "COL_Source_Other")
+  private String  regularColSourceOther;
+
+  @Column(name = "Healthcare_Type")
+  private String  healthcareType;
+
+  @Column(name = "Healthcare_Ins_Company")
+  private String  healthcareInsuranceCompany;
+
+  @Column(name = "Healthcare_Cap")
+  private Float  healthcareCap;
+
+  @Column(name = "Healthcare_Empr_Cov_Employee")
+  private Float  healthcareEmployerCoverEmployee;
+
+  @Column(name = "Healthcare_Empr_Cov_Spouse")
+  private Float  healthcareEmployerCoverSpouse;
+
+  @Column(name = "Healthcare_Empr_Cov_Children")
+  private Float  healthcareEmployerCoverChildren;
+
+  @Column(name = "Healthcare_Child_Age_Limit")
+  private Integer  healthcareChildAgeLimit;
+
+  @Column(name = "Healthcare_Max_Children")
+  private Integer  healthcareMaxChildren;
+
+  @Column(name = "Healthcare_Vision")
+  private Boolean  healthcareVision;
+
+  @Column(name = "Healthcare_Dental")
+  private Boolean  healthcareDental;
+
+  @Column(name = "Healthcare_Mental_Health")
+  private Boolean  healthcareMentalHealth;
+
+  @Column(name = "Healthcare_Comments")
+  private String  healthcareComment;
+
+  @Column(name = "Accident_Coverage")
+  private Boolean  accidentCoverage;
+
+  @Column(name = "Accident_Coverage_Work_Only")
+  private Boolean  accidentCoverageWorkOnly;
+
+  @Column(name = "Paid_Leave_All_Staff")
+  private Integer  paidLeaveAllStaff;
+
+  @Column(name = "Paid_Leave_2_Yr_Service")
+  private Integer  paidLeave2YearService;
+
+  @Column(name = "Paid_Leave_5_Yr_Service")
+  private Integer  paidLeave5YearService;
+
+  @Column(name = "Paid_Leave_10_Yr_Service")
+  private Integer  paidLeave10YearService;
+
+  @Column(name = "Paid_Leave_15_Yr_Service")
+  private Integer  paidLeave15YearService;
+
+  @Column(name = "Paid_Leave_20_Yr_Service")
+  private Integer  paidLeave20YearService;
+
+  @Column(name = "Paid_Leave_25_Yr_Service")
+  private Integer  paidLeave25YearService;
+
+  @Column(name = "Paid_Leave_Comments")
+  private String  paidLeaveComment;
+
+  @Column(name = "Paid_Leave_Addl_Grp_1")
+  private String  paidLeaveAdditionalGroup1;
+
+  @Column(name = "Paid_Leave_Addl_Grp_1_Days")
+  private Integer  paidLeaveAdditionalGroup1Days;
+
+  @Column(name = "Paid_Leave_Addl_Grp_2")
+  private String  paidLeaveAdditionalGroup2;
+
+  @Column(name = "Paid_Leave_Addl_Grp_2_Days")
+  private Integer  paidLeaveAdditionalGroup2Days;
+
+  @Column(name = "Paid_Leave_Addl_Grp_3")
+  private String  paidLeaveAdditionalGroup3;
+
+  @Column(name = "Paid_Leave_Addl_Grp_3_Days")
+  private Integer  paidLeaveAdditionalGroup3Days;
+
+  @Column(name = "Paid_Leave_Addl_Grp_4")
+  private String  paidLeaveAdditionalGroup4;
+
+  @Column(name = "Paid_Leave_Addl_Grp_4_Days")
+  private Integer  paidLeaveAdditionalGroup4Days;
+
+  @Column(name = "Sick_Leave_Short_Term_Days")
+  private Integer  sickLeaveShortTermDays;
+
+  @Column(name = "Sick_Leave_Long_Term")
+  private String  sickLeaveLongTerm;
+
+  @Column(name = "Sick_Leave_Long_Term_Months")
+  private Integer  sickLeaveLongTermMonths;
+
+  @Column(name = "Sick_Leave_Long_Term_Detail")
+  private String  sickLeaveLongTermDetail;
+
+  @Column(name = "Mat_Leave_100_Perc_Wks")
+  private Integer  maternityLeaveFullPayWeek;
+
+  @Column(name = "Mat_Leave_Partial_Pay_Wks")
+  private Integer  maternityLeavePartialPayWeek;
+
+  @Column(name = "Mat_Leave_Partial_Pay_Perc")
+  private Float  maternityLeavePartialPayPercent;
+
+  @Column(name = "Paternity_Leave_Days")
+  private Integer  paternityLeaveDay;
+
+  @Column(name = "Total_Comp_Circum_Leave")
+  private Integer  totalCompCircumLeave;
+
+  @Column(name = "Comp_Leave_1st_Degree_Days")
+  private Integer  compLeave1stDegreeDay;
+
+  @Column(name = "Comp_Leave_2nd_Degree_Days")
+  private Integer  compLeave2ndDegreeDay;
+
+  @Column(name = "Circum_Leave_Days")
+  private Integer  circumLeaveDay;
+
+  @Column(name = "Unpaid_Leave_Days")
+  private Integer  unpaidLeaveDay;
+
+  @Column(name = "Sabbatical")
+  private Integer  sabbatical;
+
+  @Column(name = "Other_Leave_Days")
+  private Integer  otherLeaveDay;
+
+  @Column(name = "Religious_Leave_Wks")
+  private Integer  religiousLeaveWeek;
+
 
   @JsonIgnore
   @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @PrimaryKeyJoinColumn
   private AllowanceInfo allowance;
-
-  @JsonIgnore
-  @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-  @PrimaryKeyJoinColumn
-  private AllowancePercentInfo allowancePercent;
-
-  @JsonIgnore
-  @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-  @PrimaryKeyJoinColumn
-  private AllowanceInKindInfo allowanceInKind;
-
-  @JsonBackReference
-  @ManyToOne
-  @JoinColumn(name = "currency_info_id")
-  private CurrencyInfo currencyInfo;
 
   @JsonBackReference
   @ManyToOne
