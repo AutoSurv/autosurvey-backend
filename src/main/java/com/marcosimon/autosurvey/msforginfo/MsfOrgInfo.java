@@ -437,6 +437,240 @@ public class MsfOrgInfo {
   @Column(name = "Travel_Overnight_Total_3")
   private Float  travelOvernightTotal3;
 
+  @Column(name = "Soc_Sec_Employer_Perc")
+  private Float  socialSecurityEmployerPercent;
+
+  @Column(name = "Soc_Sec_Employer_Amt")
+  private Float  socialSecurityEmployerAmount;
+
+  @Column(name = "Soc_Sec_Employer_Brackets")
+  private Boolean  socialSecurityEmployerBrackets;
+
+  @Column(name = "Soc_Sec_Employer_Exempt")
+  private Boolean  socialSecurityEmployerExempt;
+
+  @Column(name = "Soc_Sec_Employee_Perc")
+  private Float  socialSecurityEmployeePercent;
+
+  @Column(name = "Soc_Sec_Employee_Amt")
+  private Float  socialSecurityEmployeeAmount;
+
+  @Column(name = "Soc_Sec_Employee_Brackets")
+  private Boolean  socialSecurityEmployeeBrackets;
+
+  @Column(name = "Soc_Sec_Employee_Exempt")
+  private Boolean  socialSecurityEmployeeExempt;
+
+  @Column(name = "Soc_Sec_Other_Employer_Perc")
+  private Float  socialSecurityOtherEmployerPercent;
+
+  @Column(name = "Soc_Sec_Other_Employer_Amt")
+  private Float  socialSecurityOtherEmployerAmount;
+
+  @Column(name = "Soc_Sec_Other_Employer_Brackets")
+  private Boolean  socialSecurityOtherEmployerBrackets;
+
+  @Column(name = "Soc_Sec_Other_Employer_Exempt")
+  private Boolean  socialSecurityOtherEmployerExempt;
+
+  @Column(name = "Soc_Sec_Other_Employee_Perc")
+  private Float  socialSecurityOtherEmployeePercent;
+
+  @Column(name = "Soc_Sec_Other_Employee_Amt")
+  private Float  socialSecurityOtherEmployeeAmount;
+
+  @Column(name = "Soc_Sec_Other_Employee_Brackets")
+  private Boolean  socialSecurityOtherEmployeeBrackets;
+
+  @Column(name = "Soc_Sec_Other_Employee_Exempt")
+  private Boolean  socialSecurityOtherEmployeeExempt;
+
+  @Column(name = "Inc_Tax_Employer_Perc")
+  private Float  incomeTaxEmployerPercent;
+
+  @Column(name = "Inc_Tax_Employer_Amt")
+  private Float  incomeTaxEmployerAmount;
+
+  @Column(name = "Inc_Tax_Employer_Brackets")
+  private Boolean  incomeTaxEmployerBrackets;
+
+  @Column(name = "Inc_Tax_Employer_Exempt")
+  private Boolean  incomeTaxEmployerExempt;
+
+  @Column(name = "Inc_Tax_Employee_Perc")
+  private Float  incomeTaxEmployeePercent;
+
+  @Column(name = "Inc_Tax_Employee_Amt")
+  private Float  incomeTaxEmployeeAmount;
+
+  @Column(name = "Inc_Tax_Employee_Brackets")
+  private Boolean  incomeTaxEmployeeBrackets;
+
+  @Column(name = "Inc_Tax_Employee_Exempt")
+  private Boolean  incomeTaxEmployeeExempt;
+
+  @Column(name = "Non-Tax_Allowance_1")
+  private String  nonTaxAllowance1;
+
+  @Column(name = "Non-Tax_Allowance_2")
+  private String  nonTaxAllowance2;
+
+  @Column(name = "Non-Tax_Allowance_3")
+  private String  nonTaxAllowance3;
+
+  @Column(name = "Non-Tax_Allowance_4")
+  private String  nonTaxAllowance4;
+
+  @Column(name = "Non-Tax_Allowance_5")
+  private String  nonTaxAllowance5;
+
+  @Column(name = "Private_Pension")
+  private Boolean  privatePension;
+
+  @Column(name = "Private_Pension_Type")
+  private String  privatePensionType;
+
+  @Column(name = "Private_Pension_All_Staff")
+  private String  privatePensionAllStaff;
+
+  @Column(name = "Private_Pension_Perc_Employer")
+  private Float  privatePensionPercentEmployer;
+
+  @Column(name = "Private_Pension_Perc_Employee")
+  private Float  privatePensionPercentEmployee;
+
+  @Column(name = "Private_Pension_DIR")
+  private Float  privatePensionDirector;
+
+  @Column(name = "Private_Pension_MGR")
+  private Float  privatePensionManager;
+
+  @Column(name = "Private_Pension_SUP")
+  private Float  privatePensionSupervisor;
+
+  @Column(name = "Private_Pension_SKL")
+  private Float  privatePensionSkilled;
+
+  @Column(name = "Private_Pension_BSC")
+  private Float  privatePensionBasicSkilled;
+
+  @Column(name = "Life_Ins")
+  private Boolean  lifeInsurance;
+
+  @Column(name = "Life_Ins_Company")
+  private String  lifeInsuranceCompany;
+
+  @Column(name = "Life_Ins_Payout")
+  private Float  lifeInsurancePayout;
+
+  @Column(name = "EOC_Pmt_Normal_EOC")
+  private Integer  endOfContractPayNormal;
+
+  @Column(name = "EOC_Pmt_Redundancy")
+  private Integer  endOfContractPayRedundancy;
+
+  @Column(name = "EOC_Pmt_Normal_Retirement")
+  private Integer  endOfContractPayRetirement;
+
+  @Column(name = "EOC_Pmt_Normal_Dismissal")
+  private Integer  endOfContractPayDismissal;
+
+  @Column(name = "OT_Policy_Type")
+  private String  overtimePolicyType;
+
+  @Column(name = "OT_Monetary_Wkday")
+  private Float  overtimeMonetaryWeekday;
+
+  @Column(name = "OT_Monetary_Wkend")
+  private Float  overtimeMonetaryWeekend;
+
+  @Column(name = "OT_Monetary_PH")
+  private Float  overtimeMonetaryPublicHoliday;
+
+  @Column(name = "OT_Time_Comp_Wkday")
+  private Float  overtimeTimeWeekday;
+
+  @Column(name = "OT_Time_Comp_Wkend")
+  private Float  overtimeTimeWeekend;
+
+  @Column(name = "OT_Time_Comp_PH")
+  private Float  overtimeTimePublicHoliday;
+
+  @Column(name = "Salary_Bands")
+  private Boolean  salaryBands;
+
+  @Column(name = "Salary_Bands_Recruit_Lvl")
+  private String  salaryBandsRecruitLevel;
+
+  @Column(name = "Salary_Bands_Mvt_Systematic")
+  private String  salaryBandsSystematic;
+
+  @Column(name = "Seniority_Increase")
+  private Boolean  seniorityIncrease;
+
+  @Column(name = "Seniority_Increase_Amt")
+  private Float  seniorityIncreaseAmount;
+
+  @Column(name = "Seniority_Increase_Perc")
+  private Float  seniorityIncreasePercent;
+
+  @Column(name = "Seniority_Increase_Cap")
+  private Float  seniorityIncreaseCap;
+
+  @Column(name = "Perf_Increases")
+  private Boolean  performanceIncrease;
+
+  @Column(name = "Perf_Inc_Ind_Performance")
+  private Boolean  performanceIncreaseIndividual;
+
+  @Column(name = "Perf_Inc_Org_Performance")
+  private Boolean  performanceIncreaseOrganisation;
+
+  @Column(name = "Perf_Inc_Org_Funding")
+  private Boolean  performanceIncreaseFunding;
+
+  @Column(name = "Perf_Inc_Service_Length")
+  private Boolean  performanceIncreaseServiceLength;
+
+  @Column(name = "Perf_Inc_Job_Level")
+  private Boolean  performanceIncreaseJobLevel;
+
+  @Column(name = "Perf_Inc_Salary_Range_Position")
+  private Boolean  performanceIncreaseRangePosition;
+
+  @Column(name = "Perf_Inc_COLA")
+  private Boolean  performanceIncreaseCola;
+
+  @Column(name = "Perf_Inc_Other")
+  private Boolean  performanceIncreaseOther;
+
+  @Column(name = "Performance_Lower")
+  private Float  performanceLower;
+
+  @Column(name = "Performance_Mid")
+  private Float  performanceMid;
+
+  @Column(name = "Performance_Upper")
+  private Float  performanceUpper;
+
+  @Column(name = "Other_Bonus_Education")
+  private Float  otherBonusEducation;
+
+  @Column(name = "Other_Bonus_Funeral")
+  private Float  otherBonusFuneral;
+
+  @Column(name = "Other_Bonus_Wedding")
+  private Float  otherBonusWedding;
+
+  @Column(name = "Other_Bonus_Birthday")
+  private Float  otherBonusBirthday;
+
+  @Column(name = "Other_Bonus_Driving")
+  private Float  otherBonusDriving;
+
+  @Column(name = "Other_Bonus_Other")
+  private Float  otherBonusOther;
+
 
 
   @JsonIgnore
