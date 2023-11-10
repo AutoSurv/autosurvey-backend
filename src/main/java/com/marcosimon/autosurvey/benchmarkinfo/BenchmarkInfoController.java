@@ -42,9 +42,9 @@ public class BenchmarkInfoController {
     return ResponseEntity.accepted().body(updatedBenchmarkInfo);
   }
 
-  @DeleteMapping("{id}")
+ /* @DeleteMapping("{id}")
   public void deleteBenchmarkInfo (@PathVariable @NotEmpty String id) {
     benchmarkInfoService.deleteBenchmarkInfo(id);
-  }
+  }*/
 
 }

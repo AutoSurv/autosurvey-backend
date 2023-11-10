@@ -2,12 +2,8 @@ package com.marcosimon.autosurvey.msforginfo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.marcosimon.autosurvey.allowanceInKindInfo.AllowanceInKindInfo;
-import com.marcosimon.autosurvey.allowanceinfo.AllowanceInfo;
-import com.marcosimon.autosurvey.allowancepercentinfo.AllowancePercentInfo;
-import com.marcosimon.autosurvey.contactinfo.ContactInfo;
+import com.marcosimon.autosurvey.generalAllowances.GeneralAllowances;
 import com.marcosimon.autosurvey.benchmarkinfo.BenchmarkInfo;
-import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
 import com.marcosimon.autosurvey.functionsalaryinfo.FunctionSalaryInfo;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -25,9 +21,9 @@ import java.util.List;
 @Table(name = "org_info")
 public class MsfOrgInfo {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  //@GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "Org_Id")
-  private Long orgId;
+  private String orgId;
 
   @Column(name = "Data_Collection_Date")
   private String dataCollectionDate;
@@ -128,7 +124,7 @@ public class MsfOrgInfo {
   @Column(name = "Org_XR_Source")
   private String exchangeRateSource;
 
-  @Column(name = "Org_XR_Source")
+  @Column(name = "Org_XR_Source_Other")
   private String exchangeRateSourceOther;
 
   @Column(name = "Contract_Type_1mo")
@@ -191,7 +187,7 @@ public class MsfOrgInfo {
   @Column(name = "Challenge_Detail")
   private Boolean challengeTravelDetail;
 
-  @Column(name = "Intl_Staff")
+ /* @Column(name = "Intl_Staff")
   private Boolean internationalStaff;
 
   @Column(name = "Intl_Staff_Num")
@@ -897,22 +893,22 @@ public class MsfOrgInfo {
   private Integer  otherLeaveDay;
 
   @Column(name = "Religious_Leave_Wks")
-  private Integer  religiousLeaveWeek;
+  private Integer  religiousLeaveWeek;*/
 
 
   @JsonIgnore
-  @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-  @PrimaryKeyJoinColumn
-  private AllowanceInfo allowance;
+  @OneToMany(mappedBy = "msfOrgInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<GeneralAllowances> generalAllowances;
 
   @JsonBackReference
   @ManyToOne
   @OnDelete(action= OnDeleteAction.CASCADE)
-  @JoinColumn(name = "country_info_id", nullable = false)
+  @JoinColumn(name = "BM_Info_ID", nullable = false)
   private BenchmarkInfo benchmarkInfo;
 
   @JsonIgnore
-  @OneToMany(mappedBy = "functionSalaryInfoId", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @OneToMany(mappedBy = "msfOrgInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<FunctionSalaryInfo> functionSalaryInfoList;
+
 
 }

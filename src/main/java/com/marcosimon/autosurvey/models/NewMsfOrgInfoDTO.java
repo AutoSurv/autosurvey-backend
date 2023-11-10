@@ -2,7 +2,7 @@ package com.marcosimon.autosurvey.models;
 
 public record NewMsfOrgInfoDTO(
         String orgFullName,
-        String orgName,
+        String orgShortName,
         String orgType,
         String dataCollectionDate,
         Integer workingHours,

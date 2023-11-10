@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Long> {
-    @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.orgName = ?1 and O.countryInfo = ?2")
+public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, String> {
+   /* @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.orgName = ?1 and O.benchmarkInfo = ?2")
     Optional<MsfOrgInfo> findByOrgNameAndCountryInfo(String orgName, BenchmarkInfo benchmarkInfo);
     @Query(value = "SELECT O FROM MsfOrgInfo AS O WHERE O.benchmarkInfo.benchmarkInfoId = :benchmarkId")
     List<MsfOrgInfo> findAllByBenchmarkInfoId(@Param("benchmarkId")String benchmarkId);
     @Modifying
     @Query(value = "DELETE FROM MsfOrgInfo AS O WHERE O.countryInfo.countryInfoId = :countryId")
-    void deleteAllByCountryId(@Param("countryId")Long countryId);
+    void deleteAllByCountryId(@Param("countryId")String countryId);
     @Query(  value = "SELECT new com.marcosimon.autosurvey.models.FinalOrgInfoDTO( C.countryName, C.year, O.orgName, O.orgFullName, F.msfLevel, " +
             " F.irffgLevel, F.functionInfoId, F.msfFunction, " +
             "FS.orgFunctionId, FS.orgFunction, C.currencyRef, O.currencyInUse, CUR.currency, CUR.exchangeRate, O.workingHours, O.thirteenthSalary, FS.basicSalary, " +
@@ -35,6 +35,6 @@ public interface IMsfOrgInfoDbRepository extends JpaRepository<MsfOrgInfo, Long>
             "LEFT JOIN AllowancePercentInfo AP ON O.orgId = AP.msfOrgInfo.orgId " +
             "ORDER BY O.orgId, F.msfLevel ")
     List<FinalOrgInfoDTO> findAllFinalOrgInfo();
-
+*/
 
 }

@@ -27,13 +27,13 @@ public class FunctionSalaryInfoService {
 
     public List<FunctionSalaryInfo> getAllFunctionSalaryInfo() { return functionSalaryInfoDbRepository.findAll(); }
 
-    public FunctionSalaryInfo getFunctionSalaryInfo(Long id) {
+    public FunctionSalaryInfo getFunctionSalaryInfo(String id) {
         return functionSalaryInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
     }
 
-    @Transactional
+    /*@Transactional
     public synchronized FunctionSalaryInfo addFunctionSalaryInfo(NewFunctionSalaryInfoDTO newFunctionSalaryInfoDTO) {
         BenchmarkInfo benchmarkInfo = countryInfoDbRepository
                 .findByNameAndYear(newFunctionSalaryInfoDTO.countryName(), newFunctionSalaryInfoDTO.year())
@@ -59,10 +59,10 @@ public class FunctionSalaryInfoService {
                 newFunctionSalaryInfoDTO.allowancePerFunction(),
                 msfOrgInfo, functionInfo));
 
-    }
+    }*/
 
     @Transactional
-    public synchronized FunctionSalaryInfo updateFunctionSalaryInfo(Long id, NewFunctionSalaryInfoDTO updateFunctionSalaryInfoDTO) {
+    public synchronized FunctionSalaryInfo updateFunctionSalaryInfo(String id, NewFunctionSalaryInfoDTO updateFunctionSalaryInfoDTO) {
         FunctionSalaryInfo storedFunctionSalaryInfo = functionSalaryInfoDbRepository
                 .findById(id)
                 .orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
@@ -73,21 +73,13 @@ public class FunctionSalaryInfoService {
         if (updateFunctionSalaryInfoDTO.orgFunction() != null && !updateFunctionSalaryInfoDTO.orgFunction().isEmpty()) {
             storedFunctionSalaryInfo.setOrgFunction(updateFunctionSalaryInfoDTO.orgFunction());
         }
-        if (updateFunctionSalaryInfoDTO.basicSalary() != null && updateFunctionSalaryInfoDTO.basicSalary() >= 0) {
-            storedFunctionSalaryInfo.setBasicSalary(updateFunctionSalaryInfoDTO.basicSalary());
-        }
-        if (updateFunctionSalaryInfoDTO.allowancePerFunction() != null && updateFunctionSalaryInfoDTO.allowancePerFunction() >= 0) {
-            storedFunctionSalaryInfo.setAllowancePerFunction(updateFunctionSalaryInfoDTO.allowancePerFunction());
-        }
-        if (updateFunctionSalaryInfoDTO.TGC() != null && updateFunctionSalaryInfoDTO.TGC() >= 0) {
-            storedFunctionSalaryInfo.setTgc(updateFunctionSalaryInfoDTO.TGC());
-        }
+
 
         return functionSalaryInfoDbRepository.save(storedFunctionSalaryInfo);
 
     }
 
-    public void deleteFunctionSalaryInfo(Long id) {
+    public void deleteFunctionSalaryInfo(String id) {
         functionSalaryInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(FUNCTION_SALARY_INFO_NOT_FOUND));
         functionSalaryInfoDbRepository.deleteById(id);
     }

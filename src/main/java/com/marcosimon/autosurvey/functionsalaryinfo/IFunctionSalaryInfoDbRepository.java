@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IFunctionSalaryInfoDbRepository extends JpaRepository<FunctionSalaryInfo, Long> {
+public interface IFunctionSalaryInfoDbRepository extends JpaRepository<FunctionSalaryInfo, String> {
     @Query(value = "SELECT F FROM FunctionSalaryInfo AS F " +
             "JOIN FunctionInfo AS FI ON F.functionInfo = ?2 " +
             "JOIN MsfOrgInfo AS O ON F.msfOrgInfo = ?3 " +

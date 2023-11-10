@@ -39,7 +39,7 @@ public class FunctionInfo {
 
   //@JsonManagedReference
   @JsonIgnore
-  @OneToMany(mappedBy = "functionSalaryInfoId")
+  @OneToMany(mappedBy = "functionInfo")
   private List<FunctionSalaryInfo> functionSalaryInfoList;
 
   public FunctionInfo(String functionInfoId, String msfEntity, String msfProfessionalGroup, String msfLevel, String irffgLevel, String msfJobFamilyDep, String msfFunction) {

@@ -19,43 +19,58 @@ import javax.persistence.*;
 @Table(name = "function_salary_info")
 public class FunctionSalaryInfo {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  @Column(name = "function_salary_info_id")
-  private Long functionSalaryInfoId;
+  //@GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "Benchmark_Line_ID")
+  private String benchmarkLineId;
 
-  @Column(name = "org_function_id")
+  @Column(name = "Function_ID")
   private String orgFunctionId;
 
-  @Column(name = "org_function")
+  @Column(name = "Function_Name")
   private String orgFunction;
 
-  @Column(name = "basic_salary")
-  private Integer basicSalary;
+  @Column(name = "Min_Basic_Salary")
+  private Float minBasicSalary;
 
-  private Integer tgc;
+  @Column(name = "Max_Basic_Salary")
+  private Float maxBasicSalary;
 
-  @Column(name = "allowance_per_function")
-  private Integer allowancePerFunction;
+  @Column(name = "Funct_Allowance_Perc")
+  private Float functionAllowancePercent;
+
+  @Column(name = "Funct_Allowance_Amt")
+  private Float functionAllowanceAmount;
+
+  @Column(name = "Funct_Allowance_InKind")
+  private String functionAllowanceInKind;
+
+  @Column(name = "Funct_Allowance_Other")
+  private String functionAllowanceOther;
+
+  @Column(name = "Min_TGC_Unadjusted_WH")
+  private Float minTGCUnadjustedWH;
+
+  @Column(name = "Max_TGC_Unadjusted_WH")
+  private Float maxTGCUnadjustedWH;
+
+  @Column(name = "Min_TGC_Adjusted_WH")
+  private Float minTGCAdjustedWH;
+
+  @Column(name = "Max_TGC_Adjusted_WH")
+  private Float maxTGCAdjustedWH;
 
   //@JsonBackReference
   @JsonIgnore
   @ManyToOne
   @OnDelete(action = OnDeleteAction.CASCADE)
-  @JoinColumn(name = "org_id", nullable = true)
+  @JoinColumn(name = "Org_Id", nullable = true)
   private MsfOrgInfo msfOrgInfo;
 
   @JsonIgnore
   @ManyToOne
+  @OnDelete(action = OnDeleteAction.CASCADE)
   @JoinColumn(name = "function_info_id")
   private FunctionInfo functionInfo;
 
-  public FunctionSalaryInfo(String orgFunctionId, String orgFunction, Integer basicSalary, Integer tgc, Integer allowancePerFunction, MsfOrgInfo msfOrgInfo, FunctionInfo functionInfo) {
-    this.orgFunctionId = orgFunctionId;
-    this.orgFunction = orgFunction;
-    this.basicSalary = basicSalary;
-    this.tgc = tgc;
-    this.allowancePerFunction = allowancePerFunction;
-    this.msfOrgInfo = msfOrgInfo;
-    this.functionInfo = functionInfo;
-  }
+
 }

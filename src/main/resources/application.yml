@@ -3,12 +3,12 @@ server:
   port: 8080
 debug: true
 spring:
-#  sql:
-#    init:
-#      platform: mongodb
-#      mode: always
-#  config:
-#   import: env.properties
+  #  sql:
+  #    init:
+  #      platform: mongodb
+  #      mode: always
+  #  config:
+  #   import: env.properties
   sql:
     init:
       platform: postgresql

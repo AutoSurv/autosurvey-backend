@@ -1,8 +1,6 @@
 package com.marcosimon.autosurvey.benchmarkinfo;
 
-import com.marcosimon.autosurvey.allowanceinfo.IAllowanceInfoDbRepository;
-import com.marcosimon.autosurvey.allowancepercentinfo.IAllowancePercentInfoDbRepository;
-import com.marcosimon.autosurvey.contactinfo.IContactInfoDbRepository;
+import com.marcosimon.autosurvey.generalAllowances.IAllowanceInfoDbRepository;
 import com.marcosimon.autosurvey.exception.CustomException;
 import com.marcosimon.autosurvey.functionsalaryinfo.IFunctionSalaryInfoDbRepository;
 import com.marcosimon.autosurvey.models.NewBenchmarkInfoDTO;
@@ -22,9 +20,8 @@ public class BenchmarkInfoService {
 
     private final IBenchmarkInfoDbRepository benchmarkInfoDbRepository;
     private final IMsfOrgInfoDbRepository msfOrgInfoDbRepository;
-    private final IContactInfoDbRepository contactInfoDbRepository;
     private final IAllowanceInfoDbRepository allowanceInfoDbRepository;
-    private final IAllowancePercentInfoDbRepository allowancePercentInfoDbRepository;
+
     private final IFunctionSalaryInfoDbRepository functionSalaryInfoDbRepository;
 
     public List<BenchmarkInfo> getAllBenchmarkInfo() { return benchmarkInfoDbRepository.findAll(); }
@@ -90,16 +87,14 @@ public class BenchmarkInfoService {
 
     }
 
-    public void deleteBenchmarkInfo(String id) {
+   /* public void deleteBenchmarkInfo(String id) {
         benchmarkInfoDbRepository.findById(id).orElseThrow(() -> new CustomException(BENCHMARK_INFO_NOT_FOUND));
         msfOrgInfoDbRepository.findAllByBenchmarkInfoId(id).forEach(o -> {
-            contactInfoDbRepository.findById(o.getOrgId()).ifPresent(contactInfoDbRepository::delete);
-            allowanceInfoDbRepository.findById(o.getOrgId()).ifPresent(allowanceInfoDbRepository::delete);
-            allowancePercentInfoDbRepository.findById(o.getOrgId()).ifPresent(allowancePercentInfoDbRepository::delete);
-            functionSalaryInfoDbRepository.findAllByOrg(o).forEach(functionSalaryInfoDbRepository::delete);
+                        allowanceInfoDbRepository.findById(o.getOrgId()).ifPresent(allowanceInfoDbRepository::delete);
+                        functionSalaryInfoDbRepository.findAllByOrg(o).forEach(functionSalaryInfoDbRepository::delete);
             msfOrgInfoDbRepository.findById(o.getOrgId()).ifPresent(msfOrgInfoDbRepository::delete);
         });
         benchmarkInfoDbRepository.deleteById(id);
     }
-
+*/
 }

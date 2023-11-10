@@ -1,7 +1,6 @@
 package com.marcosimon.autosurvey.benchmarkinfo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.marcosimon.autosurvey.currencyinfo.CurrencyInfo;
 import com.marcosimon.autosurvey.msforginfo.MsfOrgInfo;
 import lombok.*;
 
@@ -48,7 +47,7 @@ public class BenchmarkInfo {
 
   //@JsonManagedReference
   @JsonIgnore
-  @OneToMany(mappedBy = "countryInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @OneToMany(mappedBy = "benchmarkInfo", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<MsfOrgInfo> orgInfoList;
 
   public BenchmarkInfo(String benchmarkInfoId, String countryName, String countryIso, String continent, String benchmarkStartDate,
